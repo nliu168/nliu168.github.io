@@ -208,16 +208,25 @@
   .btn-ghost{ color:var(--paper); background:transparent; }
   .btn-ghost:hover{ border-color:var(--paper-dim); }
 
-  /* schematic hero illustration */
+  /* hero portrait */
   .hero-diagram{
     aspect-ratio:1/1;
     position:relative;
   }
-  .hero-diagram svg{ width:100%; height:100%; }
-  .gear-slow{ animation: spin 30s linear infinite; transform-origin:center; }
-  .gear-slow-rev{ animation: spin-rev 22s linear infinite; transform-origin:center; }
-  @keyframes spin{ to{ transform:rotate(360deg); } }
-  @keyframes spin-rev{ to{ transform:rotate(-360deg); } }
+  .hero-diagram svg{ width:100%; height:100%; position:absolute; inset:0; pointer-events:none; }
+  .hero-diagram .portrait-frame{
+    position:absolute;
+    inset:14%;
+    border-radius:50%;
+    overflow:hidden;
+    border:1px solid var(--blue-line-soft);
+  }
+  .hero-diagram .portrait-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
 
   /* ---------- SECTION SCAFFOLD ---------- */
   section{
@@ -494,32 +503,24 @@
       <div class="hero-grid">
         <div>
           <div class="hero-eyebrow"><span class="dim-line"></span> B.S. First-Year Engineering (Intended M.E.) — Purdue University, 2030</div>
-          <h1>Hi, I'm Nathan.</h1>
+          <h1>I design things that move, load, and hold up.</h1>
           <p class="lede">First-year engineering student at Purdue with a background in competitive robotics and high-power rocketry — CAD/CAM, 3D printing, CNC machining, and embedded electronics.</p>
           <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">View projects</a>
             <a href="#contact" class="btn btn-ghost">Get in touch</a>
           </div>
         </div>
-        <div class="hero-diagram" aria-hidden="true">
-          <svg viewBox="0 0 300 300" fill="none">
+        <div class="hero-diagram">
+          <svg viewBox="0 0 300 300" fill="none" aria-hidden="true">
             <circle cx="150" cy="150" r="118" stroke="#3f7cad" stroke-opacity="0.35" stroke-dasharray="2 6"/>
-            <g class="gear-slow" stroke="#3f7cad" stroke-width="1.4">
-              <circle cx="150" cy="150" r="70"/>
-              <g stroke-width="1.4">
-                <path d="M150 80 L150 62 M150 220 L150 238 M80 150 L62 150 M220 150 L238 150 M99 99 L86 86 M201 99 L214 86 M99 201 L86 214 M201 201 L214 214" />
-              </g>
-              <circle cx="150" cy="150" r="18" stroke="#e8622c"/>
-            </g>
-            <g class="gear-slow-rev" stroke="#e8622c" stroke-opacity="0.7" stroke-width="1.2">
-              <circle cx="228" cy="96" r="30"/>
-              <path d="M228 66 L228 58 M228 134 L228 126 M198 96 L190 96 M258 96 L266 96"/>
-            </g>
             <line x1="20" y1="270" x2="280" y2="270" stroke="#3f7cad" stroke-opacity="0.5"/>
             <line x1="20" y1="264" x2="20" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
             <line x1="280" y1="264" x2="280" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
-            <text x="150" y="288" fill="#b9c4d2" font-size="9" font-family="monospace" text-anchor="middle">Ø140.00</text>
+            <text x="150" y="288" fill="#b9c4d2" font-size="9" font-family="monospace" text-anchor="middle">Ø210.00</text>
           </svg>
+          <div class="portrait-frame">
+            <img src="images/nathanliu.jpg" alt="Nathan Liu">
+          </div>
         </div>
       </div>
     </div>
