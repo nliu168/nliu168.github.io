@@ -308,6 +308,7 @@
     overflow:hidden;
   }
   .project-thumb svg{ width:100%; height:100%; display:block; }
+  .project-thumb img{ width:100%; height:100%; display:block; object-fit:cover; }
   .project-thumb .thumb-tag{
     position:absolute;
     top:12px; left:12px;
@@ -492,9 +493,9 @@
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <div class="hero-eyebrow"><span class="dim-line"></span> BS.ME — Purdue University, 2030</div>
+          <div class="hero-eyebrow"><span class="dim-line"></span> B.S. First-Year Engineering (Intended M.E.) — Purdue University, 2030</div>
           <h1>I design things that move, load, and hold up.</h1>
-          <p class="lede">First-year engineering student focused on mechanical design, electronics, and manufacturing.</p>
+          <p class="lede">First-year engineering student at Purdue with a background in competitive robotics and high-power rocketry — CAD/CAM, 3D printing, CNC machining, and embedded electronics.</p>
           <div class="hero-actions">
             <a href="#projects" class="btn btn-primary">View projects</a>
             <a href="#contact" class="btn btn-ghost">Get in touch</a>
@@ -537,17 +538,19 @@
 
       <div class="about-grid">
         <div class="about-copy">
-          <p>I'm a First-Year Engineering Student at Purdue intending to major in mechanical engineering. I am currently onboarding for Formula SAE, and I have experience in CAD/CAM, manufacturing, electronics, and programming.</p>
-          <p>Before enrolling at Purdue, I competed at the highest level in Science Olympiad and NASA Student Launch, gaining valuable hands-on experience throughout high school.</p>
-          <p>I'm looking for a design or manufacturing engineering internship where I can apply my existing skills to work in a structured team.</p>
+          <p>I'm a first-year engineering student at Purdue intending to major in mechanical engineering, coming off four years of competitive robotics and rocketry in high school at Thomas Jefferson High School for Science and Technology.</p>
+          <p>As Build Event Director for my school's Science Olympiad team, I led 45+ members and designed balsa bridges, robots, and trebuchets using CAD/CAM, 3D printing, and CNC machining. As a subteam lead for our Rocketry Club, I helped take a high-power rocket to 1st place in design at the NASA Student Launch Challenge and designed a deployable 3D-printed rover lander with FPV, IMU, and environmental sensors.</p>
+          <p>I've also done research outside of engineering proper — a GIS internship at George Mason University studying wildfire risk and shelter access, presented at the American Geophysical Union conference. I'm looking for a design or manufacturing engineering internship where I can apply what I've built so far on a structured team.</p>
         </div>
 
         <dl class="spec-sheet">
           <div class="spec-title">SPEC — SKILL SET</div>
-          <div class="spec-row"><dt>CAD</dt><dd>Fusion 360, Onshape, Siemens NX</dd></div>
-          <div class="spec-row"><dt>Programming</dt><dd>MATLAB, Python, Excel, Arduino C++</dd></div>
-          <div class="spec-row"><dt>Manufacturing</dt><dd>CNC mill/lathe, welding, 3D printing, waterjet</dd></div>
-          <div class="spec-row"><dt>Coursework</dt><dd>Calculus III, Intro to Engineering</dd></div>
+          <div class="spec-row"><dt>CAD/CAM</dt><dd>Onshape, Fusion 360</dd></div>
+          <div class="spec-row"><dt>Programming</dt><dd>Python, C++, Arduino, ESP32, RStudio</dd></div>
+          <div class="spec-row"><dt>Manufacturing</dt><dd>CNC router/mill, waterjet, laser cutting, 3D printing</dd></div>
+          <div class="spec-row"><dt>Electronics</dt><dd>Brushed/brushless/stepper/servo motors, IMUs, encoders</dd></div>
+          <div class="spec-row"><dt>Coursework</dt><dd>Calc III, Linear Algebra</dd></div>
+          <div class="spec-row"><dt>Honors</dt><dd>National Merit Finalist, 35 ACT</dd></div>
         </dl>
       </div>
     </div>
@@ -561,103 +564,56 @@
           <div class="section-num">03 / Projects</div>
           <h2>Selected work</h2>
         </div>
-        <div class="section-tag">Four projects spanning suspension design, thermal systems, and automation.</div>
+        <div class="section-tag">Four projects spanning competitive robotics, rocketry, and applied research.</div>
       </div>
 
       <div class="project-grid">
 
         <article class="project-card">
           <div class="project-thumb">
-            <span class="thumb-tag">CAD + FEA</span>
-            <svg viewBox="0 0 400 250" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-              <rect width="400" height="250" fill="#16304f"/>
-              <g stroke="#3f7cad" stroke-opacity="0.5" stroke-width="1">
-                <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
-                <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
-                <line x1="80" y1="0" x2="80" y2="250"/><line x1="160" y1="0" x2="160" y2="250"/>
-                <line x1="240" y1="0" x2="240" y2="250"/><line x1="320" y1="0" x2="320" y2="250"/>
-              </g>
-              <path d="M90 190 L130 90 L270 90 L310 190 Z" fill="none" stroke="#e8622c" stroke-width="2"/>
-              <circle cx="140" cy="190" r="14" fill="none" stroke="#eef1f5" stroke-width="1.5"/>
-              <circle cx="260" cy="190" r="14" fill="none" stroke="#eef1f5" stroke-width="1.5"/>
-            </svg>
+            <span class="thumb-tag">Robotics</span>
+            <img src="images/robot.jpg" alt="Science Olympiad robot vehicle">
           </div>
           <div class="project-body">
-            <h3>FSAE double-wishbone suspension</h3>
-            <p>Designed and validated front suspension geometry for the 2026 Formula SAE chassis, sizing control arms and dampers against dynamic load cases.</p>
-            <div class="project-meta"><span>SolidWorks</span><span>ANSYS</span><span>MATLAB</span></div>
+            <h3>Science Olympiad robot vehicle</h3>
+            <p>Directed 6+ prototype iterations of a competition robot as Build Event Director, combining brushed/stepper motors, encoders, and ultrasonic sensors on an Arduino/ESP32 stack, machined and printed in-house.</p>
+            <div class="project-meta"><span>CAD/CAM</span><span>CNC</span><span>Arduino</span></div>
           </div>
         </article>
 
         <article class="project-card">
           <div class="project-thumb">
-            <span class="thumb-tag">Thermal</span>
-            <svg viewBox="0 0 400 250" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-              <rect width="400" height="250" fill="#16304f"/>
-              <g stroke="#3f7cad" stroke-opacity="0.5" stroke-width="1">
-                <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
-                <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
-              </g>
-              <g stroke="#e8622c" stroke-width="2" fill="none">
-                <path d="M60 200 Q 100 60 140 200"/>
-                <path d="M140 200 Q 180 60 220 200"/>
-                <path d="M220 200 Q 260 60 300 200"/>
-                <path d="M300 200 Q 340 60 360 200"/>
-              </g>
-            </svg>
+            <span class="thumb-tag">Aerospace</span>
+            <img src="images/lander.jpg" alt="Deployable rover lander">
           </div>
           <div class="project-body">
-            <h3>Compact fin-array heat exchanger</h3>
-            <p>Modeled and prototyped a forced-air heat exchanger for a battery enclosure, cutting steady-state temperature by 18% versus the baseline design.</p>
-            <div class="project-meta"><span>ANSYS Fluent</span><span>3D Printing</span></div>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="project-thumb">
-            <span class="thumb-tag">Automation</span>
-            <svg viewBox="0 0 400 250" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-              <rect width="400" height="250" fill="#16304f"/>
-              <g stroke="#3f7cad" stroke-opacity="0.5" stroke-width="1">
-                <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
-                <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
-              </g>
-              <rect x="150" y="60" width="100" height="130" fill="none" stroke="#eef1f5" stroke-width="1.5"/>
-              <circle cx="200" cy="90" r="10" fill="none" stroke="#e8622c" stroke-width="2"/>
-              <line x1="200" y1="100" x2="200" y2="140" stroke="#e8622c" stroke-width="2"/>
-              <line x1="170" y1="140" x2="230" y2="140" stroke="#e8622c" stroke-width="2"/>
-              <line x1="170" y1="140" x2="170" y2="175" stroke="#eef1f5" stroke-width="1.5"/>
-              <line x1="230" y1="140" x2="230" y2="175" stroke="#eef1f5" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="project-body">
-            <h3>3-axis pick-and-place gantry</h3>
-            <p>Built a belt-driven gantry robot with Arduino motor control and a simple G-code interpreter for a manufacturing automation elective.</p>
-            <div class="project-meta"><span>Fusion 360</span><span>Arduino</span><span>C++</span></div>
+            <h3>Deployable rover lander</h3>
+            <p>As Rocketry Club subteam lead, designed a 3D-printed deployable rover lander with FPV, IMU, barometer, and hygrometer for the NASA Student Launch Challenge — 1st place in rocket design.</p>
+            <div class="project-meta"><span>3D Printing</span><span>IMU/Sensors</span><span>FPV</span></div>
           </div>
         </article>
 
         <article class="project-card">
           <div class="project-thumb">
             <span class="thumb-tag">Structures</span>
-            <svg viewBox="0 0 400 250" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
-              <rect width="400" height="250" fill="#16304f"/>
-              <g stroke="#3f7cad" stroke-opacity="0.5" stroke-width="1">
-                <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
-                <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
-              </g>
-              <g stroke="#eef1f5" stroke-width="1.5" fill="none">
-                <path d="M60 200 L140 200 L100 110 Z"/>
-                <path d="M140 200 L220 200 L180 90 Z"/>
-                <path d="M220 200 L300 200 L260 110 Z"/>
-              </g>
-              <line x1="60" y1="200" x2="300" y2="200" stroke="#e8622c" stroke-width="2"/>
-            </svg>
+            <img src="images/bridge.jpg" alt="Balsa bridges and trebuchets">
           </div>
           <div class="project-body">
-            <h3>Cantilever bridge load study</h3>
-            <p>Ran a comparative FEA study on truss topologies for a scale-model pedestrian bridge, optimizing member sizing for weight versus deflection.</p>
-            <div class="project-meta"><span>SolidWorks FEA</span><span>Excel</span></div>
+            <h3>Balsa bridges &amp; trebuchets</h3>
+            <p>Designed and built balsa bridges and trebuchets for Science Olympiad build events, optimizing member layout for load capacity against a strict weight budget.</p>
+            <div class="project-meta"><span>CAD/CAM</span><span>Laser Cutting</span><span>3rd, Nationals CAD</span></div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb">
+            <span class="thumb-tag">Robotics</span>
+            <img src="images/snake.jpg" alt="M-SLTHR modular snake-like terrain handling robot">
+          </div>
+          <div class="project-body">
+            <h3>M-SLTHR: modular snake robot</h3>
+            <p>Co-developed a 6-module, 3D-printed snake-like terrain handling robot achieving serpentine locomotion through ESP-NOW-coordinated single-axis joints, a sinusoidal gait controller, and a live FPV web interface — at $55.32 per module.</p>
+            <div class="project-meta"><span>Fusion 360</span><span>ESP32</span><span>3D Printing</span></div>
           </div>
         </article>
 
