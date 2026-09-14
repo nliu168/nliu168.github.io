@@ -215,12 +215,8 @@
   }
   .hero-diagram svg{ width:100%; height:100%; position:absolute; inset:0; pointer-events:none; }
   .hero-diagram .portrait-frame{
-    /* Matches the Ø210 dimension circle in the SVG: that circle has
-       r=118 inside a 300x300 viewBox, so it spans from 32 to 268 —
-       an inset of 32/300 ≈ 10.67% on each side. Using the same inset
-       here keeps the photo's edge flush with the drawn diameter line. */
     position:absolute;
-    inset:10.67%;
+    inset:14.00%;
     border-radius:50%;
     overflow:hidden;
     border:1px solid var(--blue-line-soft);
@@ -521,9 +517,9 @@
         <div class="hero-diagram">
           <svg viewBox="0 0 300 300" fill="none" aria-hidden="true">
             <circle cx="150" cy="150" r="118" stroke="#3f7cad" stroke-opacity="0.35" stroke-dasharray="2 6"/>
-            <line x1="20" y1="270" x2="280" y2="270" stroke="#3f7cad" stroke-opacity="0.5"/>
-            <line x1="20" y1="264" x2="20" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
-            <line x1="280" y1="264" x2="280" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
+            <line x1="40" y1="270" x2="260" y2="270" stroke="#3f7cad" stroke-opacity="0.5"/>
+            <line x1="40" y1="264" x2="40" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
+            <line x1="260" y1="264" x2="260" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
             <text x="150" y="288" fill="#b9c4d2" font-size="9" font-family="monospace" text-anchor="middle">Ø210.00</text>
           </svg>
           <div class="portrait-frame">
