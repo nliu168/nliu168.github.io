@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nathan Liu — Mechanical Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy-950: #0b1522;
@@ -20,13 +23,9 @@
     --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
     --font-body: "Inter", "Segoe UI", sans-serif;
 
-    /* Custom Easing Curves */
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
-    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   }
-
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -49,7 +48,6 @@
     overflow-x: hidden;
   }
 
-  /* Blueprint grid backdrop */
   .grid-bg {
     position: fixed;
     inset: 0;
@@ -77,8 +75,12 @@
     z-index: 1;
   }
 
-  /* ---------- SCROLL REVEAL ANIMATIONS ---------- */
+  /* SAFE SCROLL REVEAL: Visible by default unless JS is active */
   .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  body.js-ready .reveal {
     opacity: 0;
     transform: translateY(28px);
     transition:
@@ -87,12 +89,12 @@
     transition-delay: var(--delay, 0ms);
     will-change: opacity, transform;
   }
-  .reveal.in-view {
+  body.js-ready .reveal.in-view {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* ---------- NAV ---------- */
+  /* NAV */
   header.site-nav {
     position: sticky;
     top: 0;
@@ -100,7 +102,6 @@
     background: rgba(11,21,34,0.86);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--blue-line-soft);
-    transition: background 0.3s ease;
   }
   .nav-inner {
     display: flex;
@@ -155,7 +156,7 @@
     cursor: pointer;
   }
 
-  /* ---------- VIEW TRANSITION WRAPPER (HOME vs PROJECT PAGE) ---------- */
+  /* VIEW TRANSITION WRAPPER */
   #homeView {
     transition:
       opacity 0.45s var(--ease-out-quart),
@@ -170,7 +171,7 @@
     overflow: hidden;
   }
 
-  /* ---------- HERO ---------- */
+  /* HERO */
   .hero {
     padding: 110px 0 90px;
     position: relative;
@@ -237,12 +238,8 @@
       background 0.2s ease,
       box-shadow 0.25s var(--ease-out-quart);
   }
-  .btn:hover {
-    transform: translateY(-2px);
-  }
-  .btn:active {
-    transform: translateY(0);
-  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
   .btn-primary {
     background: var(--orange);
     color: var(--navy-950);
@@ -256,7 +253,6 @@
   .btn-ghost { color: var(--paper); background: transparent; }
   .btn-ghost:hover { border-color: var(--paper); background: rgba(63,124,173,0.1); }
 
-  /* Hero portrait & rotating CAD ring */
   .hero-diagram {
     aspect-ratio: 1/1;
     position: relative;
@@ -294,7 +290,7 @@
     display: block;
   }
 
-  /* ---------- SECTION SCAFFOLD ---------- */
+  /* SECTION SCAFFOLD */
   section {
     padding: 88px 0;
     position: relative;
@@ -326,7 +322,7 @@
     max-width: 28ch;
   }
 
-  /* ---------- ABOUT ---------- */
+  /* ABOUT */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -370,7 +366,7 @@
   .spec-row dt { color: var(--paper-dim); }
   .spec-row dd { color: var(--paper); text-align: right; }
 
-  /* ---------- INTERACTIVE PROJECT CARDS ---------- */
+  /* INTERACTIVE PROJECT CARDS */
   .project-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -390,7 +386,6 @@
       border-color 0.35s var(--ease-out-quart),
       box-shadow 0.45s var(--ease-out-expo);
   }
-  /* Corner drafting register ticks on cards */
   .project-card::before,
   .project-card::after {
     content: "";
@@ -438,7 +433,7 @@
     height: 100%;
     display: block;
     object-fit: cover;
-    transition: transform 0.7s var(--ease-out-expo), filter 0.4s ease;
+    transition: transform 0.7s var(--ease-out-expo);
   }
   .project-card:hover .project-thumb img {
     transform: scale(1.06);
@@ -523,7 +518,7 @@
     transform: translateX(6px);
   }
 
-  /* ---------- EXPANDING CARD CLONE OVERLAY (FLIP TRANSITION) ---------- */
+  /* EXPANDING CARD CLONE OVERLAY */
   .transition-clone {
     position: fixed;
     z-index: 120;
@@ -540,7 +535,7 @@
       opacity 0.4s ease;
   }
 
-  /* ---------- DYNAMIC PROJECT DETAIL VIEW (NEW PAGE) ---------- */
+  /* PROJECT DETAIL PAGE */
   .project-page {
     display: none;
     min-height: calc(100vh - 65px);
@@ -603,9 +598,7 @@
     font-weight: 500;
   }
 
-  .detail-header {
-    margin-bottom: 36px;
-  }
+  .detail-header { margin-bottom: 36px; }
   .detail-eyebrow {
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -670,9 +663,7 @@
     align-items: center;
     gap: 10px;
   }
-  .detail-narrative h3:first-child {
-    margin-top: 0;
-  }
+  .detail-narrative h3:first-child { margin-top: 0; }
   .detail-narrative h3::before {
     content: "//";
     font-family: var(--font-mono);
@@ -736,9 +727,7 @@
     background: var(--navy-800);
     transform: translateY(-3px);
   }
-  .pager-card.next {
-    text-align: right;
-  }
+  .pager-card.next { text-align: right; }
   .pager-label {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -753,7 +742,7 @@
     font-weight: 600;
   }
 
-  /* ---------- CONTACT ---------- */
+  /* CONTACT */
   .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.1fr;
@@ -812,7 +801,7 @@
   }
   .form-note.sent { color: var(--orange); }
 
-  /* ---------- FOOTER ---------- */
+  /* FOOTER */
   footer {
     padding: 36px 0 48px;
     border-top: 1px solid var(--blue-line-soft);
@@ -825,7 +814,6 @@
     gap: 10px;
   }
 
-  /* Back to top */
   .to-top {
     position: fixed;
     right: 22px; bottom: 22px;
@@ -845,7 +833,6 @@
   .to-top:hover { border-color: var(--orange); color: var(--orange); }
   .to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 860px) {
     .hero-grid { grid-template-columns: 1fr; }
     .hero-diagram { max-width: 280px; margin: 0 auto; }
@@ -893,7 +880,6 @@
   </div>
 </header>
 
-<!-- ==================== MAIN PORTFOLIO VIEW ==================== -->
 <main id="homeView">
   <!-- HERO -->
   <section class="hero" id="top" style="border-top:none;">
@@ -917,7 +903,7 @@
             <text x="150" y="288" fill="#b9c4d2" font-size="9" font-family="monospace" text-anchor="middle">Ø240.00</text>
           </svg>
           <div class="portrait-frame">
-            <img src="/images/nathanliu.jpg" alt="Nathan Liu">
+            <img src="images/nathanliu.jpg" alt="Nathan Liu">
           </div>
         </div>
       </div>
@@ -964,8 +950,7 @@
       </div>
 
       <div class="project-grid">
-        <!-- Project 1 -->
-        <article class="project-card reveal" style="--delay: 0ms;" tabindex="0" role="button" data-project-id="electric-vehicle" aria-label="Open Science Olympiad Electric Vehicle Robot case study">
+        <article class="project-card reveal" style="--delay: 0ms;" tabindex="0" role="button" data-project-id="electric-vehicle">
           <div class="project-thumb">
             <span class="thumb-tag">Robotics</span>
             <span class="thumb-index">DWG // 01</span>
@@ -982,8 +967,7 @@
           </div>
         </article>
 
-        <!-- Project 2 -->
-        <article class="project-card reveal" style="--delay: 100ms;" tabindex="0" role="button" data-project-id="rocket-rover" aria-label="Open High-Power Rocket Rover and Deployment System case study">
+        <article class="project-card reveal" style="--delay: 100ms;" tabindex="0" role="button" data-project-id="rocket-rover">
           <div class="project-thumb">
             <span class="thumb-tag">Robotics & Aerospace</span>
             <span class="thumb-index">DWG // 02</span>
@@ -1000,8 +984,7 @@
           </div>
         </article>
 
-        <!-- Project 3 -->
-        <article class="project-card reveal" style="--delay: 80ms;" tabindex="0" role="button" data-project-id="film-camera" aria-label="Open 3D-printed Film Camera case study">
+        <article class="project-card reveal" style="--delay: 80ms;" tabindex="0" role="button" data-project-id="film-camera">
           <div class="project-thumb">
             <span class="thumb-tag">Design</span>
             <span class="thumb-index">DWG // 03</span>
@@ -1018,8 +1001,7 @@
           </div>
         </article>
 
-        <!-- Project 4 -->
-        <article class="project-card reveal" style="--delay: 180ms;" tabindex="0" role="button" data-project-id="snake-robot" aria-label="Open Bio-Inspired Modular Snake Robot case study">
+        <article class="project-card reveal" style="--delay: 180ms;" tabindex="0" role="button" data-project-id="snake-robot">
           <div class="project-thumb">
             <span class="thumb-tag">Robotics</span>
             <span class="thumb-index">DWG // 04</span>
@@ -1063,6 +1045,9 @@
           </ul>
         </div>
         <form class="contact-form reveal" id="contactForm" style="--delay: 160ms;">
+          <input type="hidden" name="access_key" value="6a197fb8-9bfc-4e5f-ba09-d0a6c1a9ece0">
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
           <div class="field">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
@@ -1075,7 +1060,7 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send message</button>
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="align-self:flex-start;">Send message</button>
           <div class="form-note" id="formNote" role="status" aria-live="polite"></div>
         </form>
       </div>
@@ -1083,7 +1068,7 @@
   </section>
 </main>
 
-<!-- ==================== DYNAMIC PROJECT CASE STUDY PAGE ==================== -->
+<!-- DYNAMIC PROJECT CASE STUDY PAGE -->
 <section class="project-page" id="projectPage" aria-live="polite">
   <div class="wrap">
     <div class="detail-topbar">
@@ -1148,7 +1133,8 @@
 <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
 <script>
-  /* ---------------- PROJECT DATA STORE ---------------- */
+  document.body.classList.add('js-ready');
+
   const PROJECTS = {
     "electric-vehicle": {
       index: "01",
@@ -1244,7 +1230,6 @@
 
   const PROJECT_KEYS = Object.keys(PROJECTS);
 
-  /* ---------------- MOBILE NAV & UI BASICS ---------------- */
   const navToggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
 
@@ -1263,29 +1248,29 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  /* ---------------- SCROLL REVEAL OBSERVER ---------------- */
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+  }
 
-  /* ---------------- DYNAMIC SPA PROJECT VIEW CONTROLLER ---------------- */
   const projectPage = document.getElementById('projectPage');
   let lastScrollY = 0;
-  let activeProjectKey = null;
 
   function populateProjectDetail(key) {
     const data = PROJECTS[key];
     if (!data) return;
-    activeProjectKey = key;
 
-    document.getElementById('detailDocId').innerHTML = `DWG // <strong>${data.index}</strong>`;
+    document.getElementById('detailDocId').innerHTML = 'DWG // <strong>' + data.index + '</strong>';
     document.getElementById('detailCategory').textContent = data.category;
     document.getElementById('detailTitle').textContent = data.title;
     document.getElementById('detailSubtitle').textContent = data.subtitle;
@@ -1294,42 +1279,35 @@
     img.src = data.image;
     img.alt = data.imageAlt;
 
-    document.getElementById('detailCaptionLeft').textContent = `FIG ${data.index}.0 — ${data.title.toUpperCase()}`;
-    document.getElementById('detailSpecCode').textContent = `SPEC-${data.index}`;
+    document.getElementById('detailCaptionLeft').textContent = 'FIG ' + data.index + '.0 — ' + data.title.toUpperCase();
+    document.getElementById('detailSpecCode').textContent = 'SPEC-' + data.index;
 
-    // Narrative
     const narrativeEl = document.getElementById('detailNarrative');
-    narrativeEl.innerHTML = `
-      <h3>System Overview</h3>
-      <p>${data.overview}</p>
-      <h3>Engineering Highlights & Architecture</h3>
-      <ul class="detail-list">
-        ${data.highlights.map(item => `<li>${item}</li>`).join('')}
-      </ul>
-    `;
+    narrativeEl.innerHTML =
+      '<h3>System Overview</h3>' +
+      '<p>' + data.overview + '</p>' +
+      '<h3>Engineering Highlights & Architecture</h3>' +
+      '<ul class="detail-list">' +
+      data.highlights.map(item => '<li>' + item + '</li>').join('') +
+      '</ul>';
 
-    // Specs
     const specsEl = document.getElementById('detailSpecs');
     specsEl.innerHTML = data.specs
-      .map(([dt, dd]) => `<div class="spec-row"><dt>${dt}</dt><dd>${dd}</dd></div>`)
+      .map(pair => '<div class="spec-row"><dt>' + pair[0] + '</dt><dd>' + pair[1] + '</dd></div>')
       .join('');
 
-    // Tags
     const tagsEl = document.getElementById('detailTags');
-    tagsEl.innerHTML = data.tags.map(t => `<span>${t}</span>`).join('');
+    tagsEl.innerHTML = data.tags.map(t => '<span>' + t + '</span>').join('');
 
-    // Prev / Next buttons
     const idx = PROJECT_KEYS.indexOf(key);
     const prevKey = PROJECT_KEYS[(idx - 1 + PROJECT_KEYS.length) % PROJECT_KEYS.length];
     const nextKey = PROJECT_KEYS[(idx + 1) % PROJECT_KEYS.length];
 
-    const prevBtn = document.getElementById('prevProjectBtn');
-    const nextBtn = document.getElementById('nextProjectBtn');
     document.getElementById('prevProjectTitle').textContent = PROJECTS[prevKey].title;
     document.getElementById('nextProjectTitle').textContent = PROJECTS[nextKey].title;
 
-    prevBtn.onclick = () => navigateToProject(prevKey);
-    nextBtn.onclick = () => navigateToProject(nextKey);
+    document.getElementById('prevProjectBtn').onclick = () => navigateToProject(prevKey);
+    document.getElementById('nextProjectBtn').onclick = () => navigateToProject(nextKey);
   }
 
   function animateCardExpansion(sourceCard, onComplete) {
@@ -1342,17 +1320,17 @@
     const rect = sourceCard.getBoundingClientRect();
     const clone = document.createElement('div');
     clone.className = 'transition-clone';
-    clone.style.top = `${rect.top}px`;
-    clone.style.left = `${rect.left}px`;
-    clone.style.width = `${rect.width}px`;
-    clone.style.height = `${rect.height}px`;
+    clone.style.top = rect.top + 'px';
+    clone.style.left = rect.left + 'px';
+    clone.style.width = rect.width + 'px';
+    clone.style.height = rect.height + 'px';
     document.body.appendChild(clone);
 
     requestAnimationFrame(() => {
-      clone.style.top = `65px`;
-      clone.style.left = `0px`;
-      clone.style.width = `100vw`;
-      clone.style.height = `calc(100vh - 65px)`;
+      clone.style.top = '65px';
+      clone.style.left = '0px';
+      clone.style.width = '100vw';
+      clone.style.height = 'calc(100vh - 65px)';
       clone.style.opacity = '0';
     });
 
@@ -1363,7 +1341,8 @@
     onComplete();
   }
 
-  function openProject(key, sourceCard = null, pushHash = true) {
+  function openProject(key, sourceCard, pushHash) {
+    if (pushHash === undefined) pushHash = true;
     if (!PROJECTS[key]) return;
     if (!document.body.classList.contains('detail-open')) {
       lastScrollY = window.scrollY;
@@ -1372,7 +1351,7 @@
     populateProjectDetail(key);
 
     if (pushHash) {
-      history.pushState({ project: key }, '', `#project/${key}`);
+      history.pushState({ project: key }, '', '#project/' + key);
     }
 
     animateCardExpansion(sourceCard, () => {
@@ -1384,15 +1363,15 @@
     });
   }
 
-  function closeProject(scrollToSection = null, pushHash = true) {
+  function closeProject(scrollToSection, pushHash) {
+    if (pushHash === undefined) pushHash = true;
     projectPage.classList.remove('active');
 
     setTimeout(() => {
       document.body.classList.remove('detail-open');
-      activeProjectKey = null;
 
       if (pushHash) {
-        history.pushState({}, '', scrollToSection ? `#${scrollToSection}` : '#projects');
+        history.pushState({}, '', scrollToSection ? '#' + scrollToSection : '#projects');
       }
 
       if (scrollToSection) {
@@ -1408,7 +1387,7 @@
     projectPage.classList.remove('active');
     setTimeout(() => {
       populateProjectDetail(key);
-      history.pushState({ project: key }, '', `#project/${key}`);
+      history.pushState({ project: key }, '', '#project/' + key);
       window.scrollTo({ top: 0, behavior: 'smooth' });
       requestAnimationFrame(() => {
         projectPage.classList.add('active');
@@ -1416,27 +1395,24 @@
     }, 220);
   }
 
-  // Attach listeners to project cards
   document.querySelectorAll('.project-card').forEach(card => {
     const key = card.getAttribute('data-project-id');
-    card.addEventListener('click', () => openProject(key, card));
+    card.addEventListener('click', () => openProject(key, card, true));
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        openProject(key, card);
+        openProject(key, card, true);
       }
     });
   });
 
-  // Back button & Escape key
-  document.getElementById('backToProjects').addEventListener('click', () => closeProject());
+  document.getElementById('backToProjects').addEventListener('click', () => closeProject(null, true));
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && document.body.classList.contains('detail-open')) {
-      closeProject();
+      closeProject(null, true);
     }
   });
 
-  // Top nav links work seamlessly even when inside a project page
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', (e) => {
       navLinks.classList.remove('open');
@@ -1444,7 +1420,7 @@
       const section = link.getAttribute('data-nav-section');
       if (document.body.classList.contains('detail-open') && section) {
         e.preventDefault();
-        closeProject(section);
+        closeProject(section, true);
       }
     });
   });
@@ -1452,14 +1428,13 @@
   document.getElementById('brandHome').addEventListener('click', (e) => {
     if (document.body.classList.contains('detail-open')) {
       e.preventDefault();
-      closeProject('top');
+      closeProject('top', true);
     }
   });
 
-  // Handle browser Back/Forward buttons and direct #project/... URLs
   function handleHashChange() {
     const hash = window.location.hash;
-    if (hash.startsWith('#project/')) {
+    if (hash.indexOf('#project/') === 0) {
       const key = hash.replace('#project/', '');
       if (PROJECTS[key]) {
         openProject(key, null, false);
@@ -1469,16 +1444,57 @@
     }
   }
   window.addEventListener('popstate', handleHashChange);
-  window.addEventListener('DOMContentLoaded', handleHashChange);
+  handleHashChange();
 
-  /* ---------------- CONTACT FORM ---------------- */
+  /* ---------------- LIVE MAIL SENDING ---------------- */
   const form = document.getElementById('contactForm');
   const formNote = document.getElementById('formNote');
+  const submitBtn = document.getElementById('submitBtn');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
-    formNote.textContent = 'Message ready — connect a backend or mail service to send it.';
-    formNote.classList.add('sent');
-    form.reset();
+    
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    formNote.textContent = 'Processing transmission...';
+    formNote.classList.remove('sent');
+    formNote.style.color = 'var(--paper-dim)';
+
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: json
+    })
+    .then(async (response) => {
+      let res = await response.json();
+      if (response.status == 200) {
+        formNote.textContent = 'Transmission complete. Message sent successfully!';
+        formNote.classList.add('sent');
+        formNote.style.color = 'var(--orange)';
+        form.reset();
+      } else {
+        console.error(response);
+        formNote.textContent = res.message || 'System error. Please try again.';
+        formNote.style.color = '#ff6b6b';
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      formNote.textContent = 'Network loss. Check connection and retry.';
+      formNote.style.color = '#ff6b6b';
+    })
+    .then(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send message';
+    });
   });
 </script>
+</body>
+</html>
