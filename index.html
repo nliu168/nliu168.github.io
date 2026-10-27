@@ -677,4 +677,808 @@
     content: "//";
     font-family: var(--font-mono);
     font-size: 0.9rem;
-  
+    color: var(--orange);
+  }
+  .detail-narrative p {
+    color: var(--paper-dim);
+    margin-bottom: 18px;
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+  .detail-list {
+    list-style: none;
+    margin: 12px 0 24px;
+  }
+  .detail-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 10px;
+    color: var(--paper-dim);
+    font-size: 0.95rem;
+  }
+  .detail-list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-family: var(--font-mono);
+  }
+
+  .detail-sidebar {
+    position: sticky;
+    top: 92px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .detail-BottomNav {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--blue-line-soft);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .pager-card {
+    background: var(--navy-900);
+    border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s);
+    padding: 18px 22px;
+    cursor: pointer;
+    transition:
+      border-color 0.25s ease,
+      transform 0.3s var(--ease-out-quart),
+      background 0.25s ease;
+  }
+  .pager-card:hover {
+    border-color: var(--orange);
+    background: var(--navy-800);
+    transform: translateY(-3px);
+  }
+  .pager-card.next {
+    text-align: right;
+  }
+  .pager-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--orange);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .pager-title {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+  }
+  .contact-info p { color: var(--paper-dim); max-width: 42ch; margin-bottom: 28px; }
+  .contact-list { font-family: var(--font-mono); font-size: 0.9rem; }
+  .contact-list li {
+    list-style: none;
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--blue-line-soft);
+  }
+  .contact-list li span.k { color: var(--paper-dim); width: 88px; flex-shrink: 0; }
+  .contact-list li a, .contact-list li span.v { color: var(--paper); }
+  .contact-list li a:hover { color: var(--orange); }
+
+  form.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--paper-dim);
+  }
+  .field input, .field textarea {
+    background: var(--navy-900);
+    border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s);
+    padding: 12px 14px;
+    color: var(--paper);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field input:focus-visible, .field textarea:focus-visible {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px var(--orange-soft);
+  }
+  .field textarea { min-height: 120px; }
+  .form-note {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--paper-dim);
+    min-height: 1.2em;
+  }
+  .form-note.sent { color: var(--orange); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding: 36px 0 48px;
+    border-top: 1px solid var(--blue-line-soft);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--paper-dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Back to top */
+  .to-top {
+    position: fixed;
+    right: 22px; bottom: 22px;
+    width: 42px; height: 42px;
+    border-radius: var(--radius-s);
+    border: 1px solid var(--blue-line-soft);
+    background: rgba(11,21,34,0.9);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s var(--ease-out-quart), border-color 0.2s ease;
+    z-index: 40;
+  }
+  .to-top:hover { border-color: var(--orange); color: var(--orange); }
+  .to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-diagram { max-width: 280px; margin: 0 auto; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+    .detail-content-grid { grid-template-columns: 1fr; }
+    .detail-sidebar { position: static; }
+  }
+  @media (max-width: 640px) {
+    nav.nav-links {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: var(--navy-950);
+      border-bottom: 1px solid var(--blue-line-soft);
+      flex-direction: column;
+      padding: 18px 28px;
+      gap: 16px;
+      display: none;
+    }
+    nav.nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .hero { padding: 76px 0 60px; }
+    section { padding: 64px 0; }
+    .section-tag { text-align: left; max-width: none; }
+    .hero-diagram { max-width: 180px; }
+    .detail-BottomNav { grid-template-columns: 1fr; }
+    .pager-card.next { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand" id="brandHome"><span class="brand-index">01</span> Nathan Liu / M.E.</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">≡</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about" data-nav-section="about">About</a>
+      <a href="#projects" data-nav-section="projects">Projects</a>
+      <a href="#contact" data-nav-section="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== MAIN PORTFOLIO VIEW ==================== -->
+<main id="homeView">
+  <!-- HERO -->
+  <section class="hero" id="top" style="border-top:none;">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="hero-eyebrow"><span class="dim-line"></span> B.S. First-Year Engineering (Intended M.E.) — Purdue University, 2030</div>
+          <h1>Hi, I'm Nathan</h1>
+          <p class="lede">I'm a first-year engineering student at Purdue with a background in robotics and high-power rocketry. I have experience with CAD/CAM, 3D printing, CNC machining, and embedded electronics, and I'm always looking to learn more.</p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View projects</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          </div>
+        </div>
+        <div class="hero-diagram reveal" style="--delay: 120ms;">
+          <svg viewBox="0 0 300 300" fill="none" aria-hidden="true">
+            <circle class="cad-ring" cx="150" cy="150" r="118" stroke="#3f7cad" stroke-opacity="0.45" stroke-dasharray="3 7"/>
+            <line x1="30" y1="270" x2="270" y2="270" stroke="#3f7cad" stroke-opacity="0.5"/>
+            <line x1="30" y1="264" x2="30" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
+            <line x1="270" y1="264" x2="270" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
+            <text x="150" y="288" fill="#b9c4d2" font-size="9" font-family="monospace" text-anchor="middle">Ø240.00</text>
+          </svg>
+          <div class="portrait-frame">
+            <img src="/images/nathanliu.jpg" alt="Nathan Liu">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-num">02 / About</div>
+          <h2>Background</h2>
+        </div>
+        <div class="section-tag">Design, analysis, and a habit of taking things apart to see how they work.</div>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy reveal" style="--delay: 80ms;">
+          <p>I'm a first-year engineering student at Purdue intending to major in mechanical engineering. I have considerable practical experience from competing in Science Olympiad and competitive rocketry in high school at Thomas Jefferson High School for Science and Technology.</p>
+          <p>Some highlights are placing 3RD in Engineering CAD at Science Olympiad Nationals and passing the PDR, CDR, AND FRR to launch our high-power rocket at NASA Student Launch.</p>
+          <p>In my free time, I enjoy a LOT of hobbies, which include running, photography, video-editing, pickleball, hiking, gaming, and more. The list is always growing!</p>
+        </div>
+        <dl class="spec-sheet reveal" style="--delay: 160ms;">
+          <div class="spec-title"><span>SPEC — SKILL SET</span><span>REV 2.6</span></div>
+          <div class="spec-row"><dt>CAD/CAM</dt><dd>Onshape, Fusion 360 (currently learning Siemens NX and Fusion 360 FEA)</dd></div>
+          <div class="spec-row"><dt>Programming</dt><dd>Python, C++, Arduino, ESP32, RStudio</dd></div>
+          <div class="spec-row"><dt>Manufacturing</dt><dd>CNC router/mill, waterjet, laser cutting, 3D printing</dd></div>
+          <div class="spec-row"><dt>Electronics</dt><dd>Soldering (basic and reflow), basic PCB design, various motors, IMUs, encoders</dd></div>
+          <div class="spec-row"><dt>Coursework</dt><dd>Prototyping, Robotics, Calculus III, Linear Algebra, Intro to Engineering</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-num">03 / Projects</div>
+          <h2>Selected work</h2>
+        </div>
+        <div class="section-tag">Click any project schematic to expand full technical specifications.</div>
+      </div>
+
+      <div class="project-grid">
+        <!-- Project 1 -->
+        <article class="project-card reveal" style="--delay: 0ms;" tabindex="0" role="button" data-project-id="electric-vehicle" aria-label="Open Science Olympiad Electric Vehicle Robot case study">
+          <div class="project-thumb">
+            <span class="thumb-tag">Robotics</span>
+            <span class="thumb-index">DWG // 01</span>
+            <img src="images/electric_vehicle.gif" alt="Science Olympiad robot vehicle">
+          </div>
+          <div class="project-body">
+            <h3>Science Olympiad Electric Vehicle Robot</h3>
+            <p>A narrow-profile differential drive robot using bevel-gear motor orientation, 14-bit magnetic encoders, IMU odometry, and PID path-following—achieving 8th place at Nationals.</p>
+            <div class="project-meta"><span>CAD (Fusion 360)</span><span>3D-printing</span><span>ESP32</span><span>Laser cutting</span><span>Odometry</span></div>
+            <div class="project-cta">
+              <span>Inspect Engineering Dossier</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card reveal" style="--delay: 100ms;" tabindex="0" role="button" data-project-id="rocket-rover" aria-label="Open High-Power Rocket Rover and Deployment System case study">
+          <div class="project-thumb">
+            <span class="thumb-tag">Robotics & Aerospace</span>
+            <span class="thumb-index">DWG // 02</span>
+            <img src="images/rover.jpg" alt="High Power Rocket Rover and Deployment System">
+          </div>
+          <div class="project-body">
+            <h3>High-Power Rocket Rover and Deployment System</h3>
+            <p>3D-printed FPV rover deployed via an 80/20 aluminum guide rail from a 4,700 ft apogee rocket for the NASA Student Launch Challenge.</p>
+            <div class="project-meta"><span>3D Printing</span><span>Arduino</span><span>IMU/Sensors</span><span>Rocketry</span></div>
+            <div class="project-cta">
+              <span>Inspect Engineering Dossier</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card reveal" style="--delay: 80ms;" tabindex="0" role="button" data-project-id="film-camera" aria-label="Open 3D-printed Film Camera case study">
+          <div class="project-thumb">
+            <span class="thumb-tag">Design</span>
+            <span class="thumb-index">DWG // 03</span>
+            <img src="images/film_camera.jpg" alt="3D-printed Film Camera">
+          </div>
+          <div class="project-body">
+            <h3>3D-printed Film Camera</h3>
+            <p>Custom-designed 35mm film camera compatible with Minolta A-mount lenses, featuring a magnetic shutter mechanism and custom 3D-printed film digitizer rig.</p>
+            <div class="project-meta"><span>CAD (Onshape)</span><span>3D-printing</span><span>Iterative design</span></div>
+            <div class="project-cta">
+              <span>Inspect Engineering Dossier</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card reveal" style="--delay: 180ms;" tabindex="0" role="button" data-project-id="snake-robot" aria-label="Open Bio-Inspired Modular Snake Robot case study">
+          <div class="project-thumb">
+            <span class="thumb-tag">Robotics</span>
+            <span class="thumb-index">DWG // 04</span>
+            <img src="images/snake_bot.gif" alt="M-SLTHR modular snake-like terrain handling robot">
+          </div>
+          <div class="project-body">
+            <h3>Bio-Inspired Modular Snake Robot</h3>
+            <p>Serpentine and sidewinding search-and-rescue prototype coordinated wirelessly via ESP-NOW with reconfigurable pitch/yaw joints and live FPV web control.</p>
+            <div class="project-meta"><span>CAD (Fusion 360)</span><span>ESP32</span><span>3D-printing</span><span>Electronics</span></div>
+            <div class="project-cta">
+              <span>Inspect Engineering Dossier</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="section-num">04 / Contact</div>
+          <h2>Let's talk</h2>
+        </div>
+        <div class="section-tag">Open to internships for summer 2027.</div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal" style="--delay: 80ms;">
+          <p>The fastest way to reach me is email. I usually reply within a day or two, faster during the semester.</p>
+          <ul class="contact-list">
+            <li><span class="k">Email</span><a href="mailto:liu4697@purdue.edu">liu4697@purdue.edu</a></li>
+            <li><span class="k">Phone</span><span class="v">(571) 581-0170</span></li>
+            <li><span class="k">Location</span><span class="v">West Lafayette, IN</span></li>
+            <li>
+              <span class="k">LinkedIn</span>
+              <a href="https://linkedin.com/in/nathan-liu-8069112a2/" target="_blank" rel="noopener">/in/nathan-liu-8069112a2</a>
+            </li>
+          </ul>
+        </div>
+        <form class="contact-form reveal" id="contactForm" style="--delay: 160ms;">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send message</button>
+          <div class="form-note" id="formNote" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ==================== DYNAMIC PROJECT CASE STUDY PAGE ==================== -->
+<section class="project-page" id="projectPage" aria-live="polite">
+  <div class="wrap">
+    <div class="detail-topbar">
+      <button type="button" class="back-btn" id="backToProjects">
+        <span>←</span> Back to all projects
+      </button>
+      <div class="detail-doc-id" id="detailDocId">DWG // <strong>01</strong></div>
+    </div>
+
+    <div class="detail-header">
+      <div class="detail-eyebrow" id="detailCategory">Robotics</div>
+      <h1 class="detail-title" id="detailTitle">Project Title</h1>
+      <p class="detail-subtitle" id="detailSubtitle"></p>
+    </div>
+
+    <div class="detail-hero-media">
+      <img id="detailImage" src="" alt="">
+      <div class="detail-hero-caption">
+        <span id="detailCaptionLeft">FIG 1.0 — SYSTEM OVERVIEW</span>
+        <span id="detailCaptionRight">SCALE: NTS</span>
+      </div>
+    </div>
+
+    <div class="detail-content-grid">
+      <div class="detail-narrative" id="detailNarrative"></div>
+
+      <aside class="detail-sidebar">
+        <dl class="spec-sheet">
+          <div class="spec-title"><span>TECHNICAL SPECIFICATIONS</span><span id="detailSpecCode">SPEC-01</span></div>
+          <div id="detailSpecs"></div>
+        </dl>
+
+        <div class="spec-sheet" style="padding: 18px;">
+          <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--orange); margin-bottom: 10px;">
+            TOOLS & TECHNOLOGIES
+          </div>
+          <div class="project-meta" id="detailTags" style="margin-top: 0;"></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="detail-BottomNav">
+      <div class="pager-card prev" id="prevProjectBtn" tabindex="0" role="button">
+        <span class="pager-label">← PREVIOUS PROJECT</span>
+        <div class="pager-title" id="prevProjectTitle">Previous</div>
+      </div>
+      <div class="pager-card next" id="nextProjectBtn" tabindex="0" role="button">
+        <span class="pager-label">NEXT PROJECT →</span>
+        <div class="pager-title" id="nextProjectTitle">Next</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© <span id="year"></span> Nathan Liu. Built with HTML, CSS and JS.</span>
+    <span>Last updated Sep 2026</span>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+  /* ---------------- PROJECT DATA STORE ---------------- */
+  const PROJECTS = {
+    "electric-vehicle": {
+      index: "01",
+      category: "Robotics // Autonomous Navigation",
+      title: "Science Olympiad Electric Vehicle Robot",
+      subtitle: "High-precision narrow differential drive vehicle engineered for tight-clearance obstacle navigation.",
+      image: "images/electric_vehicle.gif",
+      imageAlt: "Science Olympiad robot vehicle",
+      tags: ["CAD (Fusion 360)", "3D-printing", "ESP32", "Laser cutting", "Odometry", "PID Control"],
+      specs: [
+        ["Competition", "Science Olympiad Nationals (8th Place)"],
+        ["Iterations", "7 full prototypes across 2 seasons"],
+        ["Drivetrain", "Bevel-geared longitudinal differential drive"],
+        ["Sensing", "IMU + 14-bit magnetic rotary encoders"],
+        ["Controller", "ESP32 running closed-loop PID path follower"]
+      ],
+      overview: "The goal of this event in 2026 was to reach a target point while navigating between two cans offset from the path. Points were awarded for having the cans closer together, so vehicle width was a key constraint. I designed a skinny differential drive robot by using bevel gears to orient the motor front to back. The rest of the robot comprises odometry from an IMU and 14-bit magnetic encoders and a PID path-following algorithm to navigate. I achieved an 8th-place finish at Nationals after 7 iterations over 2 years of this event.",
+      highlights: [
+        "Minimized chassis track width by mounting drive motors longitudinally and transmitting torque through custom-meshed bevel gears.",
+        "Fused 14-bit magnetic wheel encoder ticks with IMU heading data for low-drift dead-reckoning odometry.",
+        "Implemented a real-time PID trajectory controller on an ESP32 to arc smoothly between closely spaced gate cans and stop accurately on the target point.",
+        "Combined laser-cut structural plates with 3D-printed bearing blocks and gearboxes for rapid competition tuning."
+      ]
+    },
+    "rocket-rover": {
+      index: "02",
+      category: "Robotics & Aerospace // NASA Student Launch",
+      title: "High-Power Rocket Rover and Deployment System",
+      subtitle: "Autonomous payload deployment rail and remote FPV exploration rover launched to 4,700 ft apogee.",
+      image: "images/rover.jpg",
+      imageAlt: "High Power Rocket Rover and Deployment System",
+      tags: ["3D Printing", "Arduino", "IMU/Sensors", "Rocketry", "FPV Telemetry", "Composites"],
+      specs: [
+        ["Challenge", "NASA Student Launch (PDR, CDR & FRR Passed)"],
+        ["Launch Apogee", "4,700 ft AGL"],
+        ["Deployment", "80/20 aluminum linear guide rail + parachute"],
+        ["Payload", "FPV camera feed + environmental sensor suite"],
+        ["Airframe Role", "Fin & bulkhead structural epoxy layups"]
+      ],
+      overview: "I designed this 3D-printed rover for my team's high-power rocket (4700 ft apogee) that competed in the NASA Student Launch Challenge. The remote-controlled rover, which possesses a live FPV feed and various environmental sensors, deploys from an 80/20 aluminum guide rail at a set altitude and lands with a parachute. I also helped construct the rocket's airframe by epoxying the fins and bulkheads.",
+      highlights: [
+        "Engineered a compact 3D-printed rover chassis capable of withstanding high-G launch loads and landing impact.",
+        "Designed an 80/20 aluminum guide rail deployment mechanism to cleanly eject the rover payload bay at a programmed altitude.",
+        "Integrated an onboard environmental sensor package, IMU orientation tracking, and real-time FPV video transmission.",
+        "Contributed to high-power airframe manufacturing, including precision fin alignment and structural epoxy fillets on bulkheads."
+      ]
+    },
+    "film-camera": {
+      index: "03",
+      category: "Mechanical Design & Optics",
+      title: "3D-printed 35mm Film Camera",
+      subtitle: "Fully functional mechanical film camera built from scratch with interchangeable Minolta A-mount lens support.",
+      image: "images/film_camera.jpg",
+      imageAlt: "3D-printed Film Camera",
+      tags: ["CAD (Onshape)", "3D-printing", "Iterative design", "Optics", "Film Digitization"],
+      specs: [
+        ["Lens Mount", "Minolta A-mount (calibratable flange focal distance)"],
+        ["Shutter", "Custom magnetic leaf/curtain shutter mechanism"],
+        ["Film Format", "Standard 35mm cassette with manual advance"],
+        ["Workflow", "In-house chemical development + 3D-printed scanner"]
+      ],
+      overview: "My friend and I designed and built a working 3D-printed film camera from scratch over winter break. It is compatible with Minolta A-mount lenses and can be calibrated for other mounts. It took multiple iterations to get the magnetic shutter clearances, flange (focusing) distance, film advancement mechanism, and snap-on camera backing to work, but eventually, we were able to successfully take photos with it. Additionally, we developed film ourselves and at school, and digitized it with the film-scanning setup that we also designed and 3D-printed.",
+      highlights: [
+        "Iterated tight-tolerance CAD assemblies in Onshape to achieve light-tight labyrinth seals on the snap-on rear film door.",
+        "Calibrated exact flange focal distance to achieve infinity focus with vintage Minolta A-mount glass.",
+        "Designed a repeatable magnetic shutter mechanism with tuned clearances to eliminate binding across temperature changes.",
+        "Built a companion 3D-printed film scanning rig to digitize negatives developed in-house."
+      ]
+    },
+    "snake-robot": {
+      index: "04",
+      category: "Bio-Inspired Robotics // Search & Rescue",
+      title: "Bio-Inspired Modular Snake Robot (M-SLTHR)",
+      subtitle: "Reconfigurable multi-segment serpentine robot with wireless ESP-NOW synchronization and live FPV control.",
+      image: "images/snake_bot.gif",
+      imageAlt: "M-SLTHR modular snake-like terrain handling robot",
+      tags: ["CAD (Fusion 360)", "ESP32", "3D-printing", "Electronics", "ESP-NOW", "Kinematics"],
+      specs: [
+        ["Locomotion", "Serpentine & sidewinding sinusoidal gait"],
+        ["Comms Protocol", "Low-latency peer-to-peer ESP-NOW"],
+        ["Joints", "90° reconfigurable pitch / yaw modular couplers"],
+        ["Interface", "Live FPV video stream + web telemetry UI"]
+      ],
+      overview: "I co-developed a 3D-printed snake-like terrain handling robot achieving serpentine locomotion through wireless ESP-NOW-coordinated single-axis joints, a sinusoidal gait controller, and a live FPV web interface. The modular connectors pictured above let the servos control either pitch OR yaw, which enables sidewinding locomotion and future updates to add specialized sensor modules for different environments. This prototype serves as a proof-of-concept for modular, snake-like, search-and-rescue robots.",
+      highlights: [
+        "Designed quick-lock mechanical interfaces allowing each segment to orient its servo axis in either pitch or yaw.",
+        "Programmed a distributed ESP-NOW network so each joint module tracks phase-shifted sinusoidal gait waves without long wiring harnesses.",
+        "Hosted a browser-based FPV control dashboard from the head module for remote inspection in confined spaces.",
+        "Created a scalable architecture ready for drop-in thermal, gas, or LiDAR payload segments."
+      ]
+    }
+  };
+
+  const PROJECT_KEYS = Object.keys(PROJECTS);
+
+  /* ---------------- MOBILE NAV & UI BASICS ---------------- */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', () => {
+    toTop.classList.toggle('visible', window.scrollY > 500);
+  });
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------------- SCROLL REVEAL OBSERVER ---------------- */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ---------------- DYNAMIC SPA PROJECT VIEW CONTROLLER ---------------- */
+  const projectPage = document.getElementById('projectPage');
+  let lastScrollY = 0;
+  let activeProjectKey = null;
+
+  function populateProjectDetail(key) {
+    const data = PROJECTS[key];
+    if (!data) return;
+    activeProjectKey = key;
+
+    document.getElementById('detailDocId').innerHTML = `DWG // <strong>${data.index}</strong>`;
+    document.getElementById('detailCategory').textContent = data.category;
+    document.getElementById('detailTitle').textContent = data.title;
+    document.getElementById('detailSubtitle').textContent = data.subtitle;
+
+    const img = document.getElementById('detailImage');
+    img.src = data.image;
+    img.alt = data.imageAlt;
+
+    document.getElementById('detailCaptionLeft').textContent = `FIG ${data.index}.0 — ${data.title.toUpperCase()}`;
+    document.getElementById('detailSpecCode').textContent = `SPEC-${data.index}`;
+
+    // Narrative
+    const narrativeEl = document.getElementById('detailNarrative');
+    narrativeEl.innerHTML = `
+      <h3>System Overview</h3>
+      <p>${data.overview}</p>
+      <h3>Engineering Highlights & Architecture</h3>
+      <ul class="detail-list">
+        ${data.highlights.map(item => `<li>${item}</li>`).join('')}
+      </ul>
+    `;
+
+    // Specs
+    const specsEl = document.getElementById('detailSpecs');
+    specsEl.innerHTML = data.specs
+      .map(([dt, dd]) => `<div class="spec-row"><dt>${dt}</dt><dd>${dd}</dd></div>`)
+      .join('');
+
+    // Tags
+    const tagsEl = document.getElementById('detailTags');
+    tagsEl.innerHTML = data.tags.map(t => `<span>${t}</span>`).join('');
+
+    // Prev / Next buttons
+    const idx = PROJECT_KEYS.indexOf(key);
+    const prevKey = PROJECT_KEYS[(idx - 1 + PROJECT_KEYS.length) % PROJECT_KEYS.length];
+    const nextKey = PROJECT_KEYS[(idx + 1) % PROJECT_KEYS.length];
+
+    const prevBtn = document.getElementById('prevProjectBtn');
+    const nextBtn = document.getElementById('nextProjectBtn');
+    document.getElementById('prevProjectTitle').textContent = PROJECTS[prevKey].title;
+    document.getElementById('nextProjectTitle').textContent = PROJECTS[nextKey].title;
+
+    prevBtn.onclick = () => navigateToProject(prevKey);
+    nextBtn.onclick = () => navigateToProject(nextKey);
+  }
+
+  function animateCardExpansion(sourceCard, onComplete) {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!sourceCard || prefersReduced) {
+      onComplete();
+      return;
+    }
+
+    const rect = sourceCard.getBoundingClientRect();
+    const clone = document.createElement('div');
+    clone.className = 'transition-clone';
+    clone.style.top = `${rect.top}px`;
+    clone.style.left = `${rect.left}px`;
+    clone.style.width = `${rect.width}px`;
+    clone.style.height = `${rect.height}px`;
+    document.body.appendChild(clone);
+
+    requestAnimationFrame(() => {
+      clone.style.top = `65px`;
+      clone.style.left = `0px`;
+      clone.style.width = `100vw`;
+      clone.style.height = `calc(100vh - 65px)`;
+      clone.style.opacity = '0';
+    });
+
+    setTimeout(() => {
+      clone.remove();
+    }, 560);
+
+    onComplete();
+  }
+
+  function openProject(key, sourceCard = null, pushHash = true) {
+    if (!PROJECTS[key]) return;
+    if (!document.body.classList.contains('detail-open')) {
+      lastScrollY = window.scrollY;
+    }
+
+    populateProjectDetail(key);
+
+    if (pushHash) {
+      history.pushState({ project: key }, '', `#project/${key}`);
+    }
+
+    animateCardExpansion(sourceCard, () => {
+      document.body.classList.add('detail-open');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      requestAnimationFrame(() => {
+        projectPage.classList.add('active');
+      });
+    });
+  }
+
+  function closeProject(scrollToSection = null, pushHash = true) {
+    projectPage.classList.remove('active');
+
+    setTimeout(() => {
+      document.body.classList.remove('detail-open');
+      activeProjectKey = null;
+
+      if (pushHash) {
+        history.pushState({}, '', scrollToSection ? `#${scrollToSection}` : '#projects');
+      }
+
+      if (scrollToSection) {
+        const target = document.getElementById(scrollToSection);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: lastScrollY, behavior: 'auto' });
+      }
+    }, 280);
+  }
+
+  function navigateToProject(key) {
+    projectPage.classList.remove('active');
+    setTimeout(() => {
+      populateProjectDetail(key);
+      history.pushState({ project: key }, '', `#project/${key}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      requestAnimationFrame(() => {
+        projectPage.classList.add('active');
+      });
+    }, 220);
+  }
+
+  // Attach listeners to project cards
+  document.querySelectorAll('.project-card').forEach(card => {
+    const key = card.getAttribute('data-project-id');
+    card.addEventListener('click', () => openProject(key, card));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openProject(key, card);
+      }
+    });
+  });
+
+  // Back button & Escape key
+  document.getElementById('backToProjects').addEventListener('click', () => closeProject());
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('detail-open')) {
+      closeProject();
+    }
+  });
+
+  // Top nav links work seamlessly even when inside a project page
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      const section = link.getAttribute('data-nav-section');
+      if (document.body.classList.contains('detail-open') && section) {
+        e.preventDefault();
+        closeProject(section);
+      }
+    });
+  });
+
+  document.getElementById('brandHome').addEventListener('click', (e) => {
+    if (document.body.classList.contains('detail-open')) {
+      e.preventDefault();
+      closeProject('top');
+    }
+  });
+
+  // Handle browser Back/Forward buttons and direct #project/... URLs
+  function handleHashChange() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#project/')) {
+      const key = hash.replace('#project/', '');
+      if (PROJECTS[key]) {
+        openProject(key, null, false);
+      }
+    } else if (document.body.classList.contains('detail-open')) {
+      closeProject(null, false);
+    }
+  }
+  window.addEventListener('popstate', handleHashChange);
+  window.addEventListener('DOMContentLoaded', handleHashChange);
+
+  /* ---------------- CONTACT FORM ---------------- */
+  const form = document.getElementById('contactForm');
+  const formNote = document.getElementById('formNote');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formNote.textContent = 'Message ready — connect a backend or mail service to send it.';
+    formNote.classList.add('sent');
+    form.reset();
+  });
+</script>
