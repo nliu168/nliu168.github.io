@@ -160,8 +160,8 @@
     overflow: hidden;
   }
 
-  /* HERO */
-  .hero { padding: 110px 0 90px; position: relative; }
+  /* ==================== HERO & OPENING CAD ASSEMBLY ANIMATION ==================== */
+  .hero { padding: 110px 0 90px; position: relative; overflow: hidden; }
   .hero-grid {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
@@ -185,14 +185,65 @@
     animation: growLine 1s var(--ease-out-expo) forwards;
   }
   @keyframes growLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* "Hi, I'm Nathan" Line-Assembly Title Wrapper */
+  .hero-title-stage {
+    position: relative;
+    display: inline-block;
+    max-width: 12ch;
+  }
   .hero h1 {
     font-family: var(--font-head);
     font-weight: 700;
     font-size: clamp(2.4rem, 5vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.01em;
-    max-width: 12ch;
+    position: relative;
+    z-index: 2;
   }
+  /* Individual assembling characters */
+  .hero-char {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+  }
+  body.js-ready .hero-char {
+    opacity: 0;
+    transform: translate3d(var(--tx, -120px), var(--ty, -60px), 0) scale(0.82);
+    filter: blur(4px);
+    transition:
+      transform 1.05s var(--ease-out-expo),
+      opacity 0.75s var(--ease-out-quart),
+      filter 0.75s ease;
+    transition-delay: var(--char-delay, 180ms);
+  }
+  body.js-ready.hero-assembled .hero-char {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+
+  /* Off-screen CAD construction lines that fly in to form the text */
+  .title-assembly-svg {
+    position: absolute;
+    inset: -30px -40px;
+    width: calc(100% + 80px);
+    height: calc(100% + 60px);
+    pointer-events: none;
+    z-index: 3;
+    overflow: visible;
+  }
+  .assembly-beam {
+    fill: none;
+    stroke: var(--orange);
+    stroke-width: 2;
+    stroke-linecap: round;
+    will-change: transform, opacity, stroke-dashoffset;
+  }
+  .assembly-beam.blue {
+    stroke: var(--blue-line);
+    stroke-width: 1.5;
+  }
+
   .hero p.lede {
     margin-top: 22px;
     max-width: 46ch;
@@ -232,19 +283,38 @@
   .btn-ghost { color: var(--paper); background: transparent; }
   .btn-ghost:hover { border-color: var(--paper); background: rgba(63,124,173,0.1); }
 
+  /* Hero Portrait & 0 -> 240 Dimension Bar Scale-Up */
   .hero-diagram { aspect-ratio: 1/1; position: relative; }
-  .hero-diagram svg { width: 100%; height: 100%; position: absolute; inset: 0; pointer-events: none; }
-  .hero-diagram .cad-ring { transform-origin: 150px 150px; animation: slowSpin 48s linear infinite; }
+  .hero-diagram svg { width: 100%; height: 100%; position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+  .hero-diagram .cad-ring {
+    transform-origin: 150px 150px;
+    animation: slowSpin 48s linear infinite;
+    transition: opacity 0.8s ease;
+  }
   @keyframes slowSpin { to { transform: rotate(360deg); } }
+
   .hero-diagram .portrait-frame {
     position: absolute;
     inset: 14%;
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid var(--blue-line-soft);
+    transform-origin: center center;
+    will-change: transform, opacity;
     transition: border-color 0.4s ease, transform 0.6s var(--ease-out-expo);
   }
-  .hero-diagram:hover .portrait-frame { border-color: var(--orange); transform: scale(1.02); }
+  body.js-ready .hero-diagram .portrait-frame {
+    transform: scale(0);
+    opacity: 0;
+  }
+  body.js-ready.hero-assembled .hero-diagram .portrait-frame {
+    transform: scale(1);
+    opacity: 1;
+  }
+  body.js-ready.hero-assembled .hero-diagram:hover .portrait-frame {
+    border-color: var(--orange);
+    transform: scale(1.02);
+  }
   .hero-diagram .portrait-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* SECTION SCAFFOLD */
@@ -646,24 +716,32 @@
   <section class="hero" id="top" style="border-top:none;">
     <div class="wrap">
       <div class="hero-grid">
-        <div class="reveal">
+        <div>
           <div class="hero-eyebrow"><span class="dim-line"></span> B.S. First-Year Engineering (Intended M.E.) — Purdue University, 2030</div>
-          <h1>Hi, I'm Nathan</h1>
-          <p class="lede">I'm a first-year engineering student at Purdue with a background in robotics and high-power rocketry. I have experience with CAD/CAM, 3D printing, CNC machining, and embedded electronics, and I'm always looking to learn more.</p>
-          <div class="hero-actions">
+
+          <!-- Line-Assembly Title Container -->
+          <div class="hero-title-stage" id="heroTitleStage">
+            <svg class="title-assembly-svg" id="titleAssemblySvg" viewBox="0 0 520 140" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <h1 id="heroTitle" aria-label="Hi, I'm Nathan">Hi, I'm Nathan</h1>
+          </div>
+
+          <p class="lede reveal" style="--delay: 420ms;">I'm a first-year engineering student at Purdue with a background in robotics and high-power rocketry. I have experience with CAD/CAM, 3D printing, CNC machining, and embedded electronics, and I'm always looking to learn more.</p>
+          <div class="hero-actions reveal" style="--delay: 540ms;">
             <a href="#projects" class="btn btn-primary">View projects</a>
             <a href="#contact" class="btn btn-ghost">Get in touch</a>
           </div>
         </div>
-        <div class="hero-diagram reveal" style="--delay: 120ms;">
+
+        <div class="hero-diagram" id="heroDiagram">
           <svg viewBox="0 0 300 300" fill="none" aria-hidden="true">
             <circle class="cad-ring" cx="150" cy="150" r="118" stroke="#3f7cad" stroke-opacity="0.45" stroke-dasharray="3 7"/>
-            <line x1="30" y1="270" x2="270" y2="270" stroke="#3f7cad" stroke-opacity="0.5"/>
-            <line x1="30" y1="264" x2="30" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
-            <line x1="270" y1="264" x2="270" y2="276" stroke="#3f7cad" stroke-opacity="0.5"/>
-            <text x="150" y="288" fill="#b9c4d2" font-size="9" font-family="monospace" text-anchor="middle">Ø240.00</text>
+            <!-- Animated Dimension Bar & Ticks (scales from center 150 out to 30..270 and counts 0 -> 240.00) -->
+            <line id="dimMainLine" x1="150" y1="270" x2="150" y2="270" stroke="#3f7cad" stroke-opacity="0.75" stroke-width="1.3"/>
+            <line id="dimLeftTick" x1="150" y1="264" x2="150" y2="276" stroke="#e8622c" stroke-opacity="0.9" stroke-width="1.4"/>
+            <line id="dimRightTick" x1="150" y1="264" x2="150" y2="276" stroke="#e8622c" stroke-opacity="0.9" stroke-width="1.4"/>
+            <text id="dimValueText" x="150" y="288" fill="#b9c4d2" font-size="9.5" font-family="monospace" text-anchor="middle">Ø0.00</text>
           </svg>
-          <div class="portrait-frame">
+          <div class="portrait-frame" id="portraitFrame">
             <img src="images/nathanliu.jpg" alt="Nathan Liu">
           </div>
         </div>
@@ -909,6 +987,164 @@
 <script>
   document.body.classList.add('js-ready');
 
+  /* ============================================================================
+     OPENING HERO SEQUENCE:
+     1. Off-screen vector beams fly in to construct "Hi, I'm Nathan"
+     2. Portrait scales up from 0 -> 1
+     3. Dimension bar expands from 0 -> 240 with live numeric counter (Ø0.00 -> Ø240.00)
+     ============================================================================ */
+  (function initHeroOpeningAnimation() {
+    const heroTitle = document.getElementById('heroTitle');
+    const assemblySvg = document.getElementById('titleAssemblySvg');
+    const dimMainLine = document.getElementById('dimMainLine');
+    const dimLeftTick = document.getElementById('dimLeftTick');
+    const dimRightTick = document.getElementById('dimRightTick');
+    const dimValueText = document.getElementById('dimValueText');
+    const portraitFrame = document.getElementById('portraitFrame');
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+
+    // Split "Hi, I'm Nathan" into individual character spans with off-screen entry vectors
+    const rawText = "Hi, I'm Nathan";
+    const entryVectors = [
+      [-180, -90], [-140, 110], [-95, 130], [0, 0],
+      [-160, -120], [85, -140], [160, 115], [0, 0],
+      [-210, -85], [190, -110], [-150, 140], [220, -95], [-175, 125], [240, 90]
+    ];
+
+    heroTitle.innerHTML = '';
+    for (let i = 0; i < rawText.length; i++) {
+      const ch = rawText[i];
+      if (ch === ' ') {
+        heroTitle.appendChild(document.createTextNode(' '));
+        continue;
+      }
+      const span = document.createElement('span');
+      span.className = 'hero-char';
+      span.textContent = ch;
+      const vec = entryVectors[i % entryVectors.length];
+      span.style.setProperty('--tx', vec[0] + 'px');
+      span.style.setProperty('--ty', vec[1] + 'px');
+      span.style.setProperty('--char-delay', (140 + i * 38) + 'ms');
+      heroTitle.appendChild(span);
+    }
+
+    if (prefersReduced) {
+      document.body.classList.add('hero-assembled');
+      dimMainLine.setAttribute('x1', '30');
+      dimMainLine.setAttribute('x2', '270');
+      dimLeftTick.setAttribute('x1', '30');
+      dimLeftTick.setAttribute('x2', '30');
+      dimRightTick.setAttribute('x1', '270');
+      dimRightTick.setAttribute('x2', '270');
+      dimValueText.textContent = 'Ø240.00';
+      return;
+    }
+
+    // Create 18 CAD stroke segments that fly in from off-screen to form the text strokes
+    const targetSegments = [
+      // H
+      { x1: 42, y1: 25, x2: 42, y2: 108, ox: -420, oy: -180, accent: true },
+      { x1: 86, y1: 25, x2: 86, y2: 108, ox: -360, oy: 220, accent: false },
+      { x1: 42, y1: 66, x2: 86, y2: 66, ox: -480, oy: 0, accent: true },
+      // i,
+      { x1: 112, y1: 45, x2: 112, y2: 108, ox: -220, oy: -260, accent: false },
+      // I'm
+      { x1: 175, y1: 25, x2: 175, y2: 108, ox: 0, oy: -320, accent: true },
+      { x1: 215, y1: 48, x2: 215, y2: 108, ox: 260, oy: -280, accent: false },
+      { x1: 215, y1: 52, x2: 278, y2: 52, ox: 420, oy: -140, accent: false },
+      { x1: 246, y1: 52, x2: 246, y2: 108, ox: 180, oy: 310, accent: true },
+      { x1: 278, y1: 52, x2: 278, y2: 108, ox: 340, oy: 260, accent: false },
+      // Nathan
+      { x1: 318, y1: 25, x2: 318, y2: 108, ox: -390, oy: 280, accent: true },
+      { x1: 318, y1: 25, x2: 368, y2: 108, ox: 440, oy: -240, accent: true },
+      { x1: 368, y1: 25, x2: 368, y2: 108, ox: 520, oy: -190, accent: false },
+      { x1: 392, y1: 68, x2: 498, y2: 68, ox: 560, oy: 40, accent: true },
+      { x1: 425, y1: 28, x2: 425, y2: 108, ox: 490, oy: 290, accent: false },
+      { x1: 465, y1: 28, x2: 465, y2: 108, ox: 580, oy: -220, accent: false },
+      // Blueprint baseline & top registration rails
+      { x1: 35, y1: 114, x2: 505, y2: 114, ox: -620, oy: 0, accent: true },
+      { x1: 35, y1: 20, x2: 380, y2: 20, ox: 620, oy: 0, accent: false }
+    ];
+
+    const beamEls = targetSegments.map(seg => {
+      const line = document.createElementNS(SVG_NS, 'line');
+      line.setAttribute('class', 'assembly-beam' + (seg.accent ? '' : ' blue'));
+      line.setAttribute('x1', seg.x1);
+      line.setAttribute('y1', seg.y1);
+      line.setAttribute('x2', seg.x2);
+      line.setAttribute('y2', seg.y2);
+      line.style.transform = 'translate3d(' + seg.ox + 'px, ' + seg.oy + 'px, 0)';
+      line.style.opacity = '0';
+      assemblySvg.appendChild(line);
+      return { el: line, seg: seg };
+    });
+
+    function easeOutExpo(t) {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    }
+
+    const startTime = performance.now();
+    const totalDuration = 1450; // ms
+
+    // Trigger CSS character & portrait transitions right away
+    requestAnimationFrame(() => {
+      document.body.classList.add('hero-assembled');
+    });
+
+    function animateOpening(now) {
+      const elapsed = now - startTime;
+      const rawP = Math.max(0, Math.min(1, elapsed / totalDuration));
+      const eased = easeOutExpo(rawP);
+
+      // 1. Fly in the off-screen CAD construction lines to form "Hi, I'm Nathan", then dissolve into crisp text
+      beamEls.forEach((item, idx) => {
+        const delay = idx * 0.022;
+        const localP = Math.max(0, Math.min(1, (rawP - delay) / (0.68 - delay)));
+        const beamEase = easeOutExpo(localP);
+        const curX = item.seg.ox * (1 - beamEase);
+        const curY = item.seg.oy * (1 - beamEase);
+        item.el.style.transform = 'translate3d(' + curX.toFixed(1) + 'px, ' + curY.toFixed(1) + 'px, 0)';
+
+        // Fade in as they fly in, then fade out once the solid typography locks in
+        let alpha = Math.min(1, localP * 2.5);
+        if (rawP > 0.62) {
+          alpha *= Math.max(0, 1 - (rawP - 0.62) / 0.36);
+        }
+        item.el.style.opacity = alpha.toFixed(3);
+      });
+
+      // 2. Scale portrait image & expand dimension bar from 0 -> 240.00 simultaneously
+      const currentDia = 240 * eased;
+      const halfSpan = 120 * eased; // 150 - 120 = 30 (left), 150 + 120 = 270 (right)
+      const leftX = (150 - halfSpan).toFixed(2);
+      const rightX = (150 + halfSpan).toFixed(2);
+
+      dimMainLine.setAttribute('x1', leftX);
+      dimMainLine.setAttribute('x2', rightX);
+      dimLeftTick.setAttribute('x1', leftX);
+      dimLeftTick.setAttribute('x2', leftX);
+      dimRightTick.setAttribute('x1', rightX);
+      dimRightTick.setAttribute('x2', rightX);
+      dimValueText.textContent = 'Ø' + currentDia.toFixed(2);
+
+      // Sync portrait scale with the exact same easing curve
+      portraitFrame.style.transform = 'scale(' + eased.toFixed(4) + ')';
+      portraitFrame.style.opacity = Math.min(1, rawP * 2.2).toFixed(3);
+
+      if (rawP < 1) {
+        requestAnimationFrame(animateOpening);
+      } else {
+        // Clear inline transform so hover scale works cleanly
+        portraitFrame.style.transform = '';
+        portraitFrame.style.opacity = '';
+      }
+    }
+
+    requestAnimationFrame(animateOpening);
+  })();
+
   const PROJECTS = {
     "electric-vehicle": {
       index: "01",
@@ -1039,10 +1275,6 @@
 
   /* ============================================================================
      VIEWPORT-CENTERED VECTOR POINT-MORPHING ENGINE WITH HOLD PLATEAUS
-     - Centered directly on the "Background" heading when it first enters view
-     - Travels 640px vertically with the screen from above #about to below #about
-     - Lingers on each drawing (especially the initial Formula SAE car) and
-       transitions briskly between drawings
      ============================================================================ */
   (function initVectorMorphEngine() {
     const aboutSection = document.getElementById('about');
@@ -1227,25 +1459,19 @@
       nodeEls.push(strandNodes);
     }
 
-    // Fast quintic ease-in-out for brisk, clean reorientation during the transition window
     function easeInOutQuint(x) {
       return x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2;
     }
 
-    /* Piecewise Hold-Plateau Mapper:
-       - Gives Stage 0 (Formula SAE Car) a generous initial hold (0.00 -> 0.22) so you see
-         the complete car centered on the "Background" heading before any morph starts.
-       - Lingers on each drawing (01 Car, 02 Runner, 03 Camera, 04 Rocket) with a flat
-         plateau and transitions briskly in between. */
     const KEYFRAMES = [
-      { p: 0.00, stage: 0 }, // Car hold start
-      { p: 0.22, stage: 0 }, // Car hold end (22% of total scroll!)
-      { p: 0.34, stage: 1 }, // Fast morph 0 -> 1 (12% window)
-      { p: 0.50, stage: 1 }, // Runner hold (16% window)
-      { p: 0.62, stage: 2 }, // Fast morph 1 -> 2 (12% window)
-      { p: 0.78, stage: 2 }, // Camera hold (16% window)
-      { p: 0.90, stage: 3 }, // Fast morph 2 -> 3 (12% window)
-      { p: 1.00, stage: 3 }  // Rocket hold to bottom (10% window)
+      { p: 0.00, stage: 0 },
+      { p: 0.22, stage: 0 },
+      { p: 0.34, stage: 1 },
+      { p: 0.50, stage: 1 },
+      { p: 0.62, stage: 2 },
+      { p: 0.78, stage: 2 },
+      { p: 0.90, stage: 3 },
+      { p: 1.00, stage: 3 }
     ];
 
     function mapProgressToStage(progress) {
@@ -1274,20 +1500,13 @@
       const rect = aboutSection.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      // Start tracking when the "Background" heading enters the lower-middle of the screen (vh * 0.78)
-      // Finish when the bottom of #about scrolls past the upper screen (vh * 0.12 - rect.height)
       const startTop = vh * 0.78;
       const endTop = vh * 0.12 - rect.height;
       const totalRun = startTop - endTop;
       const rawProgress = (startTop - rect.top) / totalRun;
       const progress = Math.max(0, Math.min(1, rawProgress));
 
-      // Travel 640px vertically:
-      // At progress = 0 (when you first see "Background" heading), yOffset = -230px
-      // which centers the Formula SAE car right over the "02 / About — Background" heading!
-      // At progress = 1 (scrolling into Projects), yOffset = +410px (below the section).
       const yOffset = -230 + progress * 640;
-
       return { progress: progress, yOffset: yOffset };
     }
 
@@ -1373,7 +1592,6 @@
       const diffP = targetScrollProgress - currentScrollProgress;
       const diffY = targetYFollow - currentYFollow;
 
-      // Slightly higher damping factor (0.20) for snappier response
       if (Math.abs(diffP) > 0.0004 || Math.abs(diffY) > 0.1) {
         currentScrollProgress += diffP * 0.20;
         currentYFollow += diffY * 0.20;
@@ -1397,7 +1615,6 @@
       }
     }
 
-    // Clicking HUD pills previews that drawing directly
     const PILL_PROGRESS = [0.10, 0.42, 0.70, 0.95];
     stagePills.forEach(pill => {
       pill.style.cursor = 'pointer';
