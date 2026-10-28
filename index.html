@@ -264,8 +264,7 @@
   /* ==================== ABOUT & VIEWPORT-FOLLOWING VECTOR MORPHING ENGINE ==================== */
   #about {
     position: relative;
-    padding: 145px 0 175px;
-    /* Allow the morphing stage to start above #about and end below #about */
+    padding: 155px 0 210px;
     overflow: visible;
     z-index: 2;
   }
@@ -273,8 +272,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: -150px;
-    bottom: -150px;
+    top: -280px;
+    bottom: -280px;
     z-index: 0;
     pointer-events: none;
     display: flex;
@@ -284,7 +283,7 @@
   }
   .morph-bg-stage svg {
     width: 100%;
-    height: 660px;
+    height: 640px;
     max-width: 1320px;
     display: block;
     overflow: visible;
@@ -687,7 +686,7 @@
     </div>
 
     <div class="wrap">
-      <div class="section-head reveal">
+      <div class="section-head reveal" id="aboutHeading">
         <div>
           <div class="section-num">02 / About</div>
           <h2>Background</h2>
@@ -1039,9 +1038,11 @@
   }
 
   /* ============================================================================
-     VIEWPORT-FOLLOWING VECTOR POINT-MORPHING ENGINE
-     - Starts slightly above #about and ends slightly below #about while
-       translating vertically with the screen so the animation travels with you.
+     VIEWPORT-CENTERED VECTOR POINT-MORPHING ENGINE WITH HOLD PLATEAUS
+     - Centered directly on the "Background" heading when it first enters view
+     - Travels 640px vertically with the screen from above #about to below #about
+     - Lingers on each drawing (especially the initial Formula SAE car) and
+       transitions briskly between drawings
      ============================================================================ */
   (function initVectorMorphEngine() {
     const aboutSection = document.getElementById('about');
@@ -1121,22 +1122,22 @@
 
     /* STAGE 0: FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) */
     const stageFSAE = [
-      activeStrand([[130, 420], [185, 412], [260, 382], [375, 375], [445, 342], [490, 250], [525, 250], [565, 350], [720, 368], [805, 420]], 'accent'),
-      activeStrand([[130, 420], [280, 426], [560, 426], [805, 420]], 'normal'),
-      activeStrand([[92, 430], [168, 430], [160, 392], [104, 404], [92, 430]], 'accent'),
-      activeStrand([[740, 368], [760, 235], [835, 225], [825, 295], [755, 295], [775, 368]], 'accent'),
-      activeStrand(arcPoints(255, 418, 58, 0, 360, 28), 'normal'),
-      activeStrand(arcPoints(255, 418, 30, 0, 360, 28), 'accent'),
-      activeStrand(arcPoints(695, 418, 62, 0, 360, 28), 'normal'),
-      activeStrand(arcPoints(695, 418, 32, 0, 360, 28), 'accent'),
-      activeStrand([[275, 382], [355, 424], [435, 345], [495, 424], [515, 255], [585, 424], [665, 365]], 'normal'),
-      activeStrand(arcPoints(945, 235, 105, 0, 360, 28), 'guide'),
-      activeStrand([[870, 175], [995, 195], [995, 275], [870, 295]], 'normal'),
-      activeStrand([[885, 150], [905, 168], [890, 182], [922, 194], [898, 210], [932, 222], [908, 238], [942, 250], [918, 266], [965, 282]], 'accent'),
-      activeStrand([[885, 138], [925, 138], [905, 168], [885, 138]], 'normal'),
-      activeStrand([[65, 480], [500, 480], [980, 480]], 'guide'),
-      activeStrand([[75, 355], [210, 330], [450, 215], [680, 200], [870, 185]], 'guide'),
-      despawnedStrand(780, 260)
+      activeStrand([[130, 390], [185, 382], [260, 352], [375, 345], [445, 312], [490, 220], [525, 220], [565, 320], [720, 338], [805, 390]], 'accent'),
+      activeStrand([[130, 390], [280, 396], [560, 396], [805, 390]], 'normal'),
+      activeStrand([[92, 400], [168, 400], [160, 362], [104, 374], [92, 400]], 'accent'),
+      activeStrand([[740, 338], [760, 205], [835, 195], [825, 265], [755, 265], [775, 338]], 'accent'),
+      activeStrand(arcPoints(255, 388, 58, 0, 360, 28), 'normal'),
+      activeStrand(arcPoints(255, 388, 30, 0, 360, 28), 'accent'),
+      activeStrand(arcPoints(695, 388, 62, 0, 360, 28), 'normal'),
+      activeStrand(arcPoints(695, 388, 32, 0, 360, 28), 'accent'),
+      activeStrand([[275, 352], [355, 394], [435, 315], [495, 394], [515, 225], [585, 394], [665, 335]], 'normal'),
+      activeStrand(arcPoints(945, 225, 102, 0, 360, 28), 'guide'),
+      activeStrand([[870, 165], [995, 185], [995, 265], [870, 285]], 'normal'),
+      activeStrand([[885, 140], [905, 158], [890, 172], [922, 184], [898, 200], [932, 212], [908, 228], [942, 240], [918, 256], [965, 272]], 'accent'),
+      activeStrand([[885, 128], [925, 128], [905, 158], [885, 128]], 'normal'),
+      activeStrand([[65, 450], [500, 450], [980, 450]], 'guide'),
+      activeStrand([[75, 325], [210, 300], [450, 185], [680, 170], [870, 155]], 'guide'),
+      despawnedStrand(780, 240)
     ];
 
     /* STAGE 1: ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands — 5 Despawn) */
@@ -1226,43 +1227,77 @@
       nodeEls.push(strandNodes);
     }
 
+    // Fast quintic ease-in-out for brisk, clean reorientation during the transition window
     function easeInOutQuint(x) {
       return x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2;
     }
 
+    /* Piecewise Hold-Plateau Mapper:
+       - Gives Stage 0 (Formula SAE Car) a generous initial hold (0.00 -> 0.22) so you see
+         the complete car centered on the "Background" heading before any morph starts.
+       - Lingers on each drawing (01 Car, 02 Runner, 03 Camera, 04 Rocket) with a flat
+         plateau and transitions briskly in between. */
+    const KEYFRAMES = [
+      { p: 0.00, stage: 0 }, // Car hold start
+      { p: 0.22, stage: 0 }, // Car hold end (22% of total scroll!)
+      { p: 0.34, stage: 1 }, // Fast morph 0 -> 1 (12% window)
+      { p: 0.50, stage: 1 }, // Runner hold (16% window)
+      { p: 0.62, stage: 2 }, // Fast morph 1 -> 2 (12% window)
+      { p: 0.78, stage: 2 }, // Camera hold (16% window)
+      { p: 0.90, stage: 3 }, // Fast morph 2 -> 3 (12% window)
+      { p: 1.00, stage: 3 }  // Rocket hold to bottom (10% window)
+    ];
+
+    function mapProgressToStage(progress) {
+      const clamped = Math.max(0, Math.min(1, progress));
+      for (let i = 0; i < KEYFRAMES.length - 1; i++) {
+        const k0 = KEYFRAMES[i];
+        const k1 = KEYFRAMES[i + 1];
+        if (clamped >= k0.p && clamped <= k1.p) {
+          if (k0.stage === k1.stage) {
+            return { idxA: Math.min(k0.stage, STAGES.length - 2), idxB: Math.min(k0.stage + 1, STAGES.length - 1), rawT: k0.stage === STAGES.length - 1 ? 1 : 0 };
+          }
+          const local = (clamped - k0.p) / (k1.p - k0.p);
+          return { idxA: k0.stage, idxB: k1.stage, rawT: local };
+        }
+      }
+      return { idxA: STAGES.length - 2, idxB: STAGES.length - 1, rawT: 1 };
+    }
+
     let currentScrollProgress = 0;
     let targetScrollProgress = 0;
-    let currentYFollow = 0;
-    let targetYFollow = 0;
+    let currentYFollow = -230;
+    let targetYFollow = -230;
     let animFrameId = null;
 
     function computeScrollMetrics() {
       const rect = aboutSection.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      // Start slightly ABOVE #about (when #about top is at 92% of viewport height)
-      // Finish slightly BELOW #about (when #about bottom is at 8% of viewport height)
-      const startTop = vh * 0.92;
-      const endTop = vh * 0.08 - rect.height;
+      // Start tracking when the "Background" heading enters the lower-middle of the screen (vh * 0.78)
+      // Finish when the bottom of #about scrolls past the upper screen (vh * 0.12 - rect.height)
+      const startTop = vh * 0.78;
+      const endTop = vh * 0.12 - rect.height;
       const totalRun = startTop - endTop;
       const rawProgress = (startTop - rect.top) / totalRun;
       const progress = Math.max(0, Math.min(1, rawProgress));
 
-      // Translate the SVG stage vertically from -130px (above section) to +130px (below section)
-      // so the drawing physically scrolls down and up with your screen
-      const yOffset = (progress - 0.5) * 260;
+      // Travel 640px vertically:
+      // At progress = 0 (when you first see "Background" heading), yOffset = -230px
+      // which centers the Formula SAE car right over the "02 / About — Background" heading!
+      // At progress = 1 (scrolling into Projects), yOffset = +410px (below the section).
+      const yOffset = -230 + progress * 640;
 
       return { progress: progress, yOffset: yOffset };
     }
 
     function renderMorphState(progress, yFollow) {
-      // Move the SVG stage along with the user's scroll position
       morphSvg.style.transform = 'translate3d(0, ' + yFollow.toFixed(1) + 'px, 0)';
 
-      const scaled = progress * (STAGES.length - 1);
-      const idxA = Math.min(STAGES.length - 2, Math.floor(scaled));
-      const idxB = idxA + 1;
-      const rawT = scaled - idxA;
+      const mapped = mapProgressToStage(progress);
+      const idxA = mapped.idxA;
+      const idxB = mapped.idxB;
+      const rawT = mapped.rawT;
       const t = easeInOutQuint(rawT);
       const swirlEnvelope = Math.sin(rawT * Math.PI);
 
@@ -1284,9 +1319,8 @@
         const strandB = stageB.strands[s];
         const pathEl = pathEls[s];
 
-        // Higher opacity so lines shine prominently through the translucent cards
-        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.88 : strandA.role === 'guide' ? 0.38 : 0.64) : 0;
-        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.88 : strandB.role === 'guide' ? 0.38 : 0.64) : 0;
+        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.90 : strandA.role === 'guide' ? 0.40 : 0.66) : 0;
+        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.90 : strandB.role === 'guide' ? 0.40 : 0.66) : 0;
         const opacity = alphaA + (alphaB - alphaA) * t;
 
         const dominantRole = rawT < 0.5 ? strandA.role : strandB.role;
@@ -1316,7 +1350,7 @@
           const dx = bx - ax;
           const dy = by - ay;
 
-          const curlScale = 0.16 * swirlDir * swirlEnvelope * Math.sin((i / PTS_PER_STRAND) * Math.PI);
+          const curlScale = 0.15 * swirlDir * swirlEnvelope * Math.sin((i / PTS_PER_STRAND) * Math.PI);
           const x = ax + dx * t - dy * curlScale;
           const y = ay + dy * t + dx * curlScale;
 
@@ -1339,9 +1373,10 @@
       const diffP = targetScrollProgress - currentScrollProgress;
       const diffY = targetYFollow - currentYFollow;
 
-      if (Math.abs(diffP) > 0.0005 || Math.abs(diffY) > 0.1) {
-        currentScrollProgress += diffP * 0.14;
-        currentYFollow += diffY * 0.14;
+      // Slightly higher damping factor (0.20) for snappier response
+      if (Math.abs(diffP) > 0.0004 || Math.abs(diffY) > 0.1) {
+        currentScrollProgress += diffP * 0.20;
+        currentYFollow += diffY * 0.20;
         renderMorphState(currentScrollProgress, currentYFollow);
         animFrameId = requestAnimationFrame(tickLoop);
       } else {
@@ -1362,12 +1397,13 @@
       }
     }
 
+    // Clicking HUD pills previews that drawing directly
+    const PILL_PROGRESS = [0.10, 0.42, 0.70, 0.95];
     stagePills.forEach(pill => {
       pill.style.cursor = 'pointer';
       pill.addEventListener('click', () => {
         const idx = parseInt(pill.getAttribute('data-stage'), 10);
-        targetScrollProgress = idx / (STAGES.length - 1);
-        targetYFollow = (targetScrollProgress - 0.5) * 260;
+        targetScrollProgress = PILL_PROGRESS[idx] !== undefined ? PILL_PROGRESS[idx] : 0;
         if (!animFrameId) {
           animFrameId = requestAnimationFrame(tickLoop);
         }
