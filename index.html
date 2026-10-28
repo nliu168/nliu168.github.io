@@ -201,7 +201,6 @@
     position: relative;
     z-index: 2;
   }
-  /* Individual assembling characters */
   .hero-char {
     display: inline-block;
     will-change: transform, opacity, filter;
@@ -222,7 +221,6 @@
     filter: blur(0);
   }
 
-  /* Off-screen CAD construction lines that fly in to form the text */
   .title-assembly-svg {
     position: absolute;
     inset: -30px -40px;
@@ -237,7 +235,7 @@
     stroke: var(--orange);
     stroke-width: 2;
     stroke-linecap: round;
-    will-change: transform, opacity, stroke-dashoffset;
+    will-change: transform, opacity;
   }
   .assembly-beam.blue {
     stroke: var(--blue-line);
@@ -331,10 +329,10 @@
   .section-head h2 { font-family: var(--font-head); font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 600; }
   .section-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--paper-dim); text-align: right; max-width: 28ch; }
 
-  /* ==================== ABOUT & VIEWPORT-FOLLOWING VECTOR MORPHING ENGINE ==================== */
+  /* ==================== ABOUT & 6-STAGE VECTOR MORPHING ENGINE ==================== */
   #about {
     position: relative;
-    padding: 155px 0 210px;
+    padding: 165px 0 225px;
     overflow: visible;
     z-index: 2;
   }
@@ -342,8 +340,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: -280px;
-    bottom: -280px;
+    top: -300px;
+    bottom: -300px;
     z-index: 0;
     pointer-events: none;
     display: flex;
@@ -452,11 +450,11 @@
     border: 1px solid var(--blue-line-soft);
     border-radius: var(--radius-s);
     font-family: var(--font-mono);
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 14px;
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
@@ -468,9 +466,9 @@
     background: var(--orange);
     box-shadow: 0 0 10px var(--orange);
   }
-  .morph-hud-stages { display: flex; gap: 8px; flex-wrap: wrap; }
+  .morph-hud-stages { display: flex; gap: 6px; flex-wrap: wrap; }
   .morph-stage-pill {
-    padding: 3px 9px;
+    padding: 3px 8px;
     border: 1px solid var(--blue-line-soft);
     border-radius: var(--radius-s);
     color: var(--paper-dim);
@@ -735,7 +733,6 @@
         <div class="hero-diagram" id="heroDiagram">
           <svg viewBox="0 0 300 300" fill="none" aria-hidden="true">
             <circle class="cad-ring" cx="150" cy="150" r="118" stroke="#3f7cad" stroke-opacity="0.45" stroke-dasharray="3 7"/>
-            <!-- Animated Dimension Bar & Ticks (scales from center 150 out to 30..270 and counts 0 -> 240.00) -->
             <line id="dimMainLine" x1="150" y1="270" x2="150" y2="270" stroke="#3f7cad" stroke-opacity="0.75" stroke-width="1.3"/>
             <line id="dimLeftTick" x1="150" y1="264" x2="150" y2="276" stroke="#e8622c" stroke-opacity="0.9" stroke-width="1.4"/>
             <line id="dimRightTick" x1="150" y1="264" x2="150" y2="276" stroke="#e8622c" stroke-opacity="0.9" stroke-width="1.4"/>
@@ -749,7 +746,7 @@
     </div>
   </section>
 
-  <!-- ABOUT (WITH VIEWPORT-FOLLOWING SHARED-VERTEX MORPHING ENGINE) -->
+  <!-- ABOUT (WITH 6-STAGE SHARED-VERTEX MORPHING ENGINE) -->
   <section id="about">
     <div class="morph-bg-stage" aria-hidden="true">
       <svg id="morphSvg" viewBox="0 0 1120 680" preserveAspectRatio="xMidYMid meet">
@@ -791,16 +788,18 @@
       <div class="morph-hud reveal" style="--delay: 220ms;">
         <div class="morph-hud-left">
           <span class="morph-pulse"></span>
-          <span id="morphStageLabel">SCHEMATIC 01 // FORMULA SAE RACECAR &amp; COILOVER SUSPENSION</span>
+          <span id="morphStageLabel">SCHEMATIC 01 // ORIGIN DATUM SINGULARITY &amp; GYRO CIRCLE</span>
         </div>
         <div class="morph-hud-stages" id="morphStagePills">
-          <span class="morph-stage-pill active" data-stage="0">01 FSAE CAR</span>
-          <span class="morph-stage-pill" data-stage="1">02 RUNNER</span>
-          <span class="morph-stage-pill" data-stage="2">03 35MM CAMERA</span>
-          <span class="morph-stage-pill" data-stage="3">04 ROCKET LAUNCH</span>
+          <span class="morph-stage-pill active" data-stage="0">01 ORIGIN CIRCLE</span>
+          <span class="morph-stage-pill" data-stage="1">02 FSAE CAR</span>
+          <span class="morph-stage-pill" data-stage="2">03 RUNNER</span>
+          <span class="morph-stage-pill" data-stage="3">04 35MM CAMERA</span>
+          <span class="morph-stage-pill" data-stage="4">05 ROCKET</span>
+          <span class="morph-stage-pill" data-stage="5">06 TERMINUS CIRCLE</span>
         </div>
         <div class="morph-hud-telemetry">
-          ACTIVE TOPOLOGY: <strong id="morphVertexCount">420</strong> PTS // <strong id="morphStrandCount">15</strong>/16 STRANDS
+          ACTIVE TOPOLOGY: <strong id="morphVertexCount">224</strong> PTS // <strong id="morphStrandCount">8</strong>/16 STRANDS
         </div>
       </div>
     </div>
@@ -1005,7 +1004,6 @@
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const SVG_NS = 'http://www.w3.org/2000/svg';
 
-    // Split "Hi, I'm Nathan" into individual character spans with off-screen entry vectors
     const rawText = "Hi, I'm Nathan";
     const entryVectors = [
       [-180, -90], [-140, 110], [-95, 130], [0, 0],
@@ -1042,28 +1040,22 @@
       return;
     }
 
-    // Create 18 CAD stroke segments that fly in from off-screen to form the text strokes
     const targetSegments = [
-      // H
       { x1: 42, y1: 25, x2: 42, y2: 108, ox: -420, oy: -180, accent: true },
       { x1: 86, y1: 25, x2: 86, y2: 108, ox: -360, oy: 220, accent: false },
       { x1: 42, y1: 66, x2: 86, y2: 66, ox: -480, oy: 0, accent: true },
-      // i,
       { x1: 112, y1: 45, x2: 112, y2: 108, ox: -220, oy: -260, accent: false },
-      // I'm
       { x1: 175, y1: 25, x2: 175, y2: 108, ox: 0, oy: -320, accent: true },
       { x1: 215, y1: 48, x2: 215, y2: 108, ox: 260, oy: -280, accent: false },
       { x1: 215, y1: 52, x2: 278, y2: 52, ox: 420, oy: -140, accent: false },
       { x1: 246, y1: 52, x2: 246, y2: 108, ox: 180, oy: 310, accent: true },
       { x1: 278, y1: 52, x2: 278, y2: 108, ox: 340, oy: 260, accent: false },
-      // Nathan
       { x1: 318, y1: 25, x2: 318, y2: 108, ox: -390, oy: 280, accent: true },
       { x1: 318, y1: 25, x2: 368, y2: 108, ox: 440, oy: -240, accent: true },
       { x1: 368, y1: 25, x2: 368, y2: 108, ox: 520, oy: -190, accent: false },
       { x1: 392, y1: 68, x2: 498, y2: 68, ox: 560, oy: 40, accent: true },
       { x1: 425, y1: 28, x2: 425, y2: 108, ox: 490, oy: 290, accent: false },
       { x1: 465, y1: 28, x2: 465, y2: 108, ox: 580, oy: -220, accent: false },
-      // Blueprint baseline & top registration rails
       { x1: 35, y1: 114, x2: 505, y2: 114, ox: -620, oy: 0, accent: true },
       { x1: 35, y1: 20, x2: 380, y2: 20, ox: 620, oy: 0, accent: false }
     ];
@@ -1086,9 +1078,8 @@
     }
 
     const startTime = performance.now();
-    const totalDuration = 1450; // ms
+    const totalDuration = 1450;
 
-    // Trigger CSS character & portrait transitions right away
     requestAnimationFrame(() => {
       document.body.classList.add('hero-assembled');
     });
@@ -1098,7 +1089,6 @@
       const rawP = Math.max(0, Math.min(1, elapsed / totalDuration));
       const eased = easeOutExpo(rawP);
 
-      // 1. Fly in the off-screen CAD construction lines to form "Hi, I'm Nathan", then dissolve into crisp text
       beamEls.forEach((item, idx) => {
         const delay = idx * 0.022;
         const localP = Math.max(0, Math.min(1, (rawP - delay) / (0.68 - delay)));
@@ -1107,7 +1097,6 @@
         const curY = item.seg.oy * (1 - beamEase);
         item.el.style.transform = 'translate3d(' + curX.toFixed(1) + 'px, ' + curY.toFixed(1) + 'px, 0)';
 
-        // Fade in as they fly in, then fade out once the solid typography locks in
         let alpha = Math.min(1, localP * 2.5);
         if (rawP > 0.62) {
           alpha *= Math.max(0, 1 - (rawP - 0.62) / 0.36);
@@ -1115,9 +1104,8 @@
         item.el.style.opacity = alpha.toFixed(3);
       });
 
-      // 2. Scale portrait image & expand dimension bar from 0 -> 240.00 simultaneously
       const currentDia = 240 * eased;
-      const halfSpan = 120 * eased; // 150 - 120 = 30 (left), 150 + 120 = 270 (right)
+      const halfSpan = 120 * eased;
       const leftX = (150 - halfSpan).toFixed(2);
       const rightX = (150 + halfSpan).toFixed(2);
 
@@ -1129,14 +1117,12 @@
       dimRightTick.setAttribute('x2', rightX);
       dimValueText.textContent = 'Ø' + currentDia.toFixed(2);
 
-      // Sync portrait scale with the exact same easing curve
       portraitFrame.style.transform = 'scale(' + eased.toFixed(4) + ')';
       portraitFrame.style.opacity = Math.min(1, rawP * 2.2).toFixed(3);
 
       if (rawP < 1) {
         requestAnimationFrame(animateOpening);
       } else {
-        // Clear inline transform so hover scale works cleanly
         portraitFrame.style.transform = '';
         portraitFrame.style.opacity = '';
       }
@@ -1274,7 +1260,13 @@
   }
 
   /* ============================================================================
-     VIEWPORT-CENTERED VECTOR POINT-MORPHING ENGINE WITH HOLD PLATEAUS
+     6-DRAWING VIEWPORT-CENTERED VECTOR POINT-MORPHING ENGINE
+     - Drawing 1 (Stage 0): Origin Circle (spins outward from a single point at 560,340)
+     - Drawing 2 (Stage 1): Formula SAE Racecar & Coilover Suspension
+     - Drawing 3 (Stage 2): Endurance Runner & Topographic Trail
+     - Drawing 4 (Stage 3): 35mm Film Camera & Optical Aperture
+     - Drawing 5 (Stage 4): High-Power Rocket Launch & Parachute Rover
+     - Drawing 6 (Stage 5): Terminus Circle (spins inward and collapses into a single point)
      ============================================================================ */
   (function initVectorMorphEngine() {
     const aboutSection = document.getElementById('about');
@@ -1291,9 +1283,11 @@
     const NUM_STRANDS = 16;
     const PTS_PER_STRAND = 28;
     const SVG_NS = 'http://www.w3.org/2000/svg';
+    const CENTER_X = 560;
+    const CENTER_Y = 340;
 
     function resamplePolyline(pts, n) {
-      if (!pts || pts.length === 0) return Array.from({ length: n }, () => [560, 340]);
+      if (!pts || pts.length === 0) return Array.from({ length: n }, () => [CENTER_X, CENTER_Y]);
       if (pts.length === 1) return Array.from({ length: n }, () => [pts[0][0], pts[0][1]]);
 
       const segLengths = [];
@@ -1352,7 +1346,37 @@
       };
     }
 
-    /* STAGE 0: FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) */
+    // Helper to build the Origin & Terminus Gyroscopic CAD Circle (8 active strands, 8 despawned at center)
+    function createGyroCircleStage() {
+      return [
+        // 0..3: 4 quadrants of the main outer CAD datum circle (R = 175)
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 0, 90, 28), 'accent'),
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 90, 180, 28), 'normal'),
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 180, 270, 28), 'accent'),
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 270, 360, 28), 'normal'),
+        // 4..5: 2 halves of the inner precision ring (R = 108)
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 108, 0, 180, 28), 'accent'),
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 108, 180, 360, 28), 'accent'),
+        // 6: Outer dashed compass ring (R = 225)
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 225, 0, 360, 28), 'guide'),
+        // 7: Inner core target ring (R = 44)
+        activeStrand(arcPoints(CENTER_X, CENTER_Y, 44, 0, 360, 28), 'guide'),
+        // 8..15: Despawned at center singularity (560, 340)
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y),
+        despawnedStrand(CENTER_X, CENTER_Y)
+      ];
+    }
+
+    /* DRAWING 1 (STAGE 0): ORIGIN CIRCLE (Spins outward from singularity point) */
+    const stageOriginCircle = createGyroCircleStage();
+
+    /* DRAWING 2 (STAGE 1): FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) */
     const stageFSAE = [
       activeStrand([[130, 390], [185, 382], [260, 352], [375, 345], [445, 312], [490, 220], [525, 220], [565, 320], [720, 338], [805, 390]], 'accent'),
       activeStrand([[130, 390], [280, 396], [560, 396], [805, 390]], 'normal'),
@@ -1372,7 +1396,7 @@
       despawnedStrand(780, 240)
     ];
 
-    /* STAGE 1: ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands — 5 Despawn) */
+    /* DRAWING 3 (STAGE 2): ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands) */
     const stageRunner = [
       activeStrand(arcPoints(595, 148, 32, 0, 360, 28), 'accent'),
       activeStrand([[585, 180], [565, 235], [540, 305]], 'accent'),
@@ -1392,7 +1416,7 @@
       despawnedStrand(815, 335)
     ];
 
-    /* STAGE 2: 35MM FILM CAMERA & OPTICAL APERTURE (13 Active Strands — 2 Spawn In) */
+    /* DRAWING 4 (STAGE 3): 35MM FILM CAMERA & OPTICAL APERTURE (13 Active Strands) */
     const stageCamera = [
       activeStrand([[220, 220], [680, 220], [680, 500], [220, 500], [220, 220]], 'normal'),
       activeStrand([[330, 220], [375, 145], [525, 145], [570, 220]], 'accent'),
@@ -1412,7 +1436,7 @@
       despawnedStrand(450, 145)
     ];
 
-    /* STAGE 3: HIGH-POWER ROCKET LAUNCH & ROVER DEPLOYMENT (All 16 Strands Active!) */
+    /* DRAWING 5 (STAGE 4): HIGH-POWER ROCKET LAUNCH & ROVER DEPLOYMENT (All 16 Strands Active!) */
     const stageRocket = [
       activeStrand([[635, 95], [668, 155], [668, 435], [602, 435], [602, 155], [635, 95]], 'accent'),
       activeStrand([[602, 165], [668, 165], [668, 255], [602, 255], [602, 345], [668, 345]], 'normal'),
@@ -1432,11 +1456,16 @@
       activeStrand(arcPoints(715, 585, 46, 150, 420, 28), 'guide')
     ];
 
+    /* DRAWING 6 (STAGE 5): TERMINUS CIRCLE (Spins inward into a single point at the end) */
+    const stageTerminusCircle = createGyroCircleStage();
+
     const STAGES = [
-      { title: 'SCHEMATIC 01 // FORMULA SAE RACECAR & COILOVER SUSPENSION', activeCount: 15, strands: stageFSAE },
-      { title: 'SCHEMATIC 02 // ENDURANCE RUNNER & TOPOGRAPHIC ELEVATION', activeCount: 11, strands: stageRunner },
-      { title: 'SCHEMATIC 03 // 35MM FILM CAMERA & MAGNETIC SHUTTER OPTICS', activeCount: 13, strands: stageCamera },
-      { title: 'SCHEMATIC 04 // HIGH-POWER ROCKET APOGEE & ROVER DEPLOYMENT', activeCount: 16, strands: stageRocket }
+      { title: 'SCHEMATIC 01 // ORIGIN DATUM SINGULARITY & GYRO CIRCLE', activeCount: 8, strands: stageOriginCircle },
+      { title: 'SCHEMATIC 02 // FORMULA SAE RACECAR & COILOVER SUSPENSION', activeCount: 15, strands: stageFSAE },
+      { title: 'SCHEMATIC 03 // ENDURANCE RUNNER & TOPOGRAPHIC ELEVATION', activeCount: 11, strands: stageRunner },
+      { title: 'SCHEMATIC 04 // 35MM FILM CAMERA & MAGNETIC SHUTTER OPTICS', activeCount: 13, strands: stageCamera },
+      { title: 'SCHEMATIC 05 // HIGH-POWER ROCKET APOGEE & ROVER DEPLOYMENT', activeCount: 16, strands: stageRocket },
+      { title: 'SCHEMATIC 06 // TERMINUS CONVERGENCE RING -> SINGULARITY', activeCount: 8, strands: stageTerminusCircle }
     ];
 
     const pathEls = [];
@@ -1463,15 +1492,40 @@
       return x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2;
     }
 
+    function easeOutCubic(x) {
+      return 1 - Math.pow(1 - x, 3);
+    }
+
+    function easeInCubic(x) {
+      return x * x * x;
+    }
+
+    /* Piecewise Hold-Plateau Schedule across all 6 Drawings:
+       - 0.00 -> 0.08 : Drawing 1 (Origin Circle) spins outward from a single point!
+       - 0.08 -> 0.14 : Origin Circle hold plateau
+       - 0.14 -> 0.21 : Fast morph into Drawing 2 (Formula SAE Car)
+       - 0.21 -> 0.35 : Generous hold on Formula SAE Car
+       - 0.35 -> 0.42 : Fast morph into Drawing 3 (Runner)
+       - 0.42 -> 0.53 : Hold on Runner
+       - 0.53 -> 0.60 : Fast morph into Drawing 4 (35mm Camera)
+       - 0.60 -> 0.71 : Hold on 35mm Camera
+       - 0.71 -> 0.78 : Fast morph into Drawing 5 (Rocket Launch)
+       - 0.78 -> 0.86 : Hold on Rocket Launch
+       - 0.86 -> 0.92 : Fast morph into Drawing 6 (Terminus Circle)
+       - 0.92 -> 1.00 : Terminus Circle spins inward and collapses into a single point! */
     const KEYFRAMES = [
       { p: 0.00, stage: 0 },
-      { p: 0.22, stage: 0 },
-      { p: 0.34, stage: 1 },
-      { p: 0.50, stage: 1 },
-      { p: 0.62, stage: 2 },
-      { p: 0.78, stage: 2 },
-      { p: 0.90, stage: 3 },
-      { p: 1.00, stage: 3 }
+      { p: 0.14, stage: 0 },
+      { p: 0.21, stage: 1 },
+      { p: 0.35, stage: 1 },
+      { p: 0.42, stage: 2 },
+      { p: 0.53, stage: 2 },
+      { p: 0.60, stage: 3 },
+      { p: 0.71, stage: 3 },
+      { p: 0.78, stage: 4 },
+      { p: 0.86, stage: 4 },
+      { p: 0.92, stage: 5 },
+      { p: 1.00, stage: 5 }
     ];
 
     function mapProgressToStage(progress) {
@@ -1481,7 +1535,11 @@
         const k1 = KEYFRAMES[i + 1];
         if (clamped >= k0.p && clamped <= k1.p) {
           if (k0.stage === k1.stage) {
-            return { idxA: Math.min(k0.stage, STAGES.length - 2), idxB: Math.min(k0.stage + 1, STAGES.length - 1), rawT: k0.stage === STAGES.length - 1 ? 1 : 0 };
+            return {
+              idxA: Math.min(k0.stage, STAGES.length - 2),
+              idxB: Math.min(k0.stage + 1, STAGES.length - 1),
+              rawT: k0.stage === STAGES.length - 1 ? 1 : 0
+            };
           }
           const local = (clamped - k0.p) / (k1.p - k0.p);
           return { idxA: k0.stage, idxB: k1.stage, rawT: local };
@@ -1492,21 +1550,21 @@
 
     let currentScrollProgress = 0;
     let targetScrollProgress = 0;
-    let currentYFollow = -230;
-    let targetYFollow = -230;
+    let currentYFollow = -240;
+    let targetYFollow = -240;
     let animFrameId = null;
 
     function computeScrollMetrics() {
       const rect = aboutSection.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      const startTop = vh * 0.78;
-      const endTop = vh * 0.12 - rect.height;
+      const startTop = vh * 0.84;
+      const endTop = vh * 0.10 - rect.height;
       const totalRun = startTop - endTop;
       const rawProgress = (startTop - rect.top) / totalRun;
       const progress = Math.max(0, Math.min(1, rawProgress));
 
-      const yOffset = -230 + progress * 640;
+      const yOffset = -240 + progress * 660;
       return { progress: progress, yOffset: yOffset };
     }
 
@@ -1519,6 +1577,25 @@
       const rawT = mapped.rawT;
       const t = easeInOutQuint(rawT);
       const swirlEnvelope = Math.sin(rawT * Math.PI);
+
+      /* Singularity Spin-Out (at start of Stage 0) & Spin-In (at end of Stage 5):
+         - Progress 0.00 -> 0.09: radialScale expands 0.0 -> 1.0 while spinning 540 deg (3*PI rad)
+         - Progress 0.92 -> 1.00: radialScale collapses 1.0 -> 0.0 while spinning -540 deg (-3*PI rad) */
+      let singularityScale = 1;
+      let singularitySpinRad = 0;
+
+      if (progress < 0.09) {
+        const u = easeOutCubic(Math.max(0, Math.min(1, progress / 0.09)));
+        singularityScale = u;
+        singularitySpinRad = (1 - u) * Math.PI * 3;
+      } else if (progress > 0.92) {
+        const v = easeInCubic(Math.max(0, Math.min(1, (progress - 0.92) / 0.08)));
+        singularityScale = 1 - v;
+        singularitySpinRad = -v * Math.PI * 3;
+      }
+
+      const cosSpin = Math.cos(singularitySpinRad);
+      const sinSpin = Math.sin(singularitySpinRad);
 
       const stageA = STAGES[idxA];
       const stageB = STAGES[idxB];
@@ -1538,18 +1615,21 @@
         const strandB = stageB.strands[s];
         const pathEl = pathEls[s];
 
-        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.90 : strandA.role === 'guide' ? 0.40 : 0.66) : 0;
-        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.90 : strandB.role === 'guide' ? 0.40 : 0.66) : 0;
-        const opacity = alphaA + (alphaB - alphaA) * t;
+        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.90 : strandA.role === 'guide' ? 0.42 : 0.68) : 0;
+        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.90 : strandB.role === 'guide' ? 0.42 : 0.68) : 0;
+        let opacity = alphaA + (alphaB - alphaA) * t;
+
+        // Keep the central point glowing even when collapsed to a singularity point
+        const effectiveOpacity = opacity * (0.25 + 0.75 * singularityScale);
 
         const dominantRole = rawT < 0.5 ? strandA.role : strandB.role;
         pathEl.setAttribute(
           'class',
           'morph-strand' + (dominantRole === 'accent' ? ' accent' : dominantRole === 'guide' ? ' guide' : '')
         );
-        pathEl.style.opacity = opacity.toFixed(3);
+        pathEl.style.opacity = effectiveOpacity.toFixed(3);
 
-        if (opacity <= 0.01) {
+        if (effectiveOpacity <= 0.01) {
           pathEl.setAttribute('d', '');
           nodeEls[s].forEach(nEl => (nEl.style.opacity = '0'));
           continue;
@@ -1570,8 +1650,16 @@
           const dy = by - ay;
 
           const curlScale = 0.15 * swirlDir * swirlEnvelope * Math.sin((i / PTS_PER_STRAND) * Math.PI);
-          const x = ax + dx * t - dy * curlScale;
-          const y = ay + dy * t + dx * curlScale;
+          let x = ax + dx * t - dy * curlScale;
+          let y = ay + dy * t + dx * curlScale;
+
+          // Apply Singularity Vortex Spin & Radial Scale around (CENTER_X, CENTER_Y)
+          if (singularityScale < 0.9999 || Math.abs(singularitySpinRad) > 0.0001) {
+            const rx = (x - CENTER_X) * singularityScale;
+            const ry = (y - CENTER_Y) * singularityScale;
+            x = CENTER_X + rx * cosSpin - ry * sinSpin;
+            y = CENTER_Y + rx * sinSpin + ry * cosSpin;
+          }
 
           dStr += (i === 0 ? 'M ' : ' L ') + x.toFixed(1) + ' ' + y.toFixed(1);
 
@@ -1615,12 +1703,13 @@
       }
     }
 
-    const PILL_PROGRESS = [0.10, 0.42, 0.70, 0.95];
+    // Clicking any of the 6 HUD stage pills previews that drawing directly
+    const PILL_PROGRESS = [0.11, 0.28, 0.47, 0.65, 0.82, 0.93];
     stagePills.forEach(pill => {
       pill.style.cursor = 'pointer';
       pill.addEventListener('click', () => {
         const idx = parseInt(pill.getAttribute('data-stage'), 10);
-        targetScrollProgress = PILL_PROGRESS[idx] !== undefined ? PILL_PROGRESS[idx] : 0;
+        targetScrollProgress = PILL_PROGRESS[idx] !== undefined ? PILL_PROGRESS[idx] : 0.11;
         if (!animFrameId) {
           animFrameId = requestAnimationFrame(tickLoop);
         }
