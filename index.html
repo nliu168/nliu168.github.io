@@ -160,7 +160,7 @@
     overflow: hidden;
   }
 
-  /* ==================== HERO & OPENING CAD ASSEMBLY ANIMATION ==================== */
+  /* ==================== HERO & OPENING ANIMATION ==================== */
   .hero { padding: 110px 0 90px; position: relative; overflow: hidden; }
   .hero-grid {
     display: grid;
@@ -186,18 +186,18 @@
   }
   @keyframes growLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
-  /* "Hi, I'm Nathan" Line-Assembly Title Wrapper */
+  /* Single-line "Hi, I'm Nathan" Title */
   .hero-title-stage {
     position: relative;
-    display: inline-block;
-    max-width: 12ch;
+    display: block;
   }
   .hero h1 {
     font-family: var(--font-head);
     font-weight: 700;
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    line-height: 1.05;
+    font-size: clamp(2.1rem, 4.4vw, 3.85rem);
+    line-height: 1.08;
     letter-spacing: -0.01em;
+    white-space: nowrap;
     position: relative;
     z-index: 2;
   }
@@ -213,33 +213,12 @@
       transform 1.05s var(--ease-out-expo),
       opacity 0.75s var(--ease-out-quart),
       filter 0.75s ease;
-    transition-delay: var(--char-delay, 180ms);
+    transition-delay: var(--char-delay, 120ms);
   }
   body.js-ready.hero-assembled .hero-char {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     filter: blur(0);
-  }
-
-  .title-assembly-svg {
-    position: absolute;
-    inset: -30px -40px;
-    width: calc(100% + 80px);
-    height: calc(100% + 60px);
-    pointer-events: none;
-    z-index: 3;
-    overflow: visible;
-  }
-  .assembly-beam {
-    fill: none;
-    stroke: var(--orange);
-    stroke-width: 2;
-    stroke-linecap: round;
-    will-change: transform, opacity;
-  }
-  .assembly-beam.blue {
-    stroke: var(--blue-line);
-    stroke-width: 1.5;
   }
 
   .hero p.lede {
@@ -332,7 +311,7 @@
   /* ==================== ABOUT & 6-STAGE VECTOR MORPHING ENGINE ==================== */
   #about {
     position: relative;
-    padding: 165px 0 225px;
+    padding: 135px 0 165px;
     overflow: visible;
     z-index: 2;
   }
@@ -340,8 +319,8 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: -300px;
-    bottom: -300px;
+    top: -180px;
+    bottom: -180px;
     z-index: 0;
     pointer-events: none;
     display: flex;
@@ -351,7 +330,7 @@
   }
   .morph-bg-stage svg {
     width: 100%;
-    height: 640px;
+    height: 620px;
     max-width: 1320px;
     display: block;
     overflow: visible;
@@ -685,6 +664,7 @@
     nav.nav-links.open { display: flex; }
     .nav-toggle { display: block; }
     .hero { padding: 76px 0 60px; }
+    .hero h1 { font-size: clamp(1.85rem, 8vw, 2.6rem); }
     section { padding: 64px 0; }
     .section-tag { text-align: left; max-width: none; }
     .hero-diagram { max-width: 180px; }
@@ -717,9 +697,8 @@
         <div>
           <div class="hero-eyebrow"><span class="dim-line"></span> B.S. First-Year Engineering (Intended M.E.) — Purdue University, 2030</div>
 
-          <!-- Line-Assembly Title Container -->
+          <!-- Clean Single-Line Animated Title -->
           <div class="hero-title-stage" id="heroTitleStage">
-            <svg class="title-assembly-svg" id="titleAssemblySvg" viewBox="0 0 520 140" preserveAspectRatio="none" aria-hidden="true"></svg>
             <h1 id="heroTitle" aria-label="Hi, I'm Nathan">Hi, I'm Nathan</h1>
           </div>
 
@@ -988,13 +967,12 @@
 
   /* ============================================================================
      OPENING HERO SEQUENCE:
-     1. Off-screen vector beams fly in to construct "Hi, I'm Nathan"
+     1. Characters of "Hi, I'm Nathan" fly in from off-screen onto a single line
      2. Portrait scales up from 0 -> 1
      3. Dimension bar expands from 0 -> 240 with live numeric counter (Ø0.00 -> Ø240.00)
      ============================================================================ */
   (function initHeroOpeningAnimation() {
     const heroTitle = document.getElementById('heroTitle');
-    const assemblySvg = document.getElementById('titleAssemblySvg');
     const dimMainLine = document.getElementById('dimMainLine');
     const dimLeftTick = document.getElementById('dimLeftTick');
     const dimRightTick = document.getElementById('dimRightTick');
@@ -1002,7 +980,6 @@
     const portraitFrame = document.getElementById('portraitFrame');
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const SVG_NS = 'http://www.w3.org/2000/svg';
 
     const rawText = "Hi, I'm Nathan";
     const entryVectors = [
@@ -1024,7 +1001,7 @@
       const vec = entryVectors[i % entryVectors.length];
       span.style.setProperty('--tx', vec[0] + 'px');
       span.style.setProperty('--ty', vec[1] + 'px');
-      span.style.setProperty('--char-delay', (140 + i * 38) + 'ms');
+      span.style.setProperty('--char-delay', (90 + i * 34) + 'ms');
       heroTitle.appendChild(span);
     }
 
@@ -1040,45 +1017,12 @@
       return;
     }
 
-    const targetSegments = [
-      { x1: 42, y1: 25, x2: 42, y2: 108, ox: -420, oy: -180, accent: true },
-      { x1: 86, y1: 25, x2: 86, y2: 108, ox: -360, oy: 220, accent: false },
-      { x1: 42, y1: 66, x2: 86, y2: 66, ox: -480, oy: 0, accent: true },
-      { x1: 112, y1: 45, x2: 112, y2: 108, ox: -220, oy: -260, accent: false },
-      { x1: 175, y1: 25, x2: 175, y2: 108, ox: 0, oy: -320, accent: true },
-      { x1: 215, y1: 48, x2: 215, y2: 108, ox: 260, oy: -280, accent: false },
-      { x1: 215, y1: 52, x2: 278, y2: 52, ox: 420, oy: -140, accent: false },
-      { x1: 246, y1: 52, x2: 246, y2: 108, ox: 180, oy: 310, accent: true },
-      { x1: 278, y1: 52, x2: 278, y2: 108, ox: 340, oy: 260, accent: false },
-      { x1: 318, y1: 25, x2: 318, y2: 108, ox: -390, oy: 280, accent: true },
-      { x1: 318, y1: 25, x2: 368, y2: 108, ox: 440, oy: -240, accent: true },
-      { x1: 368, y1: 25, x2: 368, y2: 108, ox: 520, oy: -190, accent: false },
-      { x1: 392, y1: 68, x2: 498, y2: 68, ox: 560, oy: 40, accent: true },
-      { x1: 425, y1: 28, x2: 425, y2: 108, ox: 490, oy: 290, accent: false },
-      { x1: 465, y1: 28, x2: 465, y2: 108, ox: 580, oy: -220, accent: false },
-      { x1: 35, y1: 114, x2: 505, y2: 114, ox: -620, oy: 0, accent: true },
-      { x1: 35, y1: 20, x2: 380, y2: 20, ox: 620, oy: 0, accent: false }
-    ];
-
-    const beamEls = targetSegments.map(seg => {
-      const line = document.createElementNS(SVG_NS, 'line');
-      line.setAttribute('class', 'assembly-beam' + (seg.accent ? '' : ' blue'));
-      line.setAttribute('x1', seg.x1);
-      line.setAttribute('y1', seg.y1);
-      line.setAttribute('x2', seg.x2);
-      line.setAttribute('y2', seg.y2);
-      line.style.transform = 'translate3d(' + seg.ox + 'px, ' + seg.oy + 'px, 0)';
-      line.style.opacity = '0';
-      assemblySvg.appendChild(line);
-      return { el: line, seg: seg };
-    });
-
     function easeOutExpo(t) {
       return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
     }
 
     const startTime = performance.now();
-    const totalDuration = 1450;
+    const totalDuration = 1350;
 
     requestAnimationFrame(() => {
       document.body.classList.add('hero-assembled');
@@ -1088,21 +1032,6 @@
       const elapsed = now - startTime;
       const rawP = Math.max(0, Math.min(1, elapsed / totalDuration));
       const eased = easeOutExpo(rawP);
-
-      beamEls.forEach((item, idx) => {
-        const delay = idx * 0.022;
-        const localP = Math.max(0, Math.min(1, (rawP - delay) / (0.68 - delay)));
-        const beamEase = easeOutExpo(localP);
-        const curX = item.seg.ox * (1 - beamEase);
-        const curY = item.seg.oy * (1 - beamEase);
-        item.el.style.transform = 'translate3d(' + curX.toFixed(1) + 'px, ' + curY.toFixed(1) + 'px, 0)';
-
-        let alpha = Math.min(1, localP * 2.5);
-        if (rawP > 0.62) {
-          alpha *= Math.max(0, 1 - (rawP - 0.62) / 0.36);
-        }
-        item.el.style.opacity = alpha.toFixed(3);
-      });
 
       const currentDia = 240 * eased;
       const halfSpan = 120 * eased;
@@ -1261,12 +1190,13 @@
 
   /* ============================================================================
      6-DRAWING VIEWPORT-CENTERED VECTOR POINT-MORPHING ENGINE
-     - Drawing 1 (Stage 0): Origin Circle (spins outward from a single point at 560,340)
+     - Starts later (once #about is well into view) and finishes earlier (faster)
+     - Drawing 1 (Stage 0): Origin Circle (spins outward from a single point)
      - Drawing 2 (Stage 1): Formula SAE Racecar & Coilover Suspension
      - Drawing 3 (Stage 2): Endurance Runner & Topographic Trail
      - Drawing 4 (Stage 3): 35mm Film Camera & Optical Aperture
      - Drawing 5 (Stage 4): High-Power Rocket Launch & Parachute Rover
-     - Drawing 6 (Stage 5): Terminus Circle (spins inward and collapses into a single point)
+     - Drawing 6 (Stage 5): Terminus Circle (spins inward into a single point)
      ============================================================================ */
   (function initVectorMorphEngine() {
     const aboutSection = document.getElementById('about');
@@ -1346,22 +1276,16 @@
       };
     }
 
-    // Helper to build the Origin & Terminus Gyroscopic CAD Circle (8 active strands, 8 despawned at center)
     function createGyroCircleStage() {
       return [
-        // 0..3: 4 quadrants of the main outer CAD datum circle (R = 175)
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 0, 90, 28), 'accent'),
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 90, 180, 28), 'normal'),
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 180, 270, 28), 'accent'),
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 175, 270, 360, 28), 'normal'),
-        // 4..5: 2 halves of the inner precision ring (R = 108)
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 108, 0, 180, 28), 'accent'),
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 108, 180, 360, 28), 'accent'),
-        // 6: Outer dashed compass ring (R = 225)
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 225, 0, 360, 28), 'guide'),
-        // 7: Inner core target ring (R = 44)
         activeStrand(arcPoints(CENTER_X, CENTER_Y, 44, 0, 360, 28), 'guide'),
-        // 8..15: Despawned at center singularity (560, 340)
         despawnedStrand(CENTER_X, CENTER_Y),
         despawnedStrand(CENTER_X, CENTER_Y),
         despawnedStrand(CENTER_X, CENTER_Y),
@@ -1373,10 +1297,8 @@
       ];
     }
 
-    /* DRAWING 1 (STAGE 0): ORIGIN CIRCLE (Spins outward from singularity point) */
     const stageOriginCircle = createGyroCircleStage();
 
-    /* DRAWING 2 (STAGE 1): FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) */
     const stageFSAE = [
       activeStrand([[130, 390], [185, 382], [260, 352], [375, 345], [445, 312], [490, 220], [525, 220], [565, 320], [720, 338], [805, 390]], 'accent'),
       activeStrand([[130, 390], [280, 396], [560, 396], [805, 390]], 'normal'),
@@ -1396,7 +1318,6 @@
       despawnedStrand(780, 240)
     ];
 
-    /* DRAWING 3 (STAGE 2): ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands) */
     const stageRunner = [
       activeStrand(arcPoints(595, 148, 32, 0, 360, 28), 'accent'),
       activeStrand([[585, 180], [565, 235], [540, 305]], 'accent'),
@@ -1416,7 +1337,6 @@
       despawnedStrand(815, 335)
     ];
 
-    /* DRAWING 4 (STAGE 3): 35MM FILM CAMERA & OPTICAL APERTURE (13 Active Strands) */
     const stageCamera = [
       activeStrand([[220, 220], [680, 220], [680, 500], [220, 500], [220, 220]], 'normal'),
       activeStrand([[330, 220], [375, 145], [525, 145], [570, 220]], 'accent'),
@@ -1436,7 +1356,6 @@
       despawnedStrand(450, 145)
     ];
 
-    /* DRAWING 5 (STAGE 4): HIGH-POWER ROCKET LAUNCH & ROVER DEPLOYMENT (All 16 Strands Active!) */
     const stageRocket = [
       activeStrand([[635, 95], [668, 155], [668, 435], [602, 435], [602, 155], [635, 95]], 'accent'),
       activeStrand([[602, 165], [668, 165], [668, 255], [602, 255], [602, 345], [668, 345]], 'normal'),
@@ -1456,7 +1375,6 @@
       activeStrand(arcPoints(715, 585, 46, 150, 420, 28), 'guide')
     ];
 
-    /* DRAWING 6 (STAGE 5): TERMINUS CIRCLE (Spins inward into a single point at the end) */
     const stageTerminusCircle = createGyroCircleStage();
 
     const STAGES = [
@@ -1500,31 +1418,18 @@
       return x * x * x;
     }
 
-    /* Piecewise Hold-Plateau Schedule across all 6 Drawings:
-       - 0.00 -> 0.08 : Drawing 1 (Origin Circle) spins outward from a single point!
-       - 0.08 -> 0.14 : Origin Circle hold plateau
-       - 0.14 -> 0.21 : Fast morph into Drawing 2 (Formula SAE Car)
-       - 0.21 -> 0.35 : Generous hold on Formula SAE Car
-       - 0.35 -> 0.42 : Fast morph into Drawing 3 (Runner)
-       - 0.42 -> 0.53 : Hold on Runner
-       - 0.53 -> 0.60 : Fast morph into Drawing 4 (35mm Camera)
-       - 0.60 -> 0.71 : Hold on 35mm Camera
-       - 0.71 -> 0.78 : Fast morph into Drawing 5 (Rocket Launch)
-       - 0.78 -> 0.86 : Hold on Rocket Launch
-       - 0.86 -> 0.92 : Fast morph into Drawing 6 (Terminus Circle)
-       - 0.92 -> 1.00 : Terminus Circle spins inward and collapses into a single point! */
     const KEYFRAMES = [
       { p: 0.00, stage: 0 },
-      { p: 0.14, stage: 0 },
-      { p: 0.21, stage: 1 },
+      { p: 0.13, stage: 0 },
+      { p: 0.19, stage: 1 },
       { p: 0.35, stage: 1 },
-      { p: 0.42, stage: 2 },
+      { p: 0.41, stage: 2 },
       { p: 0.53, stage: 2 },
-      { p: 0.60, stage: 3 },
+      { p: 0.59, stage: 3 },
       { p: 0.71, stage: 3 },
-      { p: 0.78, stage: 4 },
-      { p: 0.86, stage: 4 },
-      { p: 0.92, stage: 5 },
+      { p: 0.77, stage: 4 },
+      { p: 0.87, stage: 4 },
+      { p: 0.93, stage: 5 },
       { p: 1.00, stage: 5 }
     ];
 
@@ -1550,21 +1455,24 @@
 
     let currentScrollProgress = 0;
     let targetScrollProgress = 0;
-    let currentYFollow = -240;
-    let targetYFollow = -240;
+    let currentYFollow = -140;
+    let targetYFollow = -140;
     let animFrameId = null;
 
     function computeScrollMetrics() {
       const rect = aboutSection.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      const startTop = vh * 0.84;
-      const endTop = vh * 0.10 - rect.height;
-      const totalRun = startTop - endTop;
+      // Starts LATER (when #about top reaches 52% of viewport height)
+      // Ends EARLIER (when #about bottom reaches 48% of viewport height)
+      // This tighter scroll range makes the entire 6-stage animation play through faster!
+      const startTop = vh * 0.52;
+      const endTop = vh * 0.48 - rect.height;
+      const totalRun = Math.max(180, startTop - endTop);
       const rawProgress = (startTop - rect.top) / totalRun;
       const progress = Math.max(0, Math.min(1, rawProgress));
 
-      const yOffset = -240 + progress * 660;
+      const yOffset = -140 + progress * 320;
       return { progress: progress, yOffset: yOffset };
     }
 
@@ -1578,18 +1486,15 @@
       const t = easeInOutQuint(rawT);
       const swirlEnvelope = Math.sin(rawT * Math.PI);
 
-      /* Singularity Spin-Out (at start of Stage 0) & Spin-In (at end of Stage 5):
-         - Progress 0.00 -> 0.09: radialScale expands 0.0 -> 1.0 while spinning 540 deg (3*PI rad)
-         - Progress 0.92 -> 1.00: radialScale collapses 1.0 -> 0.0 while spinning -540 deg (-3*PI rad) */
       let singularityScale = 1;
       let singularitySpinRad = 0;
 
-      if (progress < 0.09) {
-        const u = easeOutCubic(Math.max(0, Math.min(1, progress / 0.09)));
+      if (progress < 0.08) {
+        const u = easeOutCubic(Math.max(0, Math.min(1, progress / 0.08)));
         singularityScale = u;
         singularitySpinRad = (1 - u) * Math.PI * 3;
-      } else if (progress > 0.92) {
-        const v = easeInCubic(Math.max(0, Math.min(1, (progress - 0.92) / 0.08)));
+      } else if (progress > 0.93) {
+        const v = easeInCubic(Math.max(0, Math.min(1, (progress - 0.93) / 0.07)));
         singularityScale = 1 - v;
         singularitySpinRad = -v * Math.PI * 3;
       }
@@ -1619,7 +1524,6 @@
         const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.90 : strandB.role === 'guide' ? 0.42 : 0.68) : 0;
         let opacity = alphaA + (alphaB - alphaA) * t;
 
-        // Keep the central point glowing even when collapsed to a singularity point
         const effectiveOpacity = opacity * (0.25 + 0.75 * singularityScale);
 
         const dominantRole = rawT < 0.5 ? strandA.role : strandB.role;
@@ -1653,7 +1557,6 @@
           let x = ax + dx * t - dy * curlScale;
           let y = ay + dy * t + dx * curlScale;
 
-          // Apply Singularity Vortex Spin & Radial Scale around (CENTER_X, CENTER_Y)
           if (singularityScale < 0.9999 || Math.abs(singularitySpinRad) > 0.0001) {
             const rx = (x - CENTER_X) * singularityScale;
             const ry = (y - CENTER_Y) * singularityScale;
@@ -1681,8 +1584,8 @@
       const diffY = targetYFollow - currentYFollow;
 
       if (Math.abs(diffP) > 0.0004 || Math.abs(diffY) > 0.1) {
-        currentScrollProgress += diffP * 0.20;
-        currentYFollow += diffY * 0.20;
+        currentScrollProgress += diffP * 0.24;
+        currentYFollow += diffY * 0.24;
         renderMorphState(currentScrollProgress, currentYFollow);
         animFrameId = requestAnimationFrame(tickLoop);
       } else {
@@ -1703,13 +1606,12 @@
       }
     }
 
-    // Clicking any of the 6 HUD stage pills previews that drawing directly
-    const PILL_PROGRESS = [0.11, 0.28, 0.47, 0.65, 0.82, 0.93];
+    const PILL_PROGRESS = [0.10, 0.27, 0.47, 0.65, 0.82, 0.94];
     stagePills.forEach(pill => {
       pill.style.cursor = 'pointer';
       pill.addEventListener('click', () => {
         const idx = parseInt(pill.getAttribute('data-stage'), 10);
-        targetScrollProgress = PILL_PROGRESS[idx] !== undefined ? PILL_PROGRESS[idx] : 0.11;
+        targetScrollProgress = PILL_PROGRESS[idx] !== undefined ? PILL_PROGRESS[idx] : 0.10;
         if (!animFrameId) {
           animFrameId = requestAnimationFrame(tickLoop);
         }
