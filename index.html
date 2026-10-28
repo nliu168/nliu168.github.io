@@ -22,7 +22,6 @@
     --font-head: "Space Grotesk", "Segoe UI", sans-serif;
     --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
     --font-body: "Inter", "Segoe UI", sans-serif;
-
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
   }
@@ -322,25 +321,89 @@
     max-width: 28ch;
   }
 
-  /* ABOUT */
+  /* ABOUT & DYNAMIC SCROLL LINE ILLUSTRATIONS */
+  #about {
+    overflow: hidden;
+    padding: 108px 0;
+  }
+  .about-bg-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .about-bg-canvas svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .blueprint-group {
+    transition: transform 0.12s linear, opacity 0.25s ease;
+    will-change: transform, opacity;
+  }
+  .draw-line {
+    fill: none;
+    stroke: var(--blue-line);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.36;
+  }
+  .draw-line.accent {
+    stroke: var(--orange);
+    stroke-width: 1.65;
+    opacity: 0.52;
+  }
+  .draw-line.guide {
+    stroke: var(--blue-line);
+    stroke-width: 1;
+    stroke-dasharray: 4 6;
+    opacity: 0.22;
+  }
+  .bp-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    fill: var(--blue-line);
+    letter-spacing: 0.08em;
+    opacity: 0.48;
+    transition: opacity 0.3s ease;
+  }
+  .bp-label.accent {
+    fill: var(--orange);
+    opacity: 0.65;
+  }
+
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 56px;
+    position: relative;
+    z-index: 2;
+  }
+  .about-copy {
+    background: rgba(11, 21, 34, 0.68);
+    backdrop-filter: blur(4px);
+    padding: 24px 26px;
+    border-radius: var(--radius-s);
+    border: 1px solid rgba(63, 124, 173, 0.22);
   }
   .about-copy p {
     color: var(--paper-dim);
     margin-bottom: 18px;
     max-width: 60ch;
   }
+  .about-copy p:last-child { margin-bottom: 0; }
   .about-copy p:first-child { color: var(--paper); font-size: 1.08rem; }
+
   .spec-sheet {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     border: 1px solid var(--blue-line-soft);
     border-radius: var(--radius-s);
     overflow: hidden;
-    background: rgba(15, 32, 54, 0.55);
+    background: rgba(15, 32, 54, 0.78);
+    backdrop-filter: blur(6px);
   }
   .spec-sheet .spec-title {
     background: var(--navy-800);
@@ -910,8 +973,123 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ABOUT (WITH SCROLL-DRIVEN BLUEPRINT ILLUSTRATIONS) -->
   <section id="about">
+    <!-- Dynamic Scroll-Linked Blueprint Schematics Background -->
+    <div class="about-bg-canvas" aria-hidden="true">
+      <svg id="aboutBlueprintSvg" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice">
+
+        <!-- 1. FORMULA SAE RACECAR & COILOVER SUSPENSION (Top-Left) -->
+        <g class="blueprint-group" data-parallax="-32" data-start="0.0" data-end="0.58">
+          <text x="48" y="42" class="bp-label accent">FIG 02.1 // FORMULA SAE — SUSPENSION &amp; CHASSIS</text>
+          <!-- Ground plane datum -->
+          <line class="draw-line guide" x1="35" y1="168" x2="385" y2="168"/>
+          <!-- Open-wheel FSAE side profile -->
+          <path class="draw-line" d="M 55 148 L 105 148 L 138 122 L 195 120 L 218 86 L 238 86 L 250 126 L 325 134 L 345 148 L 70 148 Z"/>
+          <!-- Front & rear wings -->
+          <path class="draw-line accent" d="M 42 152 L 78 152 L 74 140 L 46 144 Z"/>
+          <path class="draw-line accent" d="M 322 82 L 356 78 L 352 128 L 328 128 Z"/>
+          <!-- Rear wheel & tire -->
+          <circle class="draw-line" cx="295" cy="146" r="22"/>
+          <circle class="draw-line accent" cx="295" cy="146" r="11"/>
+          <!-- Front wheel & tire -->
+          <circle class="draw-line" cx="105" cy="146" r="22"/>
+          <circle class="draw-line accent" cx="105" cy="146" r="11"/>
+          <!-- Double-wishbone + coilover spring schematic callout -->
+          <circle class="draw-line guide" cx="430" cy="112" r="52"/>
+          <!-- Upper & lower A-arms -->
+          <path class="draw-line" d="M 392 88 L 452 96 L 452 132 L 392 140"/>
+          <!-- Coilover damper & spring -->
+          <path class="draw-line accent" d="M 402 74 L 412 84 L 406 90 L 420 96 L 410 104 L 424 110 L 414 118 L 428 124 L 442 134"/>
+          <text x="385" y="182" class="bp-label">CAMBER: -1.8° // SPRING RATE: 250 LB/IN</text>
+        </g>
+
+        <!-- 2. HIGH-POWER ROCKET LAUNCH & APOGEE ARC (Right Side) -->
+        <g class="blueprint-group" data-parallax="-55" data-start="0.08" data-end="0.72">
+          <text x="890" y="54" class="bp-label accent">FIG 02.2 // NASA STUDENT LAUNCH — 4,700 FT APOGEE</text>
+          <!-- Parabolic launch trajectory arc -->
+          <path class="draw-line guide" d="M 885 370 Q 950 130 1125 68"/>
+          <!-- Apogee altitude marker -->
+          <circle class="draw-line accent" cx="1125" cy="68" r="6"/>
+          <line class="draw-line guide" x1="1045" y1="68" x2="1170" y2="68"/>
+          <!-- High-power rocket body (angled along trajectory) -->
+          <g transform="translate(1010, 165) rotate(-32)">
+            <path class="draw-line accent" d="M 0 -58 C 12 -34 14 -14 14 42 L -14 42 C -14 -14 -12 -34 0 -58 Z"/>
+            <!-- Nosecone bulkhead & payload bay -->
+            <line class="draw-line" x1="-13" y1="-16" x2="13" y2="-16"/>
+            <line class="draw-line" x1="-14" y1="10" x2="14" y2="10"/>
+            <!-- Swept fins -->
+            <path class="draw-line" d="M -14 18 L -32 46 L -14 42"/>
+            <path class="draw-line" d="M 14 18 L 32 46 L 14 42"/>
+            <!-- Exhaust plume vectors -->
+            <path class="draw-line accent" d="M -7 42 L 0 76 L 7 42"/>
+            <path class="draw-line" d="M -3 42 L 0 60 L 3 42"/>
+          </g>
+          <!-- Deployment parachute canopy schematic -->
+          <path class="draw-line" d="M 1085 118 A 28 24 0 0 1 1141 118 Z"/>
+          <path class="draw-line guide" d="M 1085 118 L 1113 148 M 1141 118 L 1113 148 M 1113 118 L 1113 148"/>
+        </g>
+
+        <!-- 3. 35MM FILM CAMERA & OPTICS (Bottom-Left) -->
+        <g class="blueprint-group" data-parallax="24" data-start="0.22" data-end="0.86">
+          <text x="52" y="472" class="bp-label accent">FIG 02.3 // 35MM FILM OPTICS &amp; SHUTTER</text>
+          <!-- Camera body shell -->
+          <rect class="draw-line" x="52" y="502" width="176" height="108" rx="8"/>
+          <!-- Top prism housing & shutter release -->
+          <path class="draw-line" d="M 96 502 L 112 478 L 168 478 L 184 502"/>
+          <rect class="draw-line accent" x="194" y="492" width="20" height="10" rx="2"/>
+          <circle class="draw-line" cx="74" cy="495" r="7"/>
+          <!-- Minolta A-mount concentric lens rings & aperture blades -->
+          <circle class="draw-line" cx="140" cy="556" r="42"/>
+          <circle class="draw-line accent" cx="140" cy="556" r="30"/>
+          <circle class="draw-line guide" cx="140" cy="556" r="18"/>
+          <path class="draw-line" d="M 128 542 L 152 542 L 158 560 L 140 572 L 122 560 Z"/>
+          <!-- 35mm film strip & sprocket holes -->
+          <path class="draw-line" d="M 246 518 L 372 518 L 372 594 L 246 594 Z"/>
+          <line class="draw-line guide" x1="246" y1="530" x2="372" y2="530"/>
+          <line class="draw-line guide" x1="246" y1="582" x2="372" y2="582"/>
+          <rect class="draw-line accent" x="260" y="536" width="44" height="40"/>
+          <rect class="draw-line accent" x="314" y="536" width="44" height="40"/>
+        </g>
+
+        <!-- 4. RUNNING, HIKING TOPOGRAPHY & STRIDE KINEMATICS (Bottom-Center) -->
+        <g class="blueprint-group" data-parallax="35" data-start="0.28" data-end="0.94">
+          <text x="455" y="520" class="bp-label accent">FIG 02.4 // ENDURANCE — TRAIL ELEVATION &amp; CADENCE</text>
+          <!-- Mountain / trail elevation profile -->
+          <path class="draw-line" d="M 445 645 L 495 595 L 535 618 L 595 548 L 650 605 L 700 572 L 760 645"/>
+          <path class="draw-line guide" d="M 445 645 L 760 645"/>
+          <!-- Runner kinematic stick-figure & stride arc -->
+          <circle class="draw-line accent" cx="602" cy="532" r="7"/>
+          <path class="draw-line accent" d="M 600 539 L 590 564 L 608 578 L 602 598"/>
+          <path class="draw-line accent" d="M 590 564 L 574 576 L 560 590"/>
+          <path class="draw-line accent" d="M 596 547 L 614 554 L 622 544"/>
+          <path class="draw-line accent" d="M 596 547 L 580 554 L 574 544"/>
+        </g>
+
+        <!-- 5. PICKLEBALL PADDLE & TRAJECTORY (Bottom-Right) -->
+        <g class="blueprint-group" data-parallax="-20" data-start="0.34" data-end="0.98">
+          <text x="865" y="495" class="bp-label accent">FIG 02.5 // PICKLEBALL — IMPACT KINEMATICS</text>
+          <!-- Pickleball paddle angled -->
+          <g transform="translate(935, 575) rotate(-24)">
+            <rect class="draw-line" x="-36" y="-52" width="72" height="88" rx="24"/>
+            <rect class="draw-line guide" x="-28" y="-44" width="56" height="72" rx="18"/>
+            <path class="draw-line accent" d="M -9 36 L -7 76 L 7 76 L 9 36"/>
+            <line class="draw-line" x1="-8" y1="48" x2="8" y2="52"/>
+            <line class="draw-line" x1="-8" y1="60" x2="8" y2="64"/>
+          </g>
+          <!-- Perforated pickleball + bounce trajectory -->
+          <path class="draw-line guide" d="M 975 555 Q 1045 505 1110 578"/>
+          <circle class="draw-line accent" cx="1065" cy="536" r="22"/>
+          <circle class="draw-line" cx="1057" cy="528" r="3"/>
+          <circle class="draw-line" cx="1073" cy="528" r="3"/>
+          <circle class="draw-line" cx="1065" cy="542" r="3"/>
+          <circle class="draw-line" cx="1054" cy="544" r="2.5"/>
+          <circle class="draw-line" cx="1076" cy="544" r="2.5"/>
+        </g>
+
+      </svg>
+    </div>
+
     <div class="wrap">
       <div class="section-head reveal">
         <div>
@@ -922,8 +1100,8 @@
       </div>
       <div class="about-grid">
         <div class="about-copy reveal" style="--delay: 80ms;">
-          <p>I'm a first-year engineering student at Purdue intending to major in mechanical engineering. I have considerable practical experience from competing in Science Olympiad and competitive rocketry in high school at Thomas Jefferson High School for Science and Technology.</p>
-          <p>Some highlights are placing 3RD in Engineering CAD at Science Olympiad Nationals and passing the PDR, CDR, AND FRR to launch our high-power rocket at NASA Student Launch.</p>
+          <p>I'm a first-year engineering student at Purdue intending to major in mechanical engineering. I recently joined Purdue's Formula SAE team as a suspension team member and I am excited to develop my skills.</p>
+          <p>Some highlights from my prior experience are placing 3RD in Engineering CAD at Science Olympiad Nationals and passing the PDR, CDR, AND FRR to launch our high-power rocket at NASA Student Launch.</p>
           <p>In my free time, I enjoy a LOT of hobbies, which include running, photography, video-editing, pickleball, hiking, gaming, and more. The list is always growing!</p>
         </div>
         <dl class="spec-sheet reveal" style="--delay: 160ms;">
@@ -969,7 +1147,7 @@
 
         <article class="project-card reveal" style="--delay: 100ms;" tabindex="0" role="button" data-project-id="rocket-rover">
           <div class="project-thumb">
-            <span class="thumb-tag">Robotics & Aerospace</span>
+            <span class="thumb-tag">Robotics &amp; Aerospace</span>
             <span class="thumb-index">DWG // 02</span>
             <img src="images/rover.jpg" alt="High Power Rocket Rover and Deployment System">
           </div>
@@ -1035,12 +1213,12 @@
         <div class="contact-info reveal" style="--delay: 80ms;">
           <p>The fastest way to reach me is email. I usually reply within a day or two, faster during the semester.</p>
           <ul class="contact-list">
-            <li><span class="k">Email</span><a href="mailto:liu4697@purdue.edu">liu4697@purdue.edu</a></li>
+            <li><span class="k">Email</span><a href="mailto:nathanliu2026@gmail.com">nathanliu2026@gmail.com</a></li>
             <li><span class="k">Phone</span><span class="v">(571) 581-0170</span></li>
             <li><span class="k">Location</span><span class="v">West Lafayette, IN</span></li>
             <li>
               <span class="k">LinkedIn</span>
-              <a href="https://linkedin.com/in/nathan-liu-8069112a2/" target="_blank" rel="noopener">/in/nathan-liu-8069112a2</a>
+              <a href="https://linkedin.com/in/nathanliu168/" target="_blank" rel="noopener">/in/nathanliu168</a>
             </li>
           </ul>
         </div>
@@ -1103,7 +1281,7 @@
 
         <div class="spec-sheet" style="padding: 18px;">
           <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--orange); margin-bottom: 10px;">
-            TOOLS & TECHNOLOGIES
+            TOOLS &amp; TECHNOLOGIES
           </div>
           <div class="project-meta" id="detailTags" style="margin-top: 0;"></div>
         </div>
@@ -1263,6 +1441,92 @@
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
   }
 
+  /* ---------------- SCROLL-LINKED LINE ANIMATIONS (BACKGROUND SECTION) ---------------- */
+  (function initAboutScrollLines() {
+    const aboutSection = document.getElementById('about');
+    const groups = document.querySelectorAll('#aboutBlueprintSvg .blueprint-group');
+    if (!aboutSection || !groups.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Measure every SVG shape in each blueprint group and prepare stroke-dasharray
+    const groupData = Array.from(groups).map(group => {
+      const shapes = group.querySelectorAll('.draw-line:not(.guide)');
+      const shapeMetrics = [];
+
+      shapes.forEach(shape => {
+        if (typeof shape.getTotalLength === 'function') {
+          try {
+            const len = shape.getTotalLength();
+            if (len > 0) {
+              shape.style.strokeDasharray = len;
+              if (!prefersReducedMotion) {
+                shape.style.strokeDashoffset = len;
+              }
+              shapeMetrics.push({ el: shape, len: len });
+            }
+          } catch (e) {
+            // Fallback if SVG element is hidden during init
+          }
+        }
+      });
+
+      return {
+        group: group,
+        parallax: parseFloat(group.getAttribute('data-parallax') || '0'),
+        start: parseFloat(group.getAttribute('data-start') || '0'),
+        end: parseFloat(group.getAttribute('data-end') || '1'),
+        shapes: shapeMetrics
+      };
+    });
+
+    if (prefersReducedMotion) return;
+
+    let ticking = false;
+
+    function updateBlueprintLines() {
+      ticking = false;
+      if (document.body.classList.contains('detail-open')) return;
+
+      const rect = aboutSection.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // Normalized progress (0 when section top enters bottom of viewport -> 1 when section bottom leaves top)
+      const totalTravel = vh + rect.height;
+      const currentTravel = vh - rect.top;
+      const rawProgress = Math.max(0, Math.min(1, currentTravel / totalTravel));
+
+      groupData.forEach(item => {
+        // Local draw progress for this specific illustration
+        const span = Math.max(0.05, item.end - item.start);
+        const localRaw = Math.max(0, Math.min(1, (rawProgress - item.start) / span));
+        // Smooth cubic ease-out curve so lines draw in fluidly as you scroll down and reverse as you scroll up
+        const eased = 1 - Math.pow(1 - localRaw, 3);
+
+        item.shapes.forEach(s => {
+          s.el.style.strokeDashoffset = s.len * (1 - eased);
+        });
+
+        // Subtle vertical parallax shift tied to scroll
+        const yOffset = (rawProgress - 0.5) * item.parallax;
+        item.group.style.transform = 'translate3d(0, ' + yOffset.toFixed(1) + 'px, 0)';
+        item.group.style.opacity = (0.2 + 0.8 * eased).toFixed(2);
+      });
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateBlueprintLines);
+      }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+    window.addEventListener('resize', requestTick);
+    updateBlueprintLines();
+  })();
+
+  /* ---------------- PROJECT DETAIL SPA CONTROLLER ---------------- */
   const projectPage = document.getElementById('projectPage');
   let lastScrollY = 0;
 
