@@ -74,24 +74,16 @@
     z-index: 1;
   }
 
-  /* SAFE SCROLL REVEAL: Visible by default unless JS is active */
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
+  /* SAFE SCROLL REVEAL */
+  .reveal { opacity: 1; transform: none; }
   body.js-ready .reveal {
     opacity: 0;
     transform: translateY(28px);
-    transition:
-      opacity 0.85s var(--ease-out-expo),
-      transform 0.85s var(--ease-out-expo);
+    transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
     transition-delay: var(--delay, 0ms);
     will-change: opacity, transform;
   }
-  body.js-ready .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  body.js-ready .reveal.in-view { opacity: 1; transform: translateY(0); }
 
   /* NAV */
   header.site-nav {
@@ -157,9 +149,7 @@
 
   /* VIEW TRANSITION WRAPPER */
   #homeView {
-    transition:
-      opacity 0.45s var(--ease-out-quart),
-      transform 0.55s var(--ease-out-expo);
+    transition: opacity 0.45s var(--ease-out-quart), transform 0.55s var(--ease-out-expo);
     transform-origin: center top;
   }
   body.detail-open #homeView {
@@ -171,10 +161,7 @@
   }
 
   /* HERO */
-  .hero {
-    padding: 110px 0 90px;
-    position: relative;
-  }
+  .hero { padding: 110px 0 90px; position: relative; }
   .hero-grid {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
@@ -197,10 +184,7 @@
     transform-origin: left;
     animation: growLine 1s var(--ease-out-expo) forwards;
   }
-  @keyframes growLine {
-    from { transform: scaleX(0); }
-    to { transform: scaleX(1); }
-  }
+  @keyframes growLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   .hero h1 {
     font-family: var(--font-head);
     font-weight: 700;
@@ -231,11 +215,7 @@
     gap: 10px;
     cursor: pointer;
     border: 1px solid var(--blue-line-soft);
-    transition:
-      transform 0.25s var(--ease-out-quart),
-      border-color 0.2s ease,
-      background 0.2s ease,
-      box-shadow 0.25s var(--ease-out-quart);
+    transition: transform 0.25s var(--ease-out-quart), border-color 0.2s ease, background 0.2s ease, box-shadow 0.25s var(--ease-out-quart);
   }
   .btn:hover { transform: translateY(-2px); }
   .btn:active { transform: translateY(0); }
@@ -252,24 +232,10 @@
   .btn-ghost { color: var(--paper); background: transparent; }
   .btn-ghost:hover { border-color: var(--paper); background: rgba(63,124,173,0.1); }
 
-  .hero-diagram {
-    aspect-ratio: 1/1;
-    position: relative;
-  }
-  .hero-diagram svg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-  .hero-diagram .cad-ring {
-    transform-origin: 150px 150px;
-    animation: slowSpin 48s linear infinite;
-  }
-  @keyframes slowSpin {
-    to { transform: rotate(360deg); }
-  }
+  .hero-diagram { aspect-ratio: 1/1; position: relative; }
+  .hero-diagram svg { width: 100%; height: 100%; position: absolute; inset: 0; pointer-events: none; }
+  .hero-diagram .cad-ring { transform-origin: 150px 150px; animation: slowSpin 48s linear infinite; }
+  @keyframes slowSpin { to { transform: rotate(360deg); } }
   .hero-diagram .portrait-frame {
     position: absolute;
     inset: 14%;
@@ -278,23 +244,11 @@
     border: 1px solid var(--blue-line-soft);
     transition: border-color 0.4s ease, transform 0.6s var(--ease-out-expo);
   }
-  .hero-diagram:hover .portrait-frame {
-    border-color: var(--orange);
-    transform: scale(1.02);
-  }
-  .hero-diagram .portrait-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  .hero-diagram:hover .portrait-frame { border-color: var(--orange); transform: scale(1.02); }
+  .hero-diagram .portrait-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* SECTION SCAFFOLD */
-  section {
-    padding: 88px 0;
-    position: relative;
-    border-top: 1px solid var(--blue-line-soft);
-  }
+  section { padding: 88px 0; position: relative; border-top: 1px solid var(--blue-line-soft); }
   .section-head {
     display: flex;
     align-items: baseline;
@@ -303,135 +257,66 @@
     margin-bottom: 52px;
     flex-wrap: wrap;
   }
-  .section-num {
-    font-family: var(--font-mono);
-    color: var(--orange);
-    font-size: 0.85rem;
-  }
-  .section-head h2 {
-    font-family: var(--font-head);
-    font-size: clamp(1.7rem, 3vw, 2.3rem);
-    font-weight: 600;
-  }
-  .section-tag {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--paper-dim);
-    text-align: right;
-    max-width: 28ch;
-  }
+  .section-num { font-family: var(--font-mono); color: var(--orange); font-size: 0.85rem; }
+  .section-head h2 { font-family: var(--font-head); font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 600; }
+  .section-tag { font-family: var(--font-mono); font-size: 0.8rem; color: var(--paper-dim); text-align: right; max-width: 28ch; }
 
-  /* ==================== ABOUT & VECTOR MORPHING ENGINE ==================== */
+  /* ==================== ABOUT & VIEWPORT-FOLLOWING VECTOR MORPHING ENGINE ==================== */
   #about {
     position: relative;
-    /* Extra scroll runway so scrolling smoothly scrubs through all 4 morph stages */
-    padding: 135px 0 155px;
-    overflow: hidden;
+    padding: 145px 0 175px;
+    /* Allow the morphing stage to start above #about and end below #about */
+    overflow: visible;
+    z-index: 2;
   }
   .morph-bg-stage {
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
+    top: -150px;
+    bottom: -150px;
     z-index: 0;
     pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
   }
   .morph-bg-stage svg {
     width: 100%;
-    height: 100%;
-    max-width: 1360px;
-    max-height: 820px;
+    height: 660px;
+    max-width: 1320px;
     display: block;
     overflow: visible;
+    will-change: transform;
   }
   .morph-strand {
     fill: none;
     stroke: var(--blue-line);
-    stroke-width: 1.55;
+    stroke-width: 1.9;
     stroke-linecap: round;
     stroke-linejoin: round;
     will-change: d, opacity;
   }
   .morph-strand.accent {
     stroke: var(--orange);
-    stroke-width: 1.85;
+    stroke-width: 2.35;
+    filter: drop-shadow(0 0 9px rgba(232, 98, 44, 0.32));
   }
   .morph-strand.guide {
     stroke-dasharray: 4 7;
-    stroke-width: 1.15;
+    stroke-width: 1.35;
   }
   .morph-node {
     fill: var(--navy-950);
     stroke: var(--orange);
-    stroke-width: 1.4;
-    will-change: cx, cy, opacity, r;
+    stroke-width: 1.7;
+    will-change: cx, cy, opacity;
   }
-  .morph-node.secondary {
-    stroke: var(--blue-line);
-  }
-  .morph-reticle {
-    stroke: rgba(63, 124, 173, 0.22);
-    stroke-width: 1;
-    fill: none;
-  }
+  .morph-node.secondary { stroke: var(--blue-line); }
+  .morph-reticle { stroke: rgba(63, 124, 173, 0.24); stroke-width: 1; fill: none; }
 
-  /* CAD Morph Telemetry HUD Bar */
-  .morph-hud {
-    margin-top: 44px;
-    padding: 12px 18px;
-    background: rgba(11, 21, 34, 0.78);
-    backdrop-filter: blur(6px);
-    border: 1px solid var(--blue-line-soft);
-    border-radius: var(--radius-s);
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 2;
-  }
-  .morph-hud-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--paper);
-  }
-  .morph-pulse {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--orange);
-    box-shadow: 0 0 10px var(--orange);
-  }
-  .morph-hud-stages {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .morph-stage-pill {
-    padding: 3px 9px;
-    border: 1px solid var(--blue-line-soft);
-    border-radius: var(--radius-s);
-    color: var(--paper-dim);
-    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
-  }
-  .morph-stage-pill.active {
-    border-color: var(--orange);
-    color: var(--orange);
-    background: rgba(232, 98, 44, 0.12);
-  }
-  .morph-hud-telemetry {
-    color: var(--paper-dim);
-  }
-  .morph-hud-telemetry strong {
-    color: var(--orange);
-    font-weight: 500;
-  }
-
+  /* High-transparency glass panels so the morphing schematics shine through clearly */
   .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -440,19 +325,21 @@
     z-index: 2;
   }
   .about-copy {
-    background: rgba(11, 21, 34, 0.62);
-    backdrop-filter: blur(4px);
+    background: rgba(11, 21, 34, 0.16);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
     padding: 24px 26px;
     border-radius: var(--radius-s);
     border: 1px solid rgba(63, 124, 173, 0.24);
   }
   .about-copy p {
-    color: var(--paper-dim);
+    color: var(--paper);
     margin-bottom: 18px;
     max-width: 60ch;
+    text-shadow: 0 1px 10px rgba(11, 21, 34, 0.95), 0 0 5px rgba(11, 21, 34, 0.9);
   }
   .about-copy p:last-child { margin-bottom: 0; }
-  .about-copy p:first-child { color: var(--paper); font-size: 1.08rem; }
+  .about-copy p:first-child { color: #ffffff; font-size: 1.08rem; }
 
   .spec-sheet {
     font-family: var(--font-mono);
@@ -460,11 +347,12 @@
     border: 1px solid var(--blue-line-soft);
     border-radius: var(--radius-s);
     overflow: hidden;
-    background: rgba(15, 32, 54, 0.72);
-    backdrop-filter: blur(5px);
+    background: rgba(15, 32, 54, 0.20);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
   }
   .spec-sheet .spec-title {
-    background: var(--navy-800);
+    background: rgba(22, 48, 79, 0.34);
     padding: 10px 16px;
     color: var(--orange);
     border-bottom: 1px solid var(--blue-line-soft);
@@ -478,21 +366,59 @@
     padding: 11px 16px;
     border-bottom: 1px solid var(--blue-line-soft);
     transition: background 0.25s ease, padding-left 0.25s var(--ease-out-quart);
+    text-shadow: 0 1px 8px rgba(11, 21, 34, 0.95);
   }
-  .spec-row:hover {
-    background: rgba(63, 124, 173, 0.12);
-    padding-left: 22px;
-  }
+  .spec-row:hover { background: rgba(63, 124, 173, 0.16); padding-left: 22px; }
   .spec-row:last-child { border-bottom: none; }
   .spec-row dt { color: var(--paper-dim); }
   .spec-row dd { color: var(--paper); text-align: right; }
 
-  /* INTERACTIVE PROJECT CARDS */
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+  /* CAD Morph Telemetry HUD Bar */
+  .morph-hud {
+    margin-top: 44px;
+    padding: 12px 18px;
+    background: rgba(11, 21, 34, 0.20);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
   }
+  .morph-hud-left { display: flex; align-items: center; gap: 12px; color: var(--paper); }
+  .morph-pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 10px var(--orange);
+  }
+  .morph-hud-stages { display: flex; gap: 8px; flex-wrap: wrap; }
+  .morph-stage-pill {
+    padding: 3px 9px;
+    border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s);
+    color: var(--paper-dim);
+    background: rgba(11, 21, 34, 0.3);
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  }
+  .morph-stage-pill.active {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: rgba(232, 98, 44, 0.18);
+  }
+  .morph-hud-telemetry { color: var(--paper-dim); }
+  .morph-hud-telemetry strong { color: var(--orange); font-weight: 500; }
+
+  /* INTERACTIVE PROJECT CARDS */
+  #projects { position: relative; z-index: 3; }
+  .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
   .project-card {
     background: var(--navy-900);
     border-radius: var(--radius-s);
@@ -502,452 +428,176 @@
     cursor: pointer;
     position: relative;
     border: 1px solid var(--blue-line-soft);
-    transition:
-      transform 0.45s var(--ease-out-expo),
-      border-color 0.35s var(--ease-out-quart),
-      box-shadow 0.45s var(--ease-out-expo);
+    transition: transform 0.45s var(--ease-out-expo), border-color 0.35s var(--ease-out-quart), box-shadow 0.45s var(--ease-out-expo);
   }
-  .project-card::before,
-  .project-card::after {
+  .project-card::before, .project-card::after {
     content: "";
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 14px; height: 14px;
     border: 2px solid var(--orange);
     z-index: 3;
     opacity: 0;
     transition: opacity 0.3s var(--ease-out-quart), transform 0.35s var(--ease-out-expo);
     pointer-events: none;
   }
-  .project-card::before {
-    top: 8px; left: 8px;
-    border-right: none; border-bottom: none;
-    transform: translate(-6px, -6px);
-  }
-  .project-card::after {
-    bottom: 8px; right: 8px;
-    border-left: none; border-top: none;
-    transform: translate(6px, 6px);
-  }
-  .project-card:hover,
-  .project-card:focus-visible {
+  .project-card::before { top: 8px; left: 8px; border-right: none; border-bottom: none; transform: translate(-6px, -6px); }
+  .project-card::after { bottom: 8px; right: 8px; border-left: none; border-top: none; transform: translate(6px, 6px); }
+  .project-card:hover, .project-card:focus-visible {
     transform: translateY(-7px);
     border-color: var(--orange);
     box-shadow: 0 20px 42px rgba(5, 11, 20, 0.65);
     outline: none;
   }
-  .project-card:hover::before,
-  .project-card:focus-visible::before,
-  .project-card:hover::after,
-  .project-card:focus-visible::after {
+  .project-card:hover::before, .project-card:focus-visible::before,
+  .project-card:hover::after, .project-card:focus-visible::after {
     opacity: 1;
     transform: translate(0, 0);
   }
-  .project-thumb {
-    aspect-ratio: 4/3;
-    position: relative;
-    background: var(--navy-800);
-    overflow: hidden;
-  }
-  .project-thumb img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    transition: transform 0.7s var(--ease-out-expo);
-  }
-  .project-card:hover .project-thumb img {
-    transform: scale(1.06);
-  }
+  .project-thumb { aspect-ratio: 4/3; position: relative; background: var(--navy-800); overflow: hidden; }
+  .project-thumb img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform 0.7s var(--ease-out-expo); }
+  .project-card:hover .project-thumb img { transform: scale(1.06); }
   .project-thumb .thumb-tag {
-    position: absolute;
-    top: 12px; left: 12px;
-    z-index: 2;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    background: rgba(11, 21, 34, 0.9);
-    backdrop-filter: blur(4px);
-    color: var(--orange);
-    padding: 4px 9px;
-    border-radius: var(--radius-s);
-    border: 1px solid var(--orange-soft);
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    background: rgba(11, 21, 34, 0.9); backdrop-filter: blur(4px);
+    color: var(--orange); padding: 4px 9px;
+    border-radius: var(--radius-s); border: 1px solid var(--orange-soft);
   }
   .project-thumb .thumb-index {
-    position: absolute;
-    bottom: 12px; right: 12px;
-    z-index: 2;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    background: rgba(11, 21, 34, 0.85);
-    color: var(--paper-dim);
-    padding: 3px 8px;
-    border-radius: var(--radius-s);
-    border: 1px solid var(--blue-line-soft);
+    position: absolute; bottom: 12px; right: 12px; z-index: 2;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    background: rgba(11, 21, 34, 0.85); color: var(--paper-dim);
+    padding: 3px 8px; border-radius: var(--radius-s); border: 1px solid var(--blue-line-soft);
   }
-  .project-body {
-    padding: 22px 22px 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .project-body h3 {
-    font-family: var(--font-head);
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    transition: color 0.25s ease;
-  }
-  .project-card:hover .project-body h3 {
-    color: var(--orange);
-  }
-  .project-body p {
-    color: var(--paper-dim);
-    font-size: 0.92rem;
-    flex: 1;
-  }
-  .project-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--blue-line);
-  }
-  .project-meta span {
-    border: 1px solid var(--blue-line-soft);
-    padding: 3px 8px;
-    border-radius: var(--radius-s);
-  }
+  .project-body { padding: 22px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+  .project-body h3 { font-family: var(--font-head); font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; transition: color 0.25s ease; }
+  .project-card:hover .project-body h3 { color: var(--orange); }
+  .project-body p { color: var(--paper-dim); font-size: 0.92rem; flex: 1; }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--blue-line); }
+  .project-meta span { border: 1px solid var(--blue-line-soft); padding: 3px 8px; border-radius: var(--radius-s); }
   .project-cta {
-    margin-top: 18px;
-    padding-top: 14px;
+    margin-top: 18px; padding-top: 14px;
     border-top: 1px dashed var(--blue-line-soft);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--paper);
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--paper);
   }
-  .project-cta .arrow {
-    color: var(--orange);
-    display: inline-block;
-    transition: transform 0.35s var(--ease-out-expo);
-  }
-  .project-card:hover .project-cta .arrow {
-    transform: translateX(6px);
-  }
+  .project-cta .arrow { color: var(--orange); display: inline-block; transition: transform 0.35s var(--ease-out-expo); }
+  .project-card:hover .project-cta .arrow { transform: translateX(6px); }
 
   /* EXPANDING CARD CLONE OVERLAY */
   .transition-clone {
-    position: fixed;
-    z-index: 120;
-    background: var(--navy-900);
-    border: 1px solid var(--orange);
-    border-radius: var(--radius-s);
-    overflow: hidden;
-    pointer-events: none;
-    transition:
-      top 0.55s var(--ease-out-expo),
-      left 0.55s var(--ease-out-expo),
-      width 0.55s var(--ease-out-expo),
-      height 0.55s var(--ease-out-expo),
-      opacity 0.4s ease;
+    position: fixed; z-index: 120;
+    background: var(--navy-900); border: 1px solid var(--orange);
+    border-radius: var(--radius-s); overflow: hidden; pointer-events: none;
+    transition: top 0.55s var(--ease-out-expo), left 0.55s var(--ease-out-expo), width 0.55s var(--ease-out-expo), height 0.55s var(--ease-out-expo), opacity 0.4s ease;
   }
 
   /* PROJECT DETAIL PAGE */
   .project-page {
-    display: none;
-    min-height: calc(100vh - 65px);
-    padding: 48px 0 96px;
-    position: relative;
-    z-index: 20;
-    opacity: 0;
-    transform: translateY(24px);
-    transition:
-      opacity 0.55s var(--ease-out-expo),
-      transform 0.55s var(--ease-out-expo);
+    display: none; min-height: calc(100vh - 65px);
+    padding: 48px 0 96px; position: relative; z-index: 20;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.55s var(--ease-out-expo), transform 0.55s var(--ease-out-expo);
   }
-  body.detail-open .project-page {
-    display: block;
-  }
-  body.detail-open .project-page.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  body.detail-open .project-page { display: block; }
+  body.detail-open .project-page.active { opacity: 1; transform: translateY(0); }
 
   .detail-topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding-bottom: 24px;
-    margin-bottom: 36px;
-    border-bottom: 1px solid var(--blue-line-soft);
-    flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; padding-bottom: 24px; margin-bottom: 36px;
+    border-bottom: 1px solid var(--blue-line-soft); flex-wrap: wrap;
   }
   .back-btn {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--paper);
-    background: var(--navy-900);
-    border: 1px solid var(--blue-line-soft);
-    padding: 10px 18px;
-    border-radius: var(--radius-s);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition:
-      border-color 0.2s ease,
-      transform 0.25s var(--ease-out-quart),
-      background 0.2s ease;
+    font-family: var(--font-mono); font-size: 0.85rem; color: var(--paper);
+    background: var(--navy-900); border: 1px solid var(--blue-line-soft);
+    padding: 10px 18px; border-radius: var(--radius-s); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: border-color 0.2s ease, transform 0.25s var(--ease-out-quart), background 0.2s ease;
   }
-  .back-btn:hover {
-    border-color: var(--orange);
-    background: var(--navy-800);
-    transform: translateX(-4px);
-  }
-  .detail-doc-id {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--paper-dim);
-  }
-  .detail-doc-id strong {
-    color: var(--orange);
-    font-weight: 500;
-  }
+  .back-btn:hover { border-color: var(--orange); background: var(--navy-800); transform: translateX(-4px); }
+  .detail-doc-id { font-family: var(--font-mono); font-size: 0.8rem; color: var(--paper-dim); }
+  .detail-doc-id strong { color: var(--orange); font-weight: 500; }
 
   .detail-header { margin-bottom: 36px; }
-  .detail-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--orange);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 12px;
-  }
-  .detail-title {
-    font-family: var(--font-head);
-    font-size: clamp(2rem, 4.2vw, 3.2rem);
-    line-height: 1.1;
-    margin-bottom: 16px;
-  }
-  .detail-subtitle {
-    font-size: 1.1rem;
-    color: var(--paper-dim);
-    max-width: 70ch;
-  }
+  .detail-eyebrow { font-family: var(--font-mono); font-size: 0.8rem; color: var(--orange); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+  .detail-title { font-family: var(--font-head); font-size: clamp(2rem, 4.2vw, 3.2rem); line-height: 1.1; margin-bottom: 16px; }
+  .detail-subtitle { font-size: 1.1rem; color: var(--paper-dim); max-width: 70ch; }
 
   .detail-hero-media {
-    position: relative;
-    background: var(--navy-900);
-    border: 1px solid var(--blue-line-soft);
-    border-radius: var(--radius-s);
-    overflow: hidden;
-    margin-bottom: 48px;
-    aspect-ratio: 16/9;
-    max-height: 540px;
-    width: 100%;
+    position: relative; background: var(--navy-900);
+    border: 1px solid var(--blue-line-soft); border-radius: var(--radius-s);
+    overflow: hidden; margin-bottom: 48px; aspect-ratio: 16/9; max-height: 540px; width: 100%;
   }
-  .detail-hero-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  .detail-hero-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .detail-hero-caption {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 12px 18px;
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 18px;
     background: linear-gradient(to top, rgba(11,21,34,0.95), transparent);
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    color: var(--paper-dim);
-    display: flex;
-    justify-content: space-between;
+    font-family: var(--font-mono); font-size: 0.76rem; color: var(--paper-dim);
+    display: flex; justify-content: space-between;
   }
 
-  .detail-content-grid {
-    display: grid;
-    grid-template-columns: 1.55fr 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-  .detail-narrative h3 {
-    font-family: var(--font-head);
-    font-size: 1.3rem;
-    margin: 28px 0 12px;
-    color: var(--paper);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .detail-content-grid { display: grid; grid-template-columns: 1.55fr 1fr; gap: 48px; align-items: start; }
+  .detail-narrative h3 { font-family: var(--font-head); font-size: 1.3rem; margin: 28px 0 12px; color: var(--paper); display: flex; align-items: center; gap: 10px; }
   .detail-narrative h3:first-child { margin-top: 0; }
-  .detail-narrative h3::before {
-    content: "//";
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--orange);
-  }
-  .detail-narrative p {
-    color: var(--paper-dim);
-    margin-bottom: 18px;
-    font-size: 0.98rem;
-    line-height: 1.7;
-  }
-  .detail-list {
-    list-style: none;
-    margin: 12px 0 24px;
-  }
-  .detail-list li {
-    position: relative;
-    padding-left: 22px;
-    margin-bottom: 10px;
-    color: var(--paper-dim);
-    font-size: 0.95rem;
-  }
-  .detail-list li::before {
-    content: "▹";
-    position: absolute;
-    left: 0;
-    color: var(--orange);
-    font-family: var(--font-mono);
-  }
+  .detail-narrative h3::before { content: "//"; font-family: var(--font-mono); font-size: 0.9rem; color: var(--orange); }
+  .detail-narrative p { color: var(--paper-dim); margin-bottom: 18px; font-size: 0.98rem; line-height: 1.7; }
+  .detail-list { list-style: none; margin: 12px 0 24px; }
+  .detail-list li { position: relative; padding-left: 22px; margin-bottom: 10px; color: var(--paper-dim); font-size: 0.95rem; }
+  .detail-list li::before { content: "▹"; position: absolute; left: 0; color: var(--orange); font-family: var(--font-mono); }
 
-  .detail-sidebar {
-    position: sticky;
-    top: 92px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
+  .detail-sidebar { position: sticky; top: 92px; display: flex; flex-direction: column; gap: 24px; }
+  .detail-sidebar .spec-sheet { background: rgba(15, 32, 54, 0.85); backdrop-filter: blur(6px); }
 
   .detail-BottomNav {
-    margin-top: 72px;
-    padding-top: 32px;
+    margin-top: 72px; padding-top: 32px;
     border-top: 1px solid var(--blue-line-soft);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
   }
   .pager-card {
-    background: var(--navy-900);
-    border: 1px solid var(--blue-line-soft);
-    border-radius: var(--radius-s);
-    padding: 18px 22px;
-    cursor: pointer;
-    transition:
-      border-color 0.25s ease,
-      transform 0.3s var(--ease-out-quart),
-      background 0.25s ease;
+    background: var(--navy-900); border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s); padding: 18px 22px; cursor: pointer;
+    transition: border-color 0.25s ease, transform 0.3s var(--ease-out-quart), background 0.25s ease;
   }
-  .pager-card:hover {
-    border-color: var(--orange);
-    background: var(--navy-800);
-    transform: translateY(-3px);
-  }
+  .pager-card:hover { border-color: var(--orange); background: var(--navy-800); transform: translateY(-3px); }
   .pager-card.next { text-align: right; }
-  .pager-label {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--orange);
-    display: block;
-    margin-bottom: 6px;
-  }
-  .pager-title {
-    font-family: var(--font-head);
-    font-size: 1.05rem;
-    color: var(--paper);
-    font-weight: 600;
-  }
+  .pager-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--orange); display: block; margin-bottom: 6px; }
+  .pager-title { font-family: var(--font-head); font-size: 1.05rem; color: var(--paper); font-weight: 600; }
 
   /* CONTACT */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 56px;
-  }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; }
   .contact-info p { color: var(--paper-dim); max-width: 42ch; margin-bottom: 28px; }
   .contact-list { font-family: var(--font-mono); font-size: 0.9rem; }
-  .contact-list li {
-    list-style: none;
-    display: flex;
-    gap: 14px;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--blue-line-soft);
-  }
+  .contact-list li { list-style: none; display: flex; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--blue-line-soft); }
   .contact-list li span.k { color: var(--paper-dim); width: 88px; flex-shrink: 0; }
   .contact-list li a, .contact-list li span.v { color: var(--paper); }
   .contact-list li a:hover { color: var(--orange); }
 
-  form.contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .field label {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--paper-dim);
-  }
+  form.contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-family: var(--font-mono); font-size: 0.78rem; color: var(--paper-dim); }
   .field input, .field textarea {
-    background: var(--navy-900);
-    border: 1px solid var(--blue-line-soft);
-    border-radius: var(--radius-s);
-    padding: 12px 14px;
-    color: var(--paper);
-    font-family: var(--font-body);
-    font-size: 0.95rem;
-    resize: vertical;
+    background: var(--navy-900); border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s); padding: 12px 14px; color: var(--paper);
+    font-family: var(--font-body); font-size: 0.95rem; resize: vertical;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .field input:focus-visible, .field textarea:focus-visible {
-    outline: none;
-    border-color: var(--orange);
-    box-shadow: 0 0 0 3px var(--orange-soft);
-  }
+  .field input:focus-visible, .field textarea:focus-visible { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
   .field textarea { min-height: 120px; }
-  .form-note {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--paper-dim);
-    min-height: 1.2em;
-  }
+  .form-note { font-family: var(--font-mono); font-size: 0.78rem; color: var(--paper-dim); min-height: 1.2em; }
   .form-note.sent { color: var(--orange); }
 
   /* FOOTER */
   footer {
-    padding: 36px 0 48px;
-    border-top: 1px solid var(--blue-line-soft);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--paper-dim);
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+    padding: 36px 0 48px; border-top: 1px solid var(--blue-line-soft);
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--paper-dim);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
   }
 
   .to-top {
-    position: fixed;
-    right: 22px; bottom: 22px;
-    width: 42px; height: 42px;
-    border-radius: var(--radius-s);
-    border: 1px solid var(--blue-line-soft);
-    background: rgba(11,21,34,0.9);
-    color: var(--paper);
-    font-family: var(--font-mono);
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(10px);
-    pointer-events: none;
+    position: fixed; right: 22px; bottom: 22px; width: 42px; height: 42px;
+    border-radius: var(--radius-s); border: 1px solid var(--blue-line-soft);
+    background: rgba(11,21,34,0.9); color: var(--paper); font-family: var(--font-mono);
+    cursor: pointer; opacity: 0; transform: translateY(10px); pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s var(--ease-out-quart), border-color 0.2s ease;
     z-index: 40;
   }
@@ -955,24 +605,15 @@
   .to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
   @media (max-width: 860px) {
-    .hero-grid { grid-template-columns: 1fr; }
+    .hero-grid, .about-grid, .contact-grid, .project-grid, .detail-content-grid { grid-template-columns: 1fr; }
     .hero-diagram { max-width: 280px; margin: 0 auto; }
-    .about-grid { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .project-grid { grid-template-columns: 1fr; }
-    .detail-content-grid { grid-template-columns: 1fr; }
     .detail-sidebar { position: static; }
   }
   @media (max-width: 640px) {
     nav.nav-links {
-      position: absolute;
-      top: 100%; left: 0; right: 0;
-      background: var(--navy-950);
-      border-bottom: 1px solid var(--blue-line-soft);
-      flex-direction: column;
-      padding: 18px 28px;
-      gap: 16px;
-      display: none;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--navy-950); border-bottom: 1px solid var(--blue-line-soft);
+      flex-direction: column; padding: 18px 28px; gap: 16px; display: none;
     }
     nav.nav-links.open { display: flex; }
     .nav-toggle { display: block; }
@@ -1031,17 +672,15 @@
     </div>
   </section>
 
-  <!-- ABOUT (WITH SHARED-VERTEX MORPHING ENGINE) -->
+  <!-- ABOUT (WITH VIEWPORT-FOLLOWING SHARED-VERTEX MORPHING ENGINE) -->
   <section id="about">
     <div class="morph-bg-stage" aria-hidden="true">
-      <svg id="morphSvg" viewBox="0 0 1120 680" preserveAspectRatio="xMidYMid slice">
-        <!-- Subtle CAD Coordinate Reticle -->
+      <svg id="morphSvg" viewBox="0 0 1120 680" preserveAspectRatio="xMidYMid meet">
         <g class="morph-reticle">
           <circle cx="560" cy="340" r="275" stroke-dasharray="2 8"/>
           <line x1="80" y1="340" x2="1040" y2="340" stroke-dasharray="3 12"/>
           <line x1="560" y1="40" x2="560" y2="640" stroke-dasharray="3 12"/>
         </g>
-        <!-- Dynamic Strands & Vertex Nodes injected by JS Morph Engine -->
         <g id="morphStrandsLayer"></g>
         <g id="morphNodesLayer"></g>
       </svg>
@@ -1072,7 +711,6 @@
         </dl>
       </div>
 
-      <!-- Live Telemetry Bar showing the active morphed vector schematic -->
       <div class="morph-hud reveal" style="--delay: 220ms;">
         <div class="morph-hud-left">
           <span class="morph-pulse"></span>
@@ -1113,10 +751,7 @@
             <h3>Science Olympiad Electric Vehicle Robot</h3>
             <p>A narrow-profile differential drive robot using bevel-gear motor orientation, 14-bit magnetic encoders, IMU odometry, and PID path-following—achieving 8th place at Nationals.</p>
             <div class="project-meta"><span>CAD (Fusion 360)</span><span>3D-printing</span><span>ESP32</span><span>Laser cutting</span><span>Odometry</span></div>
-            <div class="project-cta">
-              <span>Inspect Engineering Dossier</span>
-              <span class="arrow">→</span>
-            </div>
+            <div class="project-cta"><span>Inspect Engineering Dossier</span><span class="arrow">→</span></div>
           </div>
         </article>
 
@@ -1130,10 +765,7 @@
             <h3>High-Power Rocket Rover and Deployment System</h3>
             <p>3D-printed FPV rover deployed via an 80/20 aluminum guide rail from a 4,700 ft apogee rocket for the NASA Student Launch Challenge.</p>
             <div class="project-meta"><span>3D Printing</span><span>Arduino</span><span>IMU/Sensors</span><span>Rocketry</span></div>
-            <div class="project-cta">
-              <span>Inspect Engineering Dossier</span>
-              <span class="arrow">→</span>
-            </div>
+            <div class="project-cta"><span>Inspect Engineering Dossier</span><span class="arrow">→</span></div>
           </div>
         </article>
 
@@ -1147,10 +779,7 @@
             <h3>3D-printed Film Camera</h3>
             <p>Custom-designed 35mm film camera compatible with Minolta A-mount lenses, featuring a magnetic shutter mechanism and custom 3D-printed film digitizer rig.</p>
             <div class="project-meta"><span>CAD (Onshape)</span><span>3D-printing</span><span>Iterative design</span></div>
-            <div class="project-cta">
-              <span>Inspect Engineering Dossier</span>
-              <span class="arrow">→</span>
-            </div>
+            <div class="project-cta"><span>Inspect Engineering Dossier</span><span class="arrow">→</span></div>
           </div>
         </article>
 
@@ -1164,10 +793,7 @@
             <h3>Bio-Inspired Modular Snake Robot</h3>
             <p>Serpentine and sidewinding search-and-rescue prototype coordinated wirelessly via ESP-NOW with reconfigurable pitch/yaw joints and live FPV web control.</p>
             <div class="project-meta"><span>CAD (Fusion 360)</span><span>ESP32</span><span>3D-printing</span><span>Electronics</span></div>
-            <div class="project-cta">
-              <span>Inspect Engineering Dossier</span>
-              <span class="arrow">→</span>
-            </div>
+            <div class="project-cta"><span>Inspect Engineering Dossier</span><span class="arrow">→</span></div>
           </div>
         </article>
       </div>
@@ -1225,9 +851,7 @@
 <section class="project-page" id="projectPage" aria-live="polite">
   <div class="wrap">
     <div class="detail-topbar">
-      <button type="button" class="back-btn" id="backToProjects">
-        <span>←</span> Back to all projects
-      </button>
+      <button type="button" class="back-btn" id="backToProjects"><span>←</span> Back to all projects</button>
       <div class="detail-doc-id" id="detailDocId">DWG // <strong>01</strong></div>
     </div>
 
@@ -1255,9 +879,7 @@
         </dl>
 
         <div class="spec-sheet" style="padding: 18px;">
-          <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--orange); margin-bottom: 10px;">
-            TOOLS &amp; TECHNOLOGIES
-          </div>
+          <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--orange); margin-bottom: 10px;">TOOLS &amp; TECHNOLOGIES</div>
           <div class="project-meta" id="detailTags" style="margin-top: 0;"></div>
         </div>
       </aside>
@@ -1417,16 +1039,13 @@
   }
 
   /* ============================================================================
-     SHARED-VERTEX POINT MORPHING & DYNAMIC COMPLEXITY SPAWN/DESPAWN ENGINE
-     - 16 Polyline Strands x 28 Points per Strand = 448 Dynamic Vector Vertices
-     - Reorients the exact same points across 4 drawings as you scroll up/down:
-       Stage 0 (Top)    : Formula SAE Racecar & Double-Wishbone Coilover (15/16 strands)
-       Stage 1 (Upper)  : Endurance Runner & Topographic Trail (11/16 strands - 4 despawn)
-       Stage 2 (Lower)  : 35mm Film Camera & Optical Aperture (13/16 strands - 2 spawn)
-       Stage 3 (Bottom) : High-Power Rocket Launch & Parachute Rover (16/16 strands - all spawn)
+     VIEWPORT-FOLLOWING VECTOR POINT-MORPHING ENGINE
+     - Starts slightly above #about and ends slightly below #about while
+       translating vertically with the screen so the animation travels with you.
      ============================================================================ */
   (function initVectorMorphEngine() {
     const aboutSection = document.getElementById('about');
+    const morphSvg = document.getElementById('morphSvg');
     const strandsLayer = document.getElementById('morphStrandsLayer');
     const nodesLayer = document.getElementById('morphNodesLayer');
     const stageLabelEl = document.getElementById('morphStageLabel');
@@ -1434,13 +1053,12 @@
     const strandCountEl = document.getElementById('morphStrandCount');
     const stagePills = document.querySelectorAll('#morphStagePills .morph-stage-pill');
 
-    if (!aboutSection || !strandsLayer || !nodesLayer) return;
+    if (!aboutSection || !morphSvg || !strandsLayer || !nodesLayer) return;
 
     const NUM_STRANDS = 16;
     const PTS_PER_STRAND = 28;
-    constSVG_NS = 'http://www.w3.org/2000/svg';
+    const SVG_NS = 'http://www.w3.org/2000/svg';
 
-    // Geometry helper: resample any polyline into exactly N equidistant [x, y] vertices
     function resamplePolyline(pts, n) {
       if (!pts || pts.length === 0) return Array.from({ length: n }, () => [560, 340]);
       if (pts.length === 1) return Array.from({ length: n }, () => [pts[0][0], pts[0][1]]);
@@ -1448,9 +1066,7 @@
       const segLengths = [];
       let totalLen = 0;
       for (let i = 0; i < pts.length - 1; i++) {
-        const dx = pts[i + 1][0] - pts[i][0];
-        const dy = pts[i + 1][1] - pts[i][1];
-        const d = Math.hypot(dx, dy);
+        const d = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]);
         segLengths.push(d);
         totalLen += d;
       }
@@ -1460,25 +1076,22 @@
       for (let k = 0; k < n; k++) {
         const target = (k / (n - 1)) * totalLen;
         let acc = 0;
-        let found = false;
         for (let i = 0; i < segLengths.length; i++) {
           const sl = segLengths[i];
           if (acc + sl >= target || i === segLengths.length - 1) {
             const localT = sl === 0 ? 0 : (target - acc) / sl;
-            const x = pts[i][0] + (pts[i + 1][0] - pts[i][0]) * localT;
-            const y = pts[i][1] + (pts[i + 1][1] - pts[i][1]) * localT;
-            out.push([x, y]);
-            found = true;
+            out.push([
+              pts[i][0] + (pts[i + 1][0] - pts[i][0]) * localT,
+              pts[i][1] + (pts[i + 1][1] - pts[i][1]) * localT
+            ]);
             break;
           }
           acc += sl;
         }
-        if (!found) out.push([pts[pts.length - 1][0], pts[pts.length - 1][1]]);
       }
       return out;
     }
 
-    // Geometry helper: generate arc/circle points
     function arcPoints(cx, cy, r, startDeg, endDeg, steps) {
       const pts = [];
       const s = (startDeg * Math.PI) / 180;
@@ -1490,7 +1103,6 @@
       return pts;
     }
 
-    // Geometry helper: collapsed despawn state (all N vertices collapse to a local spawn point)
     function despawnedStrand(anchorX, anchorY) {
       return {
         active: false,
@@ -1507,89 +1119,39 @@
       };
     }
 
-    /* ---------------- STAGE 0: FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) ---------------- */
+    /* STAGE 0: FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) */
     const stageFSAE = [
-      // 0: Main open-wheel FSAE body upper silhouette & roll hoop
-      activeStrand([
-        [130, 420], [185, 412], [260, 382], [375, 375], [445, 342],
-        [490, 250], [525, 250], [565, 350], [720, 368], [805, 420]
-      ], 'accent'),
-      // 1: Undertray & ground-effect venturi floor
+      activeStrand([[130, 420], [185, 412], [260, 382], [375, 375], [445, 342], [490, 250], [525, 250], [565, 350], [720, 368], [805, 420]], 'accent'),
       activeStrand([[130, 420], [280, 426], [560, 426], [805, 420]], 'normal'),
-      // 2: Multi-element Front Wing endplate & airfoil
       activeStrand([[92, 430], [168, 430], [160, 392], [104, 404], [92, 430]], 'accent'),
-      // 3: High-downforce Rear Wing assembly & swan-neck mount
       activeStrand([[740, 368], [760, 235], [835, 225], [825, 295], [755, 295], [775, 368]], 'accent'),
-      // 4: Front wheel outer tire
       activeStrand(arcPoints(255, 418, 58, 0, 360, 28), 'normal'),
-      // 5: Front wheel rim & brake rotor
       activeStrand(arcPoints(255, 418, 30, 0, 360, 28), 'accent'),
-      // 6: Rear wheel outer tire
       activeStrand(arcPoints(695, 418, 62, 0, 360, 28), 'normal'),
-      // 7: Rear wheel rim & centerlock hub
       activeStrand(arcPoints(695, 418, 32, 0, 360, 28), 'accent'),
-      // 8: Spaceframe triangulated chassis tubes
-      activeStrand([
-        [275, 382], [355, 424], [435, 345], [495, 424],
-        [515, 255], [585, 424], [665, 365]
-      ], 'normal'),
-      // 9: Detail Callout Circle — Double-Wishbone Suspension Zoom
+      activeStrand([[275, 382], [355, 424], [435, 345], [495, 424], [515, 255], [585, 424], [665, 365]], 'normal'),
       activeStrand(arcPoints(945, 235, 105, 0, 360, 28), 'guide'),
-      // 10: Upper & Lower Control A-Arms in suspension detail
-      activeStrand([
-        [870, 175], [995, 195], [995, 275], [870, 295]
-      ], 'normal'),
-      // 11: Helical Coilover Shock Spring (Zig-Zag)
-      activeStrand([
-        [885, 150], [905, 168], [890, 182], [922, 194], [898, 210],
-        [932, 222], [908, 238], [942, 250], [918, 266], [965, 282]
-      ], 'accent'),
-      // 12: Pushrod & bellcrank rocker geometry
+      activeStrand([[870, 175], [995, 195], [995, 275], [870, 295]], 'normal'),
+      activeStrand([[885, 150], [905, 168], [890, 182], [922, 194], [898, 210], [932, 222], [908, 238], [942, 250], [918, 266], [965, 282]], 'accent'),
       activeStrand([[885, 138], [925, 138], [905, 168], [885, 138]], 'normal'),
-      // 13: Ground plane & aerodynamic flow streamlines
       activeStrand([[65, 480], [500, 480], [980, 480]], 'guide'),
-      // 14: Upper aero wake streamline over cockpit
-      activeStrand([
-        [75, 355], [210, 330], [450, 215], [680, 200], [870, 185]
-      ], 'guide'),
-      // 15: Despawned in Stage 0 (spawns later for Rocket stage)
+      activeStrand([[75, 355], [210, 330], [450, 215], [680, 200], [870, 185]], 'guide'),
       despawnedStrand(780, 260)
     ];
 
-    /* ---------------- STAGE 1: ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands — 5 Despawn) ---------------- */
+    /* STAGE 1: ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands — 5 Despawn) */
     const stageRunner = [
-      // 0: Runner Head & Helmet/Cap profile
       activeStrand(arcPoints(595, 148, 32, 0, 360, 28), 'accent'),
-      // 1: Torso spine & forward sprint lean line
       activeStrand([[585, 180], [565, 235], [540, 305]], 'accent'),
-      // 2: Lead (Right) Leg — high knee drive & shin
       activeStrand([[540, 305], [635, 335], [615, 435], [645, 442]], 'accent'),
-      // 3: Trail (Left) Leg — full extension push-off
       activeStrand([[540, 305], [455, 385], [365, 445], [340, 468]], 'normal'),
-      // 4: Forward pumping arm
       activeStrand([[576, 202], [635, 248], [680, 198]], 'normal'),
-      // 5: Rear counter-swing arm
       activeStrand([[576, 202], [502, 240], [462, 208]], 'normal'),
-      // 6: Mountain ridge topographic horizon line 1
-      activeStrand([
-        [80, 535], [210, 445], [335, 490], [495, 365],
-        [650, 455], [815, 335], [965, 440], [1050, 535]
-      ], 'normal'),
-      // 7: Lower topographic contour trail path
-      activeStrand([
-        [80, 575], [250, 515], [440, 545], [615, 475],
-        [790, 520], [955, 485], [1050, 575]
-      ], 'guide'),
-      // 8: Heart-rate / stride cadence ECG waveform
-      activeStrand([
-        [110, 250], [205, 250], [225, 220], [242, 285],
-        [262, 145], [282, 315], [300, 235], [322, 250], [420, 250]
-      ], 'accent'),
-      // 9: Motion speed vectors trailing runner
+      activeStrand([[80, 535], [210, 445], [335, 490], [495, 365], [650, 455], [815, 335], [965, 440], [1050, 535]], 'normal'),
+      activeStrand([[80, 575], [250, 515], [440, 545], [615, 475], [790, 520], [955, 485], [1050, 575]], 'guide'),
+      activeStrand([[110, 250], [205, 250], [225, 220], [242, 285], [262, 145], [282, 315], [300, 235], [322, 250], [420, 250]], 'accent'),
       activeStrand([[310, 175], [495, 175], [465, 245], [275, 245]], 'guide'),
-      // 10: Kinematic joint trajectory arc
       activeStrand(arcPoints(545, 310, 175, 195, 345, 28), 'guide'),
-      // 11..15: Despawned during simpler Runner illustration!
       despawnedStrand(540, 305),
       despawnedStrand(635, 335),
       despawnedStrand(455, 385),
@@ -1597,215 +1159,140 @@
       despawnedStrand(815, 335)
     ];
 
-    /* ---------------- STAGE 2: 35MM FILM CAMERA & OPTICAL APERTURE (13 Active Strands — 2 Spawn In) ---------------- */
+    /* STAGE 2: 35MM FILM CAMERA & OPTICAL APERTURE (13 Active Strands — 2 Spawn In) */
     const stageCamera = [
-      // 0: Main 3D-printed camera body outer chassis
-      activeStrand([
-        [220, 220], [680, 220], [680, 500], [220, 500], [220, 220]
-      ], 'normal'),
-      // 1: Top pentaprism viewfinder housing
-      activeStrand([
-        [330, 220], [375, 145], [525, 145], [570, 220]
-      ], 'accent'),
-      // 2: Shutter release button & film advance lever
-      activeStrand([
-        [585, 220], [585, 182], [655, 182], [655, 220]
-      ], 'accent'),
-      // 3: Minolta A-Mount outer barrel ring
+      activeStrand([[220, 220], [680, 220], [680, 500], [220, 500], [220, 220]], 'normal'),
+      activeStrand([[330, 220], [375, 145], [525, 145], [570, 220]], 'accent'),
+      activeStrand([[585, 220], [585, 182], [655, 182], [655, 220]], 'accent'),
       activeStrand(arcPoints(450, 365, 122, 0, 360, 28), 'normal'),
-      // 4: Optical glass element inner ring
       activeStrand(arcPoints(450, 365, 86, 0, 360, 28), 'accent'),
-      // 5: Magnetic shutter 6-blade iris polygon
-      activeStrand([
-        [450, 310], [498, 338], [498, 392],
-        [450, 420], [402, 392], [402, 338], [450, 310]
-      ], 'accent'),
-      // 6: Ergonomic right-hand grip contour
+      activeStrand([[450, 310], [498, 338], [498, 392], [450, 420], [402, 392], [402, 338], [450, 310]], 'accent'),
       activeStrand([[255, 220], [285, 220], [285, 500], [255, 500]], 'guide'),
-      // 7: 35mm film strip upper & lower rails (right side)
-      activeStrand([
-        [735, 235], [1035, 235], [1035, 485], [735, 485], [735, 235]
-      ], 'normal'),
-      // 8: Film frame exposure window 1
-      activeStrand([
-        [765, 275], [875, 275], [875, 445], [765, 445], [765, 275]
-      ], 'accent'),
-      // 9: Film frame exposure window 2
-      activeStrand([
-        [900, 275], [1010, 275], [1010, 445], [900, 445], [900, 275]
-      ], 'accent'),
-      // 10: Upper sprocket perforation track
+      activeStrand([[735, 235], [1035, 235], [1035, 485], [735, 485], [735, 235]], 'normal'),
+      activeStrand([[765, 275], [875, 275], [875, 445], [765, 445], [765, 275]], 'accent'),
+      activeStrand([[900, 275], [1010, 275], [1010, 445], [900, 445], [900, 275]], 'accent'),
       activeStrand([[745, 255], [885, 255], [1025, 255]], 'guide'),
-      // 11: Lower sprocket perforation track
       activeStrand([[745, 465], [885, 465], [1025, 465]], 'guide'),
-      // 12: Optical light-cone rays from lens to focal plane
       activeStrand([[120, 275], [450, 365], [120, 455]], 'guide'),
-      // 13..15: Despawned in Stage 2 (will spawn in for Stage 3 Rocket)
       despawnedStrand(450, 365),
       despawnedStrand(885, 360),
       despawnedStrand(450, 145)
     ];
 
-    /* ---------------- STAGE 3: HIGH-POWER ROCKET LAUNCH & ROVER DEPLOYMENT (All 16 Strands Active!) ---------------- */
+    /* STAGE 3: HIGH-POWER ROCKET LAUNCH & ROVER DEPLOYMENT (All 16 Strands Active!) */
     const stageRocket = [
-      // 0: Rocket Fuselage Airframe & Tangent Ogive Nosecone (tilted along launch vector)
-      activeStrand([
-        [635, 95], [668, 155], [668, 435], [602, 435], [602, 155], [635, 95]
-      ], 'accent'),
-      // 1: Nosecone avionics bulkhead & payload bay separation rings
-      activeStrand([
-        [602, 165], [668, 165], [668, 255], [602, 255], [602, 345], [668, 345]
-      ], 'normal'),
-      // 2: Left composite swept fin
+      activeStrand([[635, 95], [668, 155], [668, 435], [602, 435], [602, 155], [635, 95]], 'accent'),
+      activeStrand([[602, 165], [668, 165], [668, 255], [602, 255], [602, 345], [668, 345]], 'normal'),
       activeStrand([[602, 345], [535, 445], [602, 435]], 'accent'),
-      // 3: Right composite swept fin
       activeStrand([[668, 345], [735, 445], [668, 435]], 'accent'),
-      // 4: Center booster nozzle & supersonic exhaust plume diamond
-      activeStrand([
-        [618, 435], [600, 535], [635, 610], [670, 535], [652, 435]
-      ], 'accent'),
-      // 5: Inner Mach shock diamond core
-      activeStrand([
-        [626, 445], [635, 555], [644, 445]
-      ], 'normal'),
-      // 6: Parabolic Launch Trajectory Arc from pad to 4,700 ft apogee
-      activeStrand([
-        [140, 585], [240, 390], [385, 225], [545, 125], [635, 95]
-      ], 'guide'),
-      // 7: Main Recovery Parachute Canopy Dome (Left deployment zone)
+      activeStrand([[618, 435], [600, 535], [635, 610], [670, 535], [652, 435]], 'accent'),
+      activeStrand([[626, 445], [635, 555], [644, 445]], 'normal'),
+      activeStrand([[140, 585], [240, 390], [385, 225], [545, 125], [635, 95]], 'guide'),
       activeStrand(arcPoints(285, 235, 85, 180, 360, 28), 'accent'),
-      // 8: Parachute shroud suspension lines
-      activeStrand([
-        [200, 235], [285, 345], [370, 235], [242, 235], [285, 345], [328, 235]
-      ], 'guide'),
-      // 9: Deployed 3D-Printed Rover Chassis suspended below chute
-      activeStrand([
-        [235, 355], [335, 355], [335, 405], [235, 405], [235, 355]
-      ], 'normal'),
-      // 10: Rover Left Bogie Wheel
+      activeStrand([[200, 235], [285, 345], [370, 235], [242, 235], [285, 345], [328, 235]], 'guide'),
+      activeStrand([[235, 355], [335, 355], [335, 405], [235, 405], [235, 355]], 'normal'),
       activeStrand(arcPoints(252, 412, 18, 0, 360, 28), 'accent'),
-      // 11: Rover Right Bogie Wheel
       activeStrand(arcPoints(318, 412, 18, 0, 360, 28), 'accent'),
-      // 12: 80/20 Aluminum Linear Deployment Guide Rail schematic (Right side)
-      activeStrand([
-        [820, 185], [855, 185], [855, 465], [820, 465], [820, 185]
-      ], 'normal'),
-      // 13: Apogee altitude datum line (4,700 FT AGL)
+      activeStrand([[820, 185], [855, 185], [855, 465], [820, 465], [820, 185]], 'normal'),
       activeStrand([[485, 95], [785, 95], [995, 95]], 'guide'),
-      // 14: Acoustic launch pad shockwave cloud left
       activeStrand(arcPoints(555, 585, 46, 120, 390, 28), 'guide'),
-      // 15: Acoustic launch pad shockwave cloud right
       activeStrand(arcPoints(715, 585, 46, 150, 420, 28), 'guide')
     ];
 
     const STAGES = [
-      {
-        title: 'SCHEMATIC 01 // FORMULA SAE RACECAR & COILOVER SUSPENSION',
-        activeCount: 15,
-        strands: stageFSAE
-      },
-      {
-        title: 'SCHEMATIC 02 // ENDURANCE RUNNER & TOPOGRAPHIC ELEVATION',
-        activeCount: 11,
-        strands: stageRunner
-      },
-      {
-        title: 'SCHEMATIC 03 // 35MM FILM CAMERA & MAGNETIC SHUTTER OPTICS',
-        activeCount: 13,
-        strands: stageCamera
-      },
-      {
-        title: 'SCHEMATIC 04 // HIGH-POWER ROCKET APOGEE & ROVER DEPLOYMENT',
-        activeCount: 16,
-        strands: stageRocket
-      }
+      { title: 'SCHEMATIC 01 // FORMULA SAE RACECAR & COILOVER SUSPENSION', activeCount: 15, strands: stageFSAE },
+      { title: 'SCHEMATIC 02 // ENDURANCE RUNNER & TOPOGRAPHIC ELEVATION', activeCount: 11, strands: stageRunner },
+      { title: 'SCHEMATIC 03 // 35MM FILM CAMERA & MAGNETIC SHUTTER OPTICS', activeCount: 13, strands: stageCamera },
+      { title: 'SCHEMATIC 04 // HIGH-POWER ROCKET APOGEE & ROVER DEPLOYMENT', activeCount: 16, strands: stageRocket }
     ];
 
-    // Create persistent SVG path elements and key vertex node circles
     const pathEls = [];
-    const nodeEls = []; // 3 nodes per strand (start, mid, end) = 48 CAD vertex nodes
+    const nodeEls = [];
 
     for (let s = 0; s < NUM_STRANDS; s++) {
-      const p = document.createElementNS(constSVG_NS, 'path');
+      const p = document.createElementNS(SVG_NS, 'path');
       p.setAttribute('class', 'morph-strand');
       strandsLayer.appendChild(p);
       pathEls.push(p);
 
       const strandNodes = [];
       for (let n = 0; n < 3; n++) {
-        const c = document.createElementNS(constSVG_NS, 'circle');
+        const c = document.createElementNS(SVG_NS, 'circle');
         c.setAttribute('class', n === 1 ? 'morph-node' : 'morph-node secondary');
-        c.setAttribute('r', n === 1 ? '3.2' : '2.4');
+        c.setAttribute('r', n === 1 ? '3.4' : '2.5');
         nodesLayer.appendChild(c);
         strandNodes.push(c);
       }
       nodeEls.push(strandNodes);
     }
 
-    // Smooth quintic in-out easing for clean reorientation between drawings
     function easeInOutQuint(x) {
       return x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2;
     }
 
     let currentScrollProgress = 0;
     let targetScrollProgress = 0;
+    let currentYFollow = 0;
+    let targetYFollow = 0;
     let animFrameId = null;
 
-    function computeTargetScrollProgress() {
+    function computeScrollMetrics() {
       const rect = aboutSection.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      // Start morphing shortly after section enters viewport, finish as it exits
-      const startTrigger = vh * 0.65;
-      const endTrigger = -rect.height * 0.35;
-      const totalRun = startTrigger - endTrigger;
-      const current = startTrigger - rect.top;
-      return Math.max(0, Math.min(1, current / totalRun));
+
+      // Start slightly ABOVE #about (when #about top is at 92% of viewport height)
+      // Finish slightly BELOW #about (when #about bottom is at 8% of viewport height)
+      const startTop = vh * 0.92;
+      const endTop = vh * 0.08 - rect.height;
+      const totalRun = startTop - endTop;
+      const rawProgress = (startTop - rect.top) / totalRun;
+      const progress = Math.max(0, Math.min(1, rawProgress));
+
+      // Translate the SVG stage vertically from -130px (above section) to +130px (below section)
+      // so the drawing physically scrolls down and up with your screen
+      const yOffset = (progress - 0.5) * 260;
+
+      return { progress: progress, yOffset: yOffset };
     }
 
-    function renderMorphState(progress) {
-      // Map [0, 1] across the 4 stages (3 transitions: 0->1, 1->2, 2->3)
+    function renderMorphState(progress, yFollow) {
+      // Move the SVG stage along with the user's scroll position
+      morphSvg.style.transform = 'translate3d(0, ' + yFollow.toFixed(1) + 'px, 0)';
+
       const scaled = progress * (STAGES.length - 1);
       const idxA = Math.min(STAGES.length - 2, Math.floor(scaled));
       const idxB = idxA + 1;
       const rawT = scaled - idxA;
       const t = easeInOutQuint(rawT);
-
-      // Mid-transition swirl envelope: 0 at keyframe A, peaks at 1.0 halfway, 0 at keyframe B
       const swirlEnvelope = Math.sin(rawT * Math.PI);
 
       const stageA = STAGES[idxA];
       const stageB = STAGES[idxB];
 
-      // Update HUD Stage Label & Pills
       const dominantIdx = rawT < 0.5 ? idxA : idxB;
       stageLabelEl.textContent = STAGES[dominantIdx].title;
       stagePills.forEach((pill, i) => {
         pill.classList.toggle('active', i === dominantIdx);
       });
 
-      const interpStrands = Math.round(
-        stageA.activeCount + (stageB.activeCount - stageA.activeCount) * t
-      );
+      const interpStrands = Math.round(stageA.activeCount + (stageB.activeCount - stageA.activeCount) * t);
       strandCountEl.textContent = interpStrands;
       vertexCountEl.textContent = interpStrands * PTS_PER_STRAND;
 
-      // Interpolate every strand and every vertex
       for (let s = 0; s < NUM_STRANDS; s++) {
         const strandA = stageA.strands[s];
         const strandB = stageB.strands[s];
         const pathEl = pathEls[s];
 
-        // Spawn / Despawn opacity calculation
-        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.62 : strandA.role === 'guide' ? 0.26 : 0.42) : 0;
-        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.62 : strandB.role === 'guide' ? 0.26 : 0.42) : 0;
+        // Higher opacity so lines shine prominently through the translucent cards
+        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.88 : strandA.role === 'guide' ? 0.38 : 0.64) : 0;
+        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.88 : strandB.role === 'guide' ? 0.38 : 0.64) : 0;
         const opacity = alphaA + (alphaB - alphaA) * t;
 
-        // Style role switching
         const dominantRole = rawT < 0.5 ? strandA.role : strandB.role;
         pathEl.setAttribute(
           'class',
-          'morph-strand' +
-            (dominantRole === 'accent' ? ' accent' : dominantRole === 'guide' ? ' guide' : '')
+          'morph-strand' + (dominantRole === 'accent' ? ' accent' : dominantRole === 'guide' ? ' guide' : '')
         );
         pathEl.style.opacity = opacity.toFixed(3);
 
@@ -1818,8 +1305,6 @@
         const ptsA = strandA.pts;
         const ptsB = strandB.pts;
         let dStr = '';
-
-        // Alternate swirl direction per strand for an organic mechanical disassembly feel
         const swirlDir = s % 2 === 0 ? 1 : -1;
 
         for (let i = 0; i < PTS_PER_STRAND; i++) {
@@ -1831,20 +1316,18 @@
           const dx = bx - ax;
           const dy = by - ay;
 
-          // Linear interpolation + perpendicular orbital curl during mid-transition
           const curlScale = 0.16 * swirlDir * swirlEnvelope * Math.sin((i / PTS_PER_STRAND) * Math.PI);
           const x = ax + dx * t - dy * curlScale;
           const y = ay + dy * t + dx * curlScale;
 
           dStr += (i === 0 ? 'M ' : ' L ') + x.toFixed(1) + ' ' + y.toFixed(1);
 
-          // Update the 3 CAD vertex nodes on this strand (first, middle, last point)
           if (i === 0 || i === 13 || i === PTS_PER_STRAND - 1) {
             const nodeIdx = i === 0 ? 0 : i === 13 ? 1 : 2;
             const nEl = nodeEls[s][nodeIdx];
             nEl.setAttribute('cx', x.toFixed(1));
             nEl.setAttribute('cy', y.toFixed(1));
-            nEl.style.opacity = Math.min(1, opacity * 1.35).toFixed(2);
+            nEl.style.opacity = Math.min(1, opacity * 1.25).toFixed(2);
           }
         }
 
@@ -1852,34 +1335,39 @@
       }
     }
 
-    // Damped requestAnimationFrame loop so rapid scrolling produces silky-smooth point motion
     function tickLoop() {
-      const diff = targetScrollProgress - currentScrollProgress;
-      if (Math.abs(diff) > 0.0005) {
-        currentScrollProgress += diff * 0.14;
-        renderMorphState(currentScrollProgress);
+      const diffP = targetScrollProgress - currentScrollProgress;
+      const diffY = targetYFollow - currentYFollow;
+
+      if (Math.abs(diffP) > 0.0005 || Math.abs(diffY) > 0.1) {
+        currentScrollProgress += diffP * 0.14;
+        currentYFollow += diffY * 0.14;
+        renderMorphState(currentScrollProgress, currentYFollow);
         animFrameId = requestAnimationFrame(tickLoop);
       } else {
         currentScrollProgress = targetScrollProgress;
-        renderMorphState(currentScrollProgress);
+        currentYFollow = targetYFollow;
+        renderMorphState(currentScrollProgress, currentYFollow);
         animFrameId = null;
       }
     }
 
     function onScrollOrResize() {
       if (document.body.classList.contains('detail-open')) return;
-      targetScrollProgress = computeTargetScrollProgress();
+      const metrics = computeScrollMetrics();
+      targetScrollProgress = metrics.progress;
+      targetYFollow = metrics.yOffset;
       if (!animFrameId) {
         animFrameId = requestAnimationFrame(tickLoop);
       }
     }
 
-    // Allow clicking stage pills in the HUD to preview any schematic directly
     stagePills.forEach(pill => {
       pill.style.cursor = 'pointer';
       pill.addEventListener('click', () => {
         const idx = parseInt(pill.getAttribute('data-stage'), 10);
         targetScrollProgress = idx / (STAGES.length - 1);
+        targetYFollow = (targetScrollProgress - 0.5) * 260;
         if (!animFrameId) {
           animFrameId = requestAnimationFrame(tickLoop);
         }
@@ -1889,10 +1377,10 @@
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize);
 
-    // Initial render
-    targetScrollProgress = computeTargetScrollProgress();
-    currentScrollProgress = targetScrollProgress;
-    renderMorphState(currentScrollProgress);
+    const initMetrics = computeScrollMetrics();
+    currentScrollProgress = targetScrollProgress = initMetrics.progress;
+    currentYFollow = targetYFollow = initMetrics.yOffset;
+    renderMorphState(currentScrollProgress, currentYFollow);
   })();
 
   /* ---------------- PROJECT DETAIL SPA CONTROLLER ---------------- */
@@ -1915,22 +1403,16 @@
     document.getElementById('detailCaptionLeft').textContent = 'FIG ' + data.index + '.0 — ' + data.title.toUpperCase();
     document.getElementById('detailSpecCode').textContent = 'SPEC-' + data.index;
 
-    const narrativeEl = document.getElementById('detailNarrative');
-    narrativeEl.innerHTML =
-      '<h3>System Overview</h3>' +
-      '<p>' + data.overview + '</p>' +
-      '<h3>Engineering Highlights & Architecture</h3>' +
-      '<ul class="detail-list">' +
-      data.highlights.map(item => '<li>' + item + '</li>').join('') +
-      '</ul>';
+    document.getElementById('detailNarrative').innerHTML =
+      '<h3>System Overview</h3><p>' + data.overview + '</p>' +
+      '<h3>Engineering Highlights & Architecture</h3><ul class="detail-list">' +
+      data.highlights.map(item => '<li>' + item + '</li>').join('') + '</ul>';
 
-    const specsEl = document.getElementById('detailSpecs');
-    specsEl.innerHTML = data.specs
+    document.getElementById('detailSpecs').innerHTML = data.specs
       .map(pair => '<div class="spec-row"><dt>' + pair[0] + '</dt><dd>' + pair[1] + '</dd></div>')
       .join('');
 
-    const tagsEl = document.getElementById('detailTags');
-    tagsEl.innerHTML = data.tags.map(t => '<span>' + t + '</span>').join('');
+    document.getElementById('detailTags').innerHTML = data.tags.map(t => '<span>' + t + '</span>').join('');
 
     const idx = PROJECT_KEYS.indexOf(key);
     const prevKey = PROJECT_KEYS[(idx - 1 + PROJECT_KEYS.length) % PROJECT_KEYS.length];
@@ -1967,32 +1449,22 @@
       clone.style.opacity = '0';
     });
 
-    setTimeout(() => {
-      clone.remove();
-    }, 560);
-
+    setTimeout(() => clone.remove(), 560);
     onComplete();
   }
 
   function openProject(key, sourceCard, pushHash) {
     if (pushHash === undefined) pushHash = true;
     if (!PROJECTS[key]) return;
-    if (!document.body.classList.contains('detail-open')) {
-      lastScrollY = window.scrollY;
-    }
+    if (!document.body.classList.contains('detail-open')) lastScrollY = window.scrollY;
 
     populateProjectDetail(key);
-
-    if (pushHash) {
-      history.pushState({ project: key }, '', '#project/' + key);
-    }
+    if (pushHash) history.pushState({ project: key }, '', '#project/' + key);
 
     animateCardExpansion(sourceCard, () => {
       document.body.classList.add('detail-open');
       window.scrollTo({ top: 0, behavior: 'auto' });
-      requestAnimationFrame(() => {
-        projectPage.classList.add('active');
-      });
+      requestAnimationFrame(() => projectPage.classList.add('active'));
     });
   }
 
@@ -2002,10 +1474,7 @@
 
     setTimeout(() => {
       document.body.classList.remove('detail-open');
-
-      if (pushHash) {
-        history.pushState({}, '', scrollToSection ? '#' + scrollToSection : '#projects');
-      }
+      if (pushHash) history.pushState({}, '', scrollToSection ? '#' + scrollToSection : '#projects');
 
       if (scrollToSection) {
         const target = document.getElementById(scrollToSection);
@@ -2022,9 +1491,7 @@
       populateProjectDetail(key);
       history.pushState({ project: key }, '', '#project/' + key);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      requestAnimationFrame(() => {
-        projectPage.classList.add('active');
-      });
+      requestAnimationFrame(() => projectPage.classList.add('active'));
     }, 220);
   }
 
@@ -2041,9 +1508,7 @@
 
   document.getElementById('backToProjects').addEventListener('click', () => closeProject(null, true));
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.classList.contains('detail-open')) {
-      closeProject(null, true);
-    }
+    if (e.key === 'Escape' && document.body.classList.contains('detail-open')) closeProject(null, true);
   });
 
   navLinks.querySelectorAll('a').forEach(link => {
@@ -2069,9 +1534,7 @@
     const hash = window.location.hash;
     if (hash.indexOf('#project/') === 0) {
       const key = hash.replace('#project/', '');
-      if (PROJECTS[key]) {
-        openProject(key, null, false);
-      }
+      if (PROJECTS[key]) openProject(key, null, false);
     } else if (document.body.classList.contains('detail-open')) {
       closeProject(null, false);
     }
@@ -2086,7 +1549,6 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
     formNote.textContent = 'Processing transmission...';
@@ -2099,10 +1561,7 @@
 
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: json
     })
     .then(async (response) => {
@@ -2113,13 +1572,11 @@
         formNote.style.color = 'var(--orange)';
         form.reset();
       } else {
-        console.error(response);
         formNote.textContent = res.message || 'System error. Please try again.';
         formNote.style.color = '#ff6b6b';
       }
     })
-    .catch(error => {
-      console.error(error);
+    .catch(() => {
       formNote.textContent = 'Network loss. Check connection and retry.';
       formNote.style.color = '#ff6b6b';
     })
