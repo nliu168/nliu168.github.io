@@ -321,57 +321,115 @@
     max-width: 28ch;
   }
 
-  /* ABOUT & DYNAMIC SCROLL LINE ILLUSTRATIONS */
+  /* ==================== ABOUT & VECTOR MORPHING ENGINE ==================== */
   #about {
+    position: relative;
+    /* Extra scroll runway so scrolling smoothly scrubs through all 4 morph stages */
+    padding: 135px 0 155px;
     overflow: hidden;
-    padding: 108px 0;
   }
-  .about-bg-canvas {
+  .morph-bg-stage {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .about-bg-canvas svg {
+  .morph-bg-stage svg {
     width: 100%;
     height: 100%;
+    max-width: 1360px;
+    max-height: 820px;
     display: block;
+    overflow: visible;
   }
-  .blueprint-group {
-    transition: transform 0.12s linear, opacity 0.25s ease;
-    will-change: transform, opacity;
-  }
-  .draw-line {
+  .morph-strand {
     fill: none;
     stroke: var(--blue-line);
-    stroke-width: 1.5;
+    stroke-width: 1.55;
     stroke-linecap: round;
     stroke-linejoin: round;
-    opacity: 0.36;
+    will-change: d, opacity;
   }
-  .draw-line.accent {
+  .morph-strand.accent {
     stroke: var(--orange);
-    stroke-width: 1.65;
-    opacity: 0.52;
+    stroke-width: 1.85;
   }
-  .draw-line.guide {
+  .morph-strand.guide {
+    stroke-dasharray: 4 7;
+    stroke-width: 1.15;
+  }
+  .morph-node {
+    fill: var(--navy-950);
+    stroke: var(--orange);
+    stroke-width: 1.4;
+    will-change: cx, cy, opacity, r;
+  }
+  .morph-node.secondary {
     stroke: var(--blue-line);
+  }
+  .morph-reticle {
+    stroke: rgba(63, 124, 173, 0.22);
     stroke-width: 1;
-    stroke-dasharray: 4 6;
-    opacity: 0.22;
+    fill: none;
   }
-  .bp-label {
+
+  /* CAD Morph Telemetry HUD Bar */
+  .morph-hud {
+    margin-top: 44px;
+    padding: 12px 18px;
+    background: rgba(11, 21, 34, 0.78);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s);
     font-family: var(--font-mono);
-    font-size: 9.5px;
-    fill: var(--blue-line);
-    letter-spacing: 0.08em;
-    opacity: 0.48;
-    transition: opacity 0.3s ease;
+    font-size: 0.76rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
   }
-  .bp-label.accent {
-    fill: var(--orange);
-    opacity: 0.65;
+  .morph-hud-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--paper);
+  }
+  .morph-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 10px var(--orange);
+  }
+  .morph-hud-stages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .morph-stage-pill {
+    padding: 3px 9px;
+    border: 1px solid var(--blue-line-soft);
+    border-radius: var(--radius-s);
+    color: var(--paper-dim);
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+  }
+  .morph-stage-pill.active {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: rgba(232, 98, 44, 0.12);
+  }
+  .morph-hud-telemetry {
+    color: var(--paper-dim);
+  }
+  .morph-hud-telemetry strong {
+    color: var(--orange);
+    font-weight: 500;
   }
 
   .about-grid {
@@ -382,11 +440,11 @@
     z-index: 2;
   }
   .about-copy {
-    background: rgba(11, 21, 34, 0.68);
+    background: rgba(11, 21, 34, 0.62);
     backdrop-filter: blur(4px);
     padding: 24px 26px;
     border-radius: var(--radius-s);
-    border: 1px solid rgba(63, 124, 173, 0.22);
+    border: 1px solid rgba(63, 124, 173, 0.24);
   }
   .about-copy p {
     color: var(--paper-dim);
@@ -402,8 +460,8 @@
     border: 1px solid var(--blue-line-soft);
     border-radius: var(--radius-s);
     overflow: hidden;
-    background: rgba(15, 32, 54, 0.78);
-    backdrop-filter: blur(6px);
+    background: rgba(15, 32, 54, 0.72);
+    backdrop-filter: blur(5px);
   }
   .spec-sheet .spec-title {
     background: var(--navy-800);
@@ -973,120 +1031,19 @@
     </div>
   </section>
 
-  <!-- ABOUT (WITH SCROLL-DRIVEN BLUEPRINT ILLUSTRATIONS) -->
+  <!-- ABOUT (WITH SHARED-VERTEX MORPHING ENGINE) -->
   <section id="about">
-    <!-- Dynamic Scroll-Linked Blueprint Schematics Background -->
-    <div class="about-bg-canvas" aria-hidden="true">
-      <svg id="aboutBlueprintSvg" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice">
-
-        <!-- 1. FORMULA SAE RACECAR & COILOVER SUSPENSION (Top-Left) -->
-        <g class="blueprint-group" data-parallax="-32" data-start="0.0" data-end="0.58">
-          <text x="48" y="42" class="bp-label accent">FIG 02.1 // FORMULA SAE — SUSPENSION &amp; CHASSIS</text>
-          <!-- Ground plane datum -->
-          <line class="draw-line guide" x1="35" y1="168" x2="385" y2="168"/>
-          <!-- Open-wheel FSAE side profile -->
-          <path class="draw-line" d="M 55 148 L 105 148 L 138 122 L 195 120 L 218 86 L 238 86 L 250 126 L 325 134 L 345 148 L 70 148 Z"/>
-          <!-- Front & rear wings -->
-          <path class="draw-line accent" d="M 42 152 L 78 152 L 74 140 L 46 144 Z"/>
-          <path class="draw-line accent" d="M 322 82 L 356 78 L 352 128 L 328 128 Z"/>
-          <!-- Rear wheel & tire -->
-          <circle class="draw-line" cx="295" cy="146" r="22"/>
-          <circle class="draw-line accent" cx="295" cy="146" r="11"/>
-          <!-- Front wheel & tire -->
-          <circle class="draw-line" cx="105" cy="146" r="22"/>
-          <circle class="draw-line accent" cx="105" cy="146" r="11"/>
-          <!-- Double-wishbone + coilover spring schematic callout -->
-          <circle class="draw-line guide" cx="430" cy="112" r="52"/>
-          <!-- Upper & lower A-arms -->
-          <path class="draw-line" d="M 392 88 L 452 96 L 452 132 L 392 140"/>
-          <!-- Coilover damper & spring -->
-          <path class="draw-line accent" d="M 402 74 L 412 84 L 406 90 L 420 96 L 410 104 L 424 110 L 414 118 L 428 124 L 442 134"/>
-          <text x="385" y="182" class="bp-label">CAMBER: -1.8° // SPRING RATE: 250 LB/IN</text>
+    <div class="morph-bg-stage" aria-hidden="true">
+      <svg id="morphSvg" viewBox="0 0 1120 680" preserveAspectRatio="xMidYMid slice">
+        <!-- Subtle CAD Coordinate Reticle -->
+        <g class="morph-reticle">
+          <circle cx="560" cy="340" r="275" stroke-dasharray="2 8"/>
+          <line x1="80" y1="340" x2="1040" y2="340" stroke-dasharray="3 12"/>
+          <line x1="560" y1="40" x2="560" y2="640" stroke-dasharray="3 12"/>
         </g>
-
-        <!-- 2. HIGH-POWER ROCKET LAUNCH & APOGEE ARC (Right Side) -->
-        <g class="blueprint-group" data-parallax="-55" data-start="0.08" data-end="0.72">
-          <text x="890" y="54" class="bp-label accent">FIG 02.2 // NASA STUDENT LAUNCH — 4,700 FT APOGEE</text>
-          <!-- Parabolic launch trajectory arc -->
-          <path class="draw-line guide" d="M 885 370 Q 950 130 1125 68"/>
-          <!-- Apogee altitude marker -->
-          <circle class="draw-line accent" cx="1125" cy="68" r="6"/>
-          <line class="draw-line guide" x1="1045" y1="68" x2="1170" y2="68"/>
-          <!-- High-power rocket body (angled along trajectory) -->
-          <g transform="translate(1010, 165) rotate(-32)">
-            <path class="draw-line accent" d="M 0 -58 C 12 -34 14 -14 14 42 L -14 42 C -14 -14 -12 -34 0 -58 Z"/>
-            <!-- Nosecone bulkhead & payload bay -->
-            <line class="draw-line" x1="-13" y1="-16" x2="13" y2="-16"/>
-            <line class="draw-line" x1="-14" y1="10" x2="14" y2="10"/>
-            <!-- Swept fins -->
-            <path class="draw-line" d="M -14 18 L -32 46 L -14 42"/>
-            <path class="draw-line" d="M 14 18 L 32 46 L 14 42"/>
-            <!-- Exhaust plume vectors -->
-            <path class="draw-line accent" d="M -7 42 L 0 76 L 7 42"/>
-            <path class="draw-line" d="M -3 42 L 0 60 L 3 42"/>
-          </g>
-          <!-- Deployment parachute canopy schematic -->
-          <path class="draw-line" d="M 1085 118 A 28 24 0 0 1 1141 118 Z"/>
-          <path class="draw-line guide" d="M 1085 118 L 1113 148 M 1141 118 L 1113 148 M 1113 118 L 1113 148"/>
-        </g>
-
-        <!-- 3. 35MM FILM CAMERA & OPTICS (Bottom-Left) -->
-        <g class="blueprint-group" data-parallax="24" data-start="0.22" data-end="0.86">
-          <text x="52" y="472" class="bp-label accent">FIG 02.3 // 35MM FILM OPTICS &amp; SHUTTER</text>
-          <!-- Camera body shell -->
-          <rect class="draw-line" x="52" y="502" width="176" height="108" rx="8"/>
-          <!-- Top prism housing & shutter release -->
-          <path class="draw-line" d="M 96 502 L 112 478 L 168 478 L 184 502"/>
-          <rect class="draw-line accent" x="194" y="492" width="20" height="10" rx="2"/>
-          <circle class="draw-line" cx="74" cy="495" r="7"/>
-          <!-- Minolta A-mount concentric lens rings & aperture blades -->
-          <circle class="draw-line" cx="140" cy="556" r="42"/>
-          <circle class="draw-line accent" cx="140" cy="556" r="30"/>
-          <circle class="draw-line guide" cx="140" cy="556" r="18"/>
-          <path class="draw-line" d="M 128 542 L 152 542 L 158 560 L 140 572 L 122 560 Z"/>
-          <!-- 35mm film strip & sprocket holes -->
-          <path class="draw-line" d="M 246 518 L 372 518 L 372 594 L 246 594 Z"/>
-          <line class="draw-line guide" x1="246" y1="530" x2="372" y2="530"/>
-          <line class="draw-line guide" x1="246" y1="582" x2="372" y2="582"/>
-          <rect class="draw-line accent" x="260" y="536" width="44" height="40"/>
-          <rect class="draw-line accent" x="314" y="536" width="44" height="40"/>
-        </g>
-
-        <!-- 4. RUNNING, HIKING TOPOGRAPHY & STRIDE KINEMATICS (Bottom-Center) -->
-        <g class="blueprint-group" data-parallax="35" data-start="0.28" data-end="0.94">
-          <text x="455" y="520" class="bp-label accent">FIG 02.4 // ENDURANCE — TRAIL ELEVATION &amp; CADENCE</text>
-          <!-- Mountain / trail elevation profile -->
-          <path class="draw-line" d="M 445 645 L 495 595 L 535 618 L 595 548 L 650 605 L 700 572 L 760 645"/>
-          <path class="draw-line guide" d="M 445 645 L 760 645"/>
-          <!-- Runner kinematic stick-figure & stride arc -->
-          <circle class="draw-line accent" cx="602" cy="532" r="7"/>
-          <path class="draw-line accent" d="M 600 539 L 590 564 L 608 578 L 602 598"/>
-          <path class="draw-line accent" d="M 590 564 L 574 576 L 560 590"/>
-          <path class="draw-line accent" d="M 596 547 L 614 554 L 622 544"/>
-          <path class="draw-line accent" d="M 596 547 L 580 554 L 574 544"/>
-        </g>
-
-        <!-- 5. PICKLEBALL PADDLE & TRAJECTORY (Bottom-Right) -->
-        <g class="blueprint-group" data-parallax="-20" data-start="0.34" data-end="0.98">
-          <text x="865" y="495" class="bp-label accent">FIG 02.5 // PICKLEBALL — IMPACT KINEMATICS</text>
-          <!-- Pickleball paddle angled -->
-          <g transform="translate(935, 575) rotate(-24)">
-            <rect class="draw-line" x="-36" y="-52" width="72" height="88" rx="24"/>
-            <rect class="draw-line guide" x="-28" y="-44" width="56" height="72" rx="18"/>
-            <path class="draw-line accent" d="M -9 36 L -7 76 L 7 76 L 9 36"/>
-            <line class="draw-line" x1="-8" y1="48" x2="8" y2="52"/>
-            <line class="draw-line" x1="-8" y1="60" x2="8" y2="64"/>
-          </g>
-          <!-- Perforated pickleball + bounce trajectory -->
-          <path class="draw-line guide" d="M 975 555 Q 1045 505 1110 578"/>
-          <circle class="draw-line accent" cx="1065" cy="536" r="22"/>
-          <circle class="draw-line" cx="1057" cy="528" r="3"/>
-          <circle class="draw-line" cx="1073" cy="528" r="3"/>
-          <circle class="draw-line" cx="1065" cy="542" r="3"/>
-          <circle class="draw-line" cx="1054" cy="544" r="2.5"/>
-          <circle class="draw-line" cx="1076" cy="544" r="2.5"/>
-        </g>
-
+        <!-- Dynamic Strands & Vertex Nodes injected by JS Morph Engine -->
+        <g id="morphStrandsLayer"></g>
+        <g id="morphNodesLayer"></g>
       </svg>
     </div>
 
@@ -1098,6 +1055,7 @@
         </div>
         <div class="section-tag">Design, analysis, and a habit of taking things apart to see how they work.</div>
       </div>
+
       <div class="about-grid">
         <div class="about-copy reveal" style="--delay: 80ms;">
           <p>I'm a first-year engineering student at Purdue intending to major in mechanical engineering. I recently joined Purdue's Formula SAE team as a suspension team member and I am excited to develop my skills.</p>
@@ -1112,6 +1070,23 @@
           <div class="spec-row"><dt>Electronics</dt><dd>Soldering (basic and reflow), basic PCB design, various motors, IMUs, encoders</dd></div>
           <div class="spec-row"><dt>Coursework</dt><dd>Prototyping, Robotics, Calculus III, Linear Algebra, Intro to Engineering</dd></div>
         </dl>
+      </div>
+
+      <!-- Live Telemetry Bar showing the active morphed vector schematic -->
+      <div class="morph-hud reveal" style="--delay: 220ms;">
+        <div class="morph-hud-left">
+          <span class="morph-pulse"></span>
+          <span id="morphStageLabel">SCHEMATIC 01 // FORMULA SAE RACECAR &amp; COILOVER SUSPENSION</span>
+        </div>
+        <div class="morph-hud-stages" id="morphStagePills">
+          <span class="morph-stage-pill active" data-stage="0">01 FSAE CAR</span>
+          <span class="morph-stage-pill" data-stage="1">02 RUNNER</span>
+          <span class="morph-stage-pill" data-stage="2">03 35MM CAMERA</span>
+          <span class="morph-stage-pill" data-stage="3">04 ROCKET LAUNCH</span>
+        </div>
+        <div class="morph-hud-telemetry">
+          ACTIVE TOPOLOGY: <strong id="morphVertexCount">420</strong> PTS // <strong id="morphStrandCount">15</strong>/16 STRANDS
+        </div>
       </div>
     </div>
   </section>
@@ -1441,89 +1416,483 @@
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
   }
 
-  /* ---------------- SCROLL-LINKED LINE ANIMATIONS (BACKGROUND SECTION) ---------------- */
-  (function initAboutScrollLines() {
+  /* ============================================================================
+     SHARED-VERTEX POINT MORPHING & DYNAMIC COMPLEXITY SPAWN/DESPAWN ENGINE
+     - 16 Polyline Strands x 28 Points per Strand = 448 Dynamic Vector Vertices
+     - Reorients the exact same points across 4 drawings as you scroll up/down:
+       Stage 0 (Top)    : Formula SAE Racecar & Double-Wishbone Coilover (15/16 strands)
+       Stage 1 (Upper)  : Endurance Runner & Topographic Trail (11/16 strands - 4 despawn)
+       Stage 2 (Lower)  : 35mm Film Camera & Optical Aperture (13/16 strands - 2 spawn)
+       Stage 3 (Bottom) : High-Power Rocket Launch & Parachute Rover (16/16 strands - all spawn)
+     ============================================================================ */
+  (function initVectorMorphEngine() {
     const aboutSection = document.getElementById('about');
-    const groups = document.querySelectorAll('#aboutBlueprintSvg .blueprint-group');
-    if (!aboutSection || !groups.length) return;
+    const strandsLayer = document.getElementById('morphStrandsLayer');
+    const nodesLayer = document.getElementById('morphNodesLayer');
+    const stageLabelEl = document.getElementById('morphStageLabel');
+    const vertexCountEl = document.getElementById('morphVertexCount');
+    const strandCountEl = document.getElementById('morphStrandCount');
+    const stagePills = document.querySelectorAll('#morphStagePills .morph-stage-pill');
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!aboutSection || !strandsLayer || !nodesLayer) return;
 
-    // Measure every SVG shape in each blueprint group and prepare stroke-dasharray
-    const groupData = Array.from(groups).map(group => {
-      const shapes = group.querySelectorAll('.draw-line:not(.guide)');
-      const shapeMetrics = [];
+    const NUM_STRANDS = 16;
+    const PTS_PER_STRAND = 28;
+    constSVG_NS = 'http://www.w3.org/2000/svg';
 
-      shapes.forEach(shape => {
-        if (typeof shape.getTotalLength === 'function') {
-          try {
-            const len = shape.getTotalLength();
-            if (len > 0) {
-              shape.style.strokeDasharray = len;
-              if (!prefersReducedMotion) {
-                shape.style.strokeDashoffset = len;
-              }
-              shapeMetrics.push({ el: shape, len: len });
-            }
-          } catch (e) {
-            // Fallback if SVG element is hidden during init
+    // Geometry helper: resample any polyline into exactly N equidistant [x, y] vertices
+    function resamplePolyline(pts, n) {
+      if (!pts || pts.length === 0) return Array.from({ length: n }, () => [560, 340]);
+      if (pts.length === 1) return Array.from({ length: n }, () => [pts[0][0], pts[0][1]]);
+
+      const segLengths = [];
+      let totalLen = 0;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const dx = pts[i + 1][0] - pts[i][0];
+        const dy = pts[i + 1][1] - pts[i][1];
+        const d = Math.hypot(dx, dy);
+        segLengths.push(d);
+        totalLen += d;
+      }
+      if (totalLen === 0) return Array.from({ length: n }, () => [pts[0][0], pts[0][1]]);
+
+      const out = [];
+      for (let k = 0; k < n; k++) {
+        const target = (k / (n - 1)) * totalLen;
+        let acc = 0;
+        let found = false;
+        for (let i = 0; i < segLengths.length; i++) {
+          const sl = segLengths[i];
+          if (acc + sl >= target || i === segLengths.length - 1) {
+            const localT = sl === 0 ? 0 : (target - acc) / sl;
+            const x = pts[i][0] + (pts[i + 1][0] - pts[i][0]) * localT;
+            const y = pts[i][1] + (pts[i + 1][1] - pts[i][1]) * localT;
+            out.push([x, y]);
+            found = true;
+            break;
           }
+          acc += sl;
         }
-      });
-
-      return {
-        group: group,
-        parallax: parseFloat(group.getAttribute('data-parallax') || '0'),
-        start: parseFloat(group.getAttribute('data-start') || '0'),
-        end: parseFloat(group.getAttribute('data-end') || '1'),
-        shapes: shapeMetrics
-      };
-    });
-
-    if (prefersReducedMotion) return;
-
-    let ticking = false;
-
-    function updateBlueprintLines() {
-      ticking = false;
-      if (document.body.classList.contains('detail-open')) return;
-
-      const rect = aboutSection.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-
-      // Normalized progress (0 when section top enters bottom of viewport -> 1 when section bottom leaves top)
-      const totalTravel = vh + rect.height;
-      const currentTravel = vh - rect.top;
-      const rawProgress = Math.max(0, Math.min(1, currentTravel / totalTravel));
-
-      groupData.forEach(item => {
-        // Local draw progress for this specific illustration
-        const span = Math.max(0.05, item.end - item.start);
-        const localRaw = Math.max(0, Math.min(1, (rawProgress - item.start) / span));
-        // Smooth cubic ease-out curve so lines draw in fluidly as you scroll down and reverse as you scroll up
-        const eased = 1 - Math.pow(1 - localRaw, 3);
-
-        item.shapes.forEach(s => {
-          s.el.style.strokeDashoffset = s.len * (1 - eased);
-        });
-
-        // Subtle vertical parallax shift tied to scroll
-        const yOffset = (rawProgress - 0.5) * item.parallax;
-        item.group.style.transform = 'translate3d(0, ' + yOffset.toFixed(1) + 'px, 0)';
-        item.group.style.opacity = (0.2 + 0.8 * eased).toFixed(2);
-      });
+        if (!found) out.push([pts[pts.length - 1][0], pts[pts.length - 1][1]]);
+      }
+      return out;
     }
 
-    function requestTick() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateBlueprintLines);
+    // Geometry helper: generate arc/circle points
+    function arcPoints(cx, cy, r, startDeg, endDeg, steps) {
+      const pts = [];
+      const s = (startDeg * Math.PI) / 180;
+      const e = (endDeg * Math.PI) / 180;
+      for (let i = 0; i <= steps; i++) {
+        const a = s + (e - s) * (i / steps);
+        pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+      }
+      return pts;
+    }
+
+    // Geometry helper: collapsed despawn state (all N vertices collapse to a local spawn point)
+    function despawnedStrand(anchorX, anchorY) {
+      return {
+        active: false,
+        role: 'guide',
+        pts: Array.from({ length: PTS_PER_STRAND }, () => [anchorX, anchorY])
+      };
+    }
+
+    function activeStrand(rawPts, role) {
+      return {
+        active: true,
+        role: role || 'normal',
+        pts: resamplePolyline(rawPts, PTS_PER_STRAND)
+      };
+    }
+
+    /* ---------------- STAGE 0: FORMULA SAE RACECAR & COILOVER SUSPENSION (15 Active Strands) ---------------- */
+    const stageFSAE = [
+      // 0: Main open-wheel FSAE body upper silhouette & roll hoop
+      activeStrand([
+        [130, 420], [185, 412], [260, 382], [375, 375], [445, 342],
+        [490, 250], [525, 250], [565, 350], [720, 368], [805, 420]
+      ], 'accent'),
+      // 1: Undertray & ground-effect venturi floor
+      activeStrand([[130, 420], [280, 426], [560, 426], [805, 420]], 'normal'),
+      // 2: Multi-element Front Wing endplate & airfoil
+      activeStrand([[92, 430], [168, 430], [160, 392], [104, 404], [92, 430]], 'accent'),
+      // 3: High-downforce Rear Wing assembly & swan-neck mount
+      activeStrand([[740, 368], [760, 235], [835, 225], [825, 295], [755, 295], [775, 368]], 'accent'),
+      // 4: Front wheel outer tire
+      activeStrand(arcPoints(255, 418, 58, 0, 360, 28), 'normal'),
+      // 5: Front wheel rim & brake rotor
+      activeStrand(arcPoints(255, 418, 30, 0, 360, 28), 'accent'),
+      // 6: Rear wheel outer tire
+      activeStrand(arcPoints(695, 418, 62, 0, 360, 28), 'normal'),
+      // 7: Rear wheel rim & centerlock hub
+      activeStrand(arcPoints(695, 418, 32, 0, 360, 28), 'accent'),
+      // 8: Spaceframe triangulated chassis tubes
+      activeStrand([
+        [275, 382], [355, 424], [435, 345], [495, 424],
+        [515, 255], [585, 424], [665, 365]
+      ], 'normal'),
+      // 9: Detail Callout Circle — Double-Wishbone Suspension Zoom
+      activeStrand(arcPoints(945, 235, 105, 0, 360, 28), 'guide'),
+      // 10: Upper & Lower Control A-Arms in suspension detail
+      activeStrand([
+        [870, 175], [995, 195], [995, 275], [870, 295]
+      ], 'normal'),
+      // 11: Helical Coilover Shock Spring (Zig-Zag)
+      activeStrand([
+        [885, 150], [905, 168], [890, 182], [922, 194], [898, 210],
+        [932, 222], [908, 238], [942, 250], [918, 266], [965, 282]
+      ], 'accent'),
+      // 12: Pushrod & bellcrank rocker geometry
+      activeStrand([[885, 138], [925, 138], [905, 168], [885, 138]], 'normal'),
+      // 13: Ground plane & aerodynamic flow streamlines
+      activeStrand([[65, 480], [500, 480], [980, 480]], 'guide'),
+      // 14: Upper aero wake streamline over cockpit
+      activeStrand([
+        [75, 355], [210, 330], [450, 215], [680, 200], [870, 185]
+      ], 'guide'),
+      // 15: Despawned in Stage 0 (spawns later for Rocket stage)
+      despawnedStrand(780, 260)
+    ];
+
+    /* ---------------- STAGE 1: ENDURANCE RUNNER & TRAIL ELEVATION (11 Active Strands — 5 Despawn) ---------------- */
+    const stageRunner = [
+      // 0: Runner Head & Helmet/Cap profile
+      activeStrand(arcPoints(595, 148, 32, 0, 360, 28), 'accent'),
+      // 1: Torso spine & forward sprint lean line
+      activeStrand([[585, 180], [565, 235], [540, 305]], 'accent'),
+      // 2: Lead (Right) Leg — high knee drive & shin
+      activeStrand([[540, 305], [635, 335], [615, 435], [645, 442]], 'accent'),
+      // 3: Trail (Left) Leg — full extension push-off
+      activeStrand([[540, 305], [455, 385], [365, 445], [340, 468]], 'normal'),
+      // 4: Forward pumping arm
+      activeStrand([[576, 202], [635, 248], [680, 198]], 'normal'),
+      // 5: Rear counter-swing arm
+      activeStrand([[576, 202], [502, 240], [462, 208]], 'normal'),
+      // 6: Mountain ridge topographic horizon line 1
+      activeStrand([
+        [80, 535], [210, 445], [335, 490], [495, 365],
+        [650, 455], [815, 335], [965, 440], [1050, 535]
+      ], 'normal'),
+      // 7: Lower topographic contour trail path
+      activeStrand([
+        [80, 575], [250, 515], [440, 545], [615, 475],
+        [790, 520], [955, 485], [1050, 575]
+      ], 'guide'),
+      // 8: Heart-rate / stride cadence ECG waveform
+      activeStrand([
+        [110, 250], [205, 250], [225, 220], [242, 285],
+        [262, 145], [282, 315], [300, 235], [322, 250], [420, 250]
+      ], 'accent'),
+      // 9: Motion speed vectors trailing runner
+      activeStrand([[310, 175], [495, 175], [465, 245], [275, 245]], 'guide'),
+      // 10: Kinematic joint trajectory arc
+      activeStrand(arcPoints(545, 310, 175, 195, 345, 28), 'guide'),
+      // 11..15: Despawned during simpler Runner illustration!
+      despawnedStrand(540, 305),
+      despawnedStrand(635, 335),
+      despawnedStrand(455, 385),
+      despawnedStrand(595, 148),
+      despawnedStrand(815, 335)
+    ];
+
+    /* ---------------- STAGE 2: 35MM FILM CAMERA & OPTICAL APERTURE (13 Active Strands — 2 Spawn In) ---------------- */
+    const stageCamera = [
+      // 0: Main 3D-printed camera body outer chassis
+      activeStrand([
+        [220, 220], [680, 220], [680, 500], [220, 500], [220, 220]
+      ], 'normal'),
+      // 1: Top pentaprism viewfinder housing
+      activeStrand([
+        [330, 220], [375, 145], [525, 145], [570, 220]
+      ], 'accent'),
+      // 2: Shutter release button & film advance lever
+      activeStrand([
+        [585, 220], [585, 182], [655, 182], [655, 220]
+      ], 'accent'),
+      // 3: Minolta A-Mount outer barrel ring
+      activeStrand(arcPoints(450, 365, 122, 0, 360, 28), 'normal'),
+      // 4: Optical glass element inner ring
+      activeStrand(arcPoints(450, 365, 86, 0, 360, 28), 'accent'),
+      // 5: Magnetic shutter 6-blade iris polygon
+      activeStrand([
+        [450, 310], [498, 338], [498, 392],
+        [450, 420], [402, 392], [402, 338], [450, 310]
+      ], 'accent'),
+      // 6: Ergonomic right-hand grip contour
+      activeStrand([[255, 220], [285, 220], [285, 500], [255, 500]], 'guide'),
+      // 7: 35mm film strip upper & lower rails (right side)
+      activeStrand([
+        [735, 235], [1035, 235], [1035, 485], [735, 485], [735, 235]
+      ], 'normal'),
+      // 8: Film frame exposure window 1
+      activeStrand([
+        [765, 275], [875, 275], [875, 445], [765, 445], [765, 275]
+      ], 'accent'),
+      // 9: Film frame exposure window 2
+      activeStrand([
+        [900, 275], [1010, 275], [1010, 445], [900, 445], [900, 275]
+      ], 'accent'),
+      // 10: Upper sprocket perforation track
+      activeStrand([[745, 255], [885, 255], [1025, 255]], 'guide'),
+      // 11: Lower sprocket perforation track
+      activeStrand([[745, 465], [885, 465], [1025, 465]], 'guide'),
+      // 12: Optical light-cone rays from lens to focal plane
+      activeStrand([[120, 275], [450, 365], [120, 455]], 'guide'),
+      // 13..15: Despawned in Stage 2 (will spawn in for Stage 3 Rocket)
+      despawnedStrand(450, 365),
+      despawnedStrand(885, 360),
+      despawnedStrand(450, 145)
+    ];
+
+    /* ---------------- STAGE 3: HIGH-POWER ROCKET LAUNCH & ROVER DEPLOYMENT (All 16 Strands Active!) ---------------- */
+    const stageRocket = [
+      // 0: Rocket Fuselage Airframe & Tangent Ogive Nosecone (tilted along launch vector)
+      activeStrand([
+        [635, 95], [668, 155], [668, 435], [602, 435], [602, 155], [635, 95]
+      ], 'accent'),
+      // 1: Nosecone avionics bulkhead & payload bay separation rings
+      activeStrand([
+        [602, 165], [668, 165], [668, 255], [602, 255], [602, 345], [668, 345]
+      ], 'normal'),
+      // 2: Left composite swept fin
+      activeStrand([[602, 345], [535, 445], [602, 435]], 'accent'),
+      // 3: Right composite swept fin
+      activeStrand([[668, 345], [735, 445], [668, 435]], 'accent'),
+      // 4: Center booster nozzle & supersonic exhaust plume diamond
+      activeStrand([
+        [618, 435], [600, 535], [635, 610], [670, 535], [652, 435]
+      ], 'accent'),
+      // 5: Inner Mach shock diamond core
+      activeStrand([
+        [626, 445], [635, 555], [644, 445]
+      ], 'normal'),
+      // 6: Parabolic Launch Trajectory Arc from pad to 4,700 ft apogee
+      activeStrand([
+        [140, 585], [240, 390], [385, 225], [545, 125], [635, 95]
+      ], 'guide'),
+      // 7: Main Recovery Parachute Canopy Dome (Left deployment zone)
+      activeStrand(arcPoints(285, 235, 85, 180, 360, 28), 'accent'),
+      // 8: Parachute shroud suspension lines
+      activeStrand([
+        [200, 235], [285, 345], [370, 235], [242, 235], [285, 345], [328, 235]
+      ], 'guide'),
+      // 9: Deployed 3D-Printed Rover Chassis suspended below chute
+      activeStrand([
+        [235, 355], [335, 355], [335, 405], [235, 405], [235, 355]
+      ], 'normal'),
+      // 10: Rover Left Bogie Wheel
+      activeStrand(arcPoints(252, 412, 18, 0, 360, 28), 'accent'),
+      // 11: Rover Right Bogie Wheel
+      activeStrand(arcPoints(318, 412, 18, 0, 360, 28), 'accent'),
+      // 12: 80/20 Aluminum Linear Deployment Guide Rail schematic (Right side)
+      activeStrand([
+        [820, 185], [855, 185], [855, 465], [820, 465], [820, 185]
+      ], 'normal'),
+      // 13: Apogee altitude datum line (4,700 FT AGL)
+      activeStrand([[485, 95], [785, 95], [995, 95]], 'guide'),
+      // 14: Acoustic launch pad shockwave cloud left
+      activeStrand(arcPoints(555, 585, 46, 120, 390, 28), 'guide'),
+      // 15: Acoustic launch pad shockwave cloud right
+      activeStrand(arcPoints(715, 585, 46, 150, 420, 28), 'guide')
+    ];
+
+    const STAGES = [
+      {
+        title: 'SCHEMATIC 01 // FORMULA SAE RACECAR & COILOVER SUSPENSION',
+        activeCount: 15,
+        strands: stageFSAE
+      },
+      {
+        title: 'SCHEMATIC 02 // ENDURANCE RUNNER & TOPOGRAPHIC ELEVATION',
+        activeCount: 11,
+        strands: stageRunner
+      },
+      {
+        title: 'SCHEMATIC 03 // 35MM FILM CAMERA & MAGNETIC SHUTTER OPTICS',
+        activeCount: 13,
+        strands: stageCamera
+      },
+      {
+        title: 'SCHEMATIC 04 // HIGH-POWER ROCKET APOGEE & ROVER DEPLOYMENT',
+        activeCount: 16,
+        strands: stageRocket
+      }
+    ];
+
+    // Create persistent SVG path elements and key vertex node circles
+    const pathEls = [];
+    const nodeEls = []; // 3 nodes per strand (start, mid, end) = 48 CAD vertex nodes
+
+    for (let s = 0; s < NUM_STRANDS; s++) {
+      const p = document.createElementNS(constSVG_NS, 'path');
+      p.setAttribute('class', 'morph-strand');
+      strandsLayer.appendChild(p);
+      pathEls.push(p);
+
+      const strandNodes = [];
+      for (let n = 0; n < 3; n++) {
+        const c = document.createElementNS(constSVG_NS, 'circle');
+        c.setAttribute('class', n === 1 ? 'morph-node' : 'morph-node secondary');
+        c.setAttribute('r', n === 1 ? '3.2' : '2.4');
+        nodesLayer.appendChild(c);
+        strandNodes.push(c);
+      }
+      nodeEls.push(strandNodes);
+    }
+
+    // Smooth quintic in-out easing for clean reorientation between drawings
+    function easeInOutQuint(x) {
+      return x < 0.5 ? 16 * x * x * x * x * x : 1 - Math.pow(-2 * x + 2, 5) / 2;
+    }
+
+    let currentScrollProgress = 0;
+    let targetScrollProgress = 0;
+    let animFrameId = null;
+
+    function computeTargetScrollProgress() {
+      const rect = aboutSection.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      // Start morphing shortly after section enters viewport, finish as it exits
+      const startTrigger = vh * 0.65;
+      const endTrigger = -rect.height * 0.35;
+      const totalRun = startTrigger - endTrigger;
+      const current = startTrigger - rect.top;
+      return Math.max(0, Math.min(1, current / totalRun));
+    }
+
+    function renderMorphState(progress) {
+      // Map [0, 1] across the 4 stages (3 transitions: 0->1, 1->2, 2->3)
+      const scaled = progress * (STAGES.length - 1);
+      const idxA = Math.min(STAGES.length - 2, Math.floor(scaled));
+      const idxB = idxA + 1;
+      const rawT = scaled - idxA;
+      const t = easeInOutQuint(rawT);
+
+      // Mid-transition swirl envelope: 0 at keyframe A, peaks at 1.0 halfway, 0 at keyframe B
+      const swirlEnvelope = Math.sin(rawT * Math.PI);
+
+      const stageA = STAGES[idxA];
+      const stageB = STAGES[idxB];
+
+      // Update HUD Stage Label & Pills
+      const dominantIdx = rawT < 0.5 ? idxA : idxB;
+      stageLabelEl.textContent = STAGES[dominantIdx].title;
+      stagePills.forEach((pill, i) => {
+        pill.classList.toggle('active', i === dominantIdx);
+      });
+
+      const interpStrands = Math.round(
+        stageA.activeCount + (stageB.activeCount - stageA.activeCount) * t
+      );
+      strandCountEl.textContent = interpStrands;
+      vertexCountEl.textContent = interpStrands * PTS_PER_STRAND;
+
+      // Interpolate every strand and every vertex
+      for (let s = 0; s < NUM_STRANDS; s++) {
+        const strandA = stageA.strands[s];
+        const strandB = stageB.strands[s];
+        const pathEl = pathEls[s];
+
+        // Spawn / Despawn opacity calculation
+        const alphaA = strandA.active ? (strandA.role === 'accent' ? 0.62 : strandA.role === 'guide' ? 0.26 : 0.42) : 0;
+        const alphaB = strandB.active ? (strandB.role === 'accent' ? 0.62 : strandB.role === 'guide' ? 0.26 : 0.42) : 0;
+        const opacity = alphaA + (alphaB - alphaA) * t;
+
+        // Style role switching
+        const dominantRole = rawT < 0.5 ? strandA.role : strandB.role;
+        pathEl.setAttribute(
+          'class',
+          'morph-strand' +
+            (dominantRole === 'accent' ? ' accent' : dominantRole === 'guide' ? ' guide' : '')
+        );
+        pathEl.style.opacity = opacity.toFixed(3);
+
+        if (opacity <= 0.01) {
+          pathEl.setAttribute('d', '');
+          nodeEls[s].forEach(nEl => (nEl.style.opacity = '0'));
+          continue;
+        }
+
+        const ptsA = strandA.pts;
+        const ptsB = strandB.pts;
+        let dStr = '';
+
+        // Alternate swirl direction per strand for an organic mechanical disassembly feel
+        const swirlDir = s % 2 === 0 ? 1 : -1;
+
+        for (let i = 0; i < PTS_PER_STRAND; i++) {
+          const ax = ptsA[i][0];
+          const ay = ptsA[i][1];
+          const bx = ptsB[i][0];
+          const by = ptsB[i][1];
+
+          const dx = bx - ax;
+          const dy = by - ay;
+
+          // Linear interpolation + perpendicular orbital curl during mid-transition
+          const curlScale = 0.16 * swirlDir * swirlEnvelope * Math.sin((i / PTS_PER_STRAND) * Math.PI);
+          const x = ax + dx * t - dy * curlScale;
+          const y = ay + dy * t + dx * curlScale;
+
+          dStr += (i === 0 ? 'M ' : ' L ') + x.toFixed(1) + ' ' + y.toFixed(1);
+
+          // Update the 3 CAD vertex nodes on this strand (first, middle, last point)
+          if (i === 0 || i === 13 || i === PTS_PER_STRAND - 1) {
+            const nodeIdx = i === 0 ? 0 : i === 13 ? 1 : 2;
+            const nEl = nodeEls[s][nodeIdx];
+            nEl.setAttribute('cx', x.toFixed(1));
+            nEl.setAttribute('cy', y.toFixed(1));
+            nEl.style.opacity = Math.min(1, opacity * 1.35).toFixed(2);
+          }
+        }
+
+        pathEl.setAttribute('d', dStr);
       }
     }
 
-    window.addEventListener('scroll', requestTick, { passive: true });
-    window.addEventListener('resize', requestTick);
-    updateBlueprintLines();
+    // Damped requestAnimationFrame loop so rapid scrolling produces silky-smooth point motion
+    function tickLoop() {
+      const diff = targetScrollProgress - currentScrollProgress;
+      if (Math.abs(diff) > 0.0005) {
+        currentScrollProgress += diff * 0.14;
+        renderMorphState(currentScrollProgress);
+        animFrameId = requestAnimationFrame(tickLoop);
+      } else {
+        currentScrollProgress = targetScrollProgress;
+        renderMorphState(currentScrollProgress);
+        animFrameId = null;
+      }
+    }
+
+    function onScrollOrResize() {
+      if (document.body.classList.contains('detail-open')) return;
+      targetScrollProgress = computeTargetScrollProgress();
+      if (!animFrameId) {
+        animFrameId = requestAnimationFrame(tickLoop);
+      }
+    }
+
+    // Allow clicking stage pills in the HUD to preview any schematic directly
+    stagePills.forEach(pill => {
+      pill.style.cursor = 'pointer';
+      pill.addEventListener('click', () => {
+        const idx = parseInt(pill.getAttribute('data-stage'), 10);
+        targetScrollProgress = idx / (STAGES.length - 1);
+        if (!animFrameId) {
+          animFrameId = requestAnimationFrame(tickLoop);
+        }
+      });
+    });
+
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
+
+    // Initial render
+    targetScrollProgress = computeTargetScrollProgress();
+    currentScrollProgress = targetScrollProgress;
+    renderMorphState(currentScrollProgress);
   })();
 
   /* ---------------- PROJECT DETAIL SPA CONTROLLER ---------------- */
